@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from hardcoded_models import PosesList
-from hardcoded_models import PlacesList
+from hardcoded_models.models import PosesList
+from hardcoded_models.models import PlacesList
 
 
 class Person(models.Model):
@@ -12,7 +12,7 @@ class Person(models.Model):
         ('M', 'Male'),
         ('F', 'Female')
     )
-    gender = models.Field.choices(choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField()
     city = models.CharField('City', max_length=255, null=True)
     photo = models.FileField(upload_to='profile_photos')
@@ -20,6 +20,6 @@ class Person(models.Model):
 
 class PersonPreferences(models.Model):
     user = models.OneToOneField(User)
-    relation = models.OneToOneField(User)
-    preferred_poses = models.OneToManyField(PosesList)
-    preferred_places = models.OneToManyField()
+    relation = models.OneToOneField(User, related_name='related user')
+    preferred_poses = models.ManyToManyField(PosesList)
+    preferred_places = models.ManyToManyField(PlacesList)
