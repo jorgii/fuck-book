@@ -12,7 +12,8 @@ urlpatterns = patterns(
     url(r'^statistics', 'statistics.views.statistics', name='statistics'),
     url(r'^notifications', 'notifications.views.notifications', name='notifications'),
     url(r'^dice', 'dice.views.dice', name='dice'),
-    # Uncomment the admin/doc line below to enable admin documentation:
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}, name='logout'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:

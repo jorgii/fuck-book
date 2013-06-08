@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+{% block title%}Login{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <form class="form-signin" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">{% if form.errors %}Wrong Password!{% endif %}</h2>
+        <input type="text" name="username" class="input-block-level" placeholder="username">
+        <input type="password" name="password" class="input-block-level" placeholder="password">
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+      </form>
+
+    </div> <!-- /container -->
+{% endblock %}

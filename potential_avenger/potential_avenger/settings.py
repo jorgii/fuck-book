@@ -1,10 +1,10 @@
 # Django settings for potential_avenger project.
 import os
 
-SITE_ROOT = os.path.realpath(os.path.dirname(__file__)) + '/'
+SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+LOGIN_REDIRECT_URL = 'profile'
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -52,7 +52,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -63,7 +63,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = 'os.path.join(os.path.abspath(os.path.dirname(__file__)), "static")'
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -71,8 +71,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    'static',
-    '/var/www/static/',
+    os.path.join(SITE_ROOT, '../static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -112,7 +111,7 @@ ROOT_URLCONF = 'potential_avenger.urls'
 WSGI_APPLICATION = 'potential_avenger.wsgi.application'
 
 TEMPLATE_DIRS = (
-    'potential_avenger/templates'
+    os.path.join(SITE_ROOT, 'templates')
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

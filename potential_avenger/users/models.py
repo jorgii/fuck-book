@@ -7,7 +7,6 @@ from hardcoded_models.models import PlacesList
 
 class Person(models.Model):
     user = models.OneToOneField(User)
-    name = models.CharField('Person Name', max_length=255)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female')
