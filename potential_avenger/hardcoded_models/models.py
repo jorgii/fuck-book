@@ -11,3 +11,7 @@ class PlacesList(models.Model):
 
 class TipsList(models.Model):
     useful_tip = models.CharField('Useful Tip', max_length=255)
+
+
+class NotificationType(models.Model):
+    notification_type = models.CharField('Notification Type', max_length=255)
