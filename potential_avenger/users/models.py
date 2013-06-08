@@ -23,3 +23,9 @@ class PersonPreferences(models.Model):
     relation = models.OneToOneField(User, related_name='related user')
     preferred_poses = models.ManyToManyField(PosesList)
     preferred_places = models.ManyToManyField(PlacesList)
+
+
+class PersonalSettings(models.Model):
+    user = models.OneToOneField(User)
+    useful_tips = models.BooleanField()
+    notification_period = models.IntegerField()
