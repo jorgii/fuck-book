@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Fuckbook - Profile{% endblock %}
+
+{% block menu %}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#">Profile</a></li>
+    <li><a href="#">Check In</a></li>
+    <li><a href="#">Diary</a></li>
+    <li><a href="#">Statistics</a></li>
+    <li><a href="#">Notifications</a></li>
+    <li><a href="#">Dice</a></li>
+  </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row-fluid">
+      <div class="span12">
+        <!-- Container -->
+        <div class="row-fluid">
+          <div class="span6">
+            <!-- Container -->
+            <div class="row-fluid">
+              <div class="span6">pro pic<!-- Insert Profile picture here --></div>
+              <div class="span6">gender/age/city<!-- Insert Name, Gender, Age, City here --></div>
+            </div>
+          </div>
+          <div class="span6"><!-- Insert Change settings here --></div>
+        </div>
+        <!-- Insert In a relation with, Preferred poses and Preferred places here -->
+      </div>
+    </div>
+{% endblock %}

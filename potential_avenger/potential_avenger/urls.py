@@ -1,12 +1,13 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'potential_avenger.views.home', name='home'),
-    # url(r'^potential_avenger/', include('potential_avenger.foo.urls')),
+    url(r'^profile', 'users.views.profile', name='profile'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
