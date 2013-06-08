@@ -19,7 +19,7 @@ class Person(models.Model):
 
 
 class PersonPreferences(models.Model):
-    user = models.OneToOneField(User)
+    person = models.OneToOneField(Person)
     relation = models.OneToOneField(User, related_name='related user')
     preferred_poses = models.ManyToManyField(PosesList)
     preferred_places = models.ManyToManyField(PlacesList)

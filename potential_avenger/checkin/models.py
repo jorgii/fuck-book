@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from users.models import Person
 from hardcoded_models.models import PosesList
 from hardcoded_models.models import PlacesList
 
@@ -19,4 +20,4 @@ class CheckinDetails(models.Model):
     rating = models.IntegerField()
     duration = models.IntegerField()
     contraception = models.BooleanField()
-    with_who = models.OneToOneField(User, related_name='related user')
+    with_who = models.OneToOneField(Person, related_name='related user')
