@@ -19,4 +19,4 @@ class CheckinDetails(models.Model):
     rating = models.IntegerField()
     duration = models.IntegerField()
     contraception = models.BooleanField()
-    with_who = models.OneToOneField(Person, related_name='related user', null=True)
+    with_who = models.OneToOneField(Person, related_name='checkin related user', null=True)
