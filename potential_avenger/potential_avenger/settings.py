@@ -1,5 +1,7 @@
 # Django settings for potential_avenger project.
+import os
 
+SITE_ROOT = os.path.realpath(os.path.dirname(__file__)) + '/'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -61,7 +63,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/potential_avenger/static/'
+STATIC_ROOT = 'os.path.join(os.path.abspath(os.path.dirname(__file__)), "static")'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
