@@ -130,7 +130,8 @@ INSTALLED_APPS = (
     'diary',
     'statistics',
     'notifications',
-    'dice'
+    'dice',
+    'hardcoded_models'
 )
 
 # A sample logging configuration. The only tangible logging
