@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from datetime import date
 
@@ -12,5 +13,7 @@ def profile(request):
     age = int((date.today() - request.user.person.birth_date).days/365)
     city = request.user.person.city
 
-    profile_photo = request.user.person.photo.name
+    female_friends = User.objects.filter(person__gender='F').exclude(id=request.user.id)
+    friends = [person.first_name for person in User.objects.exclude(id=request.user.id)]
+    profile_photo = request.user.person.photo.url
     return render(request, "profile.html", locals())

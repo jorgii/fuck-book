@@ -14,7 +14,7 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField()
     city = models.CharField('City', max_length=255, null=True)
-    photo = models.FileField(upload_to='potential_avenger/media/profile_photos')
+    photo = models.FileField(upload_to='profile_photos')
 
 
 class PersonPreferences(models.Model):
