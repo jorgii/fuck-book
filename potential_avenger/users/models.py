@@ -16,6 +16,9 @@ class Person(models.Model):
     city = models.CharField('City', max_length=255, null=True)
     photo = models.FileField(upload_to='profile_photos')
 
+    def __str__(self):
+        return '{} {}'.format(self.user.first_name, self.user.last_name)
+
 
 class PersonPreferences(models.Model):
     person = models.OneToOneField(Person)

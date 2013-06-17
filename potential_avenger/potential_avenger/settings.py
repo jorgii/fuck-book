@@ -5,6 +5,8 @@ SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOGIN_REDIRECT_URL = 'profile'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
