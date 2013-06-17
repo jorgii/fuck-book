@@ -46,14 +46,17 @@ def register(request):
 @login_required
 def register_success(request):
     if request.method == 'POST':
-        person_form = PersonForm(request.POST)
-        user_form = UserForm(request.POST)
+        person_form = PersonForm(request.POST, instance=request.user.person)
+        user_form = UserForm(request.POST, instance=request.user)
+        print('person_form errors:', person_form.errors)
+        print('user_form errors:', user_form.errors)
         if person_form.is_valid() and user_form.is_valid():
             user_form.save()
             person_form.save()
+            print('success')
             return redirect('/profile/')
     args = {}
     args.update(csrf(request))
-    args['person_form'] = PersonForm()
-    args['user_form'] = UserForm()
+    args['person_form'] = PersonForm(instance=request.user.person)
+    args['user_form'] = UserForm(instance=request.user)
     return render_to_response('register_success.html', args)

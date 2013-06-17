@@ -9,12 +9,14 @@
   <body>
     <div class="container">
         <div class="row-fluid">
+            <div class="span12 text-center"><h3>CONGRATS! Tell us something more about you..</h3></div>
+        </div>
+        <div class="row-fluid">
             <div class="span4"></div>
             <div class="span4">
-                CONGRATS! Go to <a href="{% url 'login' %}">login page</a>
-                <form class="form" method="post" style="width: 85%" action="{% url 'register' %}">
+                <form class="form" method="post" style="width: 85%" action="{% url 'register_success' %}">
                     {% csrf_token %}
-                    <h4>{% if form.errors %}Oups, something went wrongs!{% endif %}</h2>
+                    {{person_form.errors}}
                     {{user_form}}<br/>
                     {{person_form}}<br/>
                     <input class="btn btn-primary btn-large" type="submit" value="Continue"/>
