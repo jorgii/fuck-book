@@ -14,10 +14,10 @@
         <div class="row-fluid">
             <div class="span4"></div>
             <div class="span4">
-                <form class="form-signin" method="post" style="width: 85%" action="{% url 'login' %}">
+                <form class="form" method="post" style="width: 85%" =action"{% url 'login' %}">
                     {% csrf_token %}
-                    <h2 class="form-signin-heading">{% if form.errors %}Wrong Password!{% endif %}</h2>
-                    <input type="text" name="username" class="input-block-level" placeholder="username">
+                    <h5>{% if form.errors %}Wrong username or password!{% endif %}</h5>
+                    <input type="text" name="e-mail" class="input-block-level" placeholder="e-mail">
                     <input type="password" name="password" class="input-block-level" placeholder="password">
                     <input type="hidden" name="next" value="{{ next }}" />
                     <button class="btn btn-large btn-primary" type="submit">Sign in</button>
