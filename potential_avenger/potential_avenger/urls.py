@@ -16,6 +16,7 @@ urlpatterns = patterns(
     url(r'^dice/$', 'dice.views.dice', name='dice'),
     url(r'^$', 'users.views.profile', name='home'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),
+    url(r'^register/$', 'users.views.register', name='register'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}, name='logout'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

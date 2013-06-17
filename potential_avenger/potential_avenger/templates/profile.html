@@ -10,14 +10,27 @@
           <div class="span6">
             <!-- Container -->
             <div class="row-fluid">
-              <div class="span6"><img src="{{profile_photo}}" alt="profile picture"/></div>
-              <div class="span6">
-                {{full_name}}<br/>
-                {{gender}}<br/>
-                {{age}}<br/>
-                {{city}}<br/>
-                <!--Just for FUN to be deleted-->
-                All other female friends: {{friends}}
+              <div class="span2"><img src="{{profile_photo}}" heitgth="12" alt="profile picture"/></div>
+              <div class="span1"></div>
+              <div class="span7">
+                <table class="table table-striped">
+                    <tr>
+                      <td><b>Name:</b></td>
+                      <td>{{full_name}}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Gender:</b></td>
+                      <td>{{gender}}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Age:</b></td>
+                      <td>{{age}}</td>
+                    </tr>
+                    <tr>
+                      <td><b>City/Town:</b></td>
+                      <td>{{city}}</td>
+                    </tr>
+                </table>
               </div>
             </div>
           </div>

@@ -17,3 +17,6 @@ def profile(request):
     friends = [person.first_name for person in User.objects.exclude(id=request.user.id)]
     profile_photo = request.user.person.photo.url
     return render(request, "profile.html", locals())
+
+def register(request):
+    pass
