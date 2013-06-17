@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.context_processors import csrf
-
+from django.contrib.auth import login
 
 from users.models import Person
+from users.forms import PersonForm, UserForm
 
 
 @login_required
@@ -30,8 +31,11 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            p = Person(user=form.instance)
+            user = form.instance
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            p = Person(user=user)
             p.save()
+            login(request, user)
             return redirect('/register_success/')
     args = {}
     args.update(csrf(request))
@@ -39,6 +43,17 @@ def register(request):
     return render_to_response('register.html', args)
 
 
+@login_required
 def register_success(request):
-    
-    return render_to_response('register_success.html')
+    if request.method == 'POST':
+        person_form = PersonForm(request.POST)
+        user_form = UserForm(request.POST)
+        if person_form.is_valid() and user_form.is_valid():
+            user_form.save()
+            person_form.save()
+            return redirect('/profile/')
+    args = {}
+    args.update(csrf(request))
+    args['person_form'] = PersonForm()
+    args['user_form'] = UserForm()
+    return render_to_response('register_success.html', args)

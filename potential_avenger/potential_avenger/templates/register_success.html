@@ -12,6 +12,13 @@
             <div class="span4"></div>
             <div class="span4">
                 CONGRATS! Go to <a href="{% url 'login' %}">login page</a>
+                <form class="form" method="post" style="width: 85%" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    <h4>{% if form.errors %}Oups, something went wrongs!{% endif %}</h2>
+                    {{user_form}}<br/>
+                    {{person_form}}<br/>
+                    <input class="btn btn-primary btn-large" type="submit" value="Continue"/>
+                </form>
             </div>
             <div class="span4"></div>
         </div>
