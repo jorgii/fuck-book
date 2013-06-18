@@ -27,8 +27,9 @@ def profile(request):
 
 
 def register(request):
+    args = {}
+    form = UserCreationForm(request.POST or None)
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             user = form.instance
@@ -37,26 +38,22 @@ def register(request):
             p.save()
             login(request, user)
             return redirect('/register_success/')
-    args = {}
+    args['form'] = form
     args.update(csrf(request))
-    args['form'] = UserCreationForm()
     return render_to_response('register.html', args)
 
 
 @login_required
 def register_success(request):
-    if request.method == 'POST':
-        person_form = PersonForm(request.POST, instance=request.user.person)
-        user_form = UserForm(request.POST, instance=request.user)
-        print('person_form errors:', person_form.errors)
-        print('user_form errors:', user_form.errors)
-        if person_form.is_valid() and user_form.is_valid():
-            user_form.save()
-            person_form.save()
-            print('success')
-            return redirect('/profile/')
     args = {}
+    person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
+    user_form = UserForm(request.POST or None, instance=request.user)
+    if request.method == 'POST':
+        if person_form.is_valid() and user_form.is_valid():
+            person_form.save()
+            user_form.save()
+            return redirect('/profile/')
     args.update(csrf(request))
-    args['person_form'] = PersonForm(instance=request.user.person)
-    args['user_form'] = UserForm(instance=request.user)
+    args['person_form'] = person_form
+    args['user_form'] = user_form
     return render_to_response('register_success.html', args)

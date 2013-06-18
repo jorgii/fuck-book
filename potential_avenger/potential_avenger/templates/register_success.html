@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Log out</title>
+    <title>Success</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
@@ -14,11 +14,10 @@
         <div class="row-fluid">
             <div class="span4"></div>
             <div class="span4">
-                <form class="form" method="post" style="width: 85%" action="{% url 'register_success' %}">
+                <form class="form" enctype="multipart/form-data" method="post" style="width: 85%" action="{% url 'register_success' %}">
                     {% csrf_token %}
-                    {{person_form.errors}}
-                    {{user_form}}<br/>
-                    {{person_form}}<br/>
+                    {{user_form.as_p}}
+                    {{person_form.as_p}}<br/>
                     <input class="btn btn-primary btn-large" type="submit" value="Continue"/>
                 </form>
             </div>
