@@ -1,8 +1,15 @@
+from time import time
+
+
 from django.db import models
 from django.contrib.auth.models import User
 
 from hardcoded_models.models import PosesList
 from hardcoded_models.models import PlacesList
+
+
+def get_upload_file_name(instance, filename):
+    return 'profile_photos/{}_{}{}'.format(str(time()).replace('.', '_'), instance.user.id, str(filename[filename.rfind('.'):len(filename)]))
 
 
 class Person(models.Model):
@@ -14,7 +21,7 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(null=True)
     city = models.CharField('City', max_length=255, blank=True, null=True)
-    photo = models.FileField(upload_to='profile_photos')
+    photo = models.FileField(upload_to=get_upload_file_name, verbose_name="Profile photo")
 
     def __str__(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)
