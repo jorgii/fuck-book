@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Log out</title>
+    <title>Log in</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
@@ -16,10 +16,7 @@
             <div class="span4">
                 <form class="form" method="post" style="width: 85%" =action"{% url 'login' %}">
                     {% csrf_token %}
-                    <h5>{% if form.errors %}Wrong username or password!{% endif %}</h5>
-                    <input type="text" name="username" class="input-block-level" placeholder="username">
-                    <input type="password" name="password" class="input-block-level" placeholder="password">
-                    <input type="hidden" name="next" value="{{ next }}" />
+                    {{authentication_form}}
                     <button class="btn btn-large btn-primary" type="submit">Sign in</button>
                     <a class="offset2" href="{% url 'register' %}">Dare to register?</a>
                 </form>

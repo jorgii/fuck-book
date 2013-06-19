@@ -4,9 +4,10 @@ from datetime import date
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.context_processors import csrf
 from django.contrib.auth import login
+
 
 from users.models import Person
 from users.forms import PersonForm, UserForm
@@ -24,6 +25,21 @@ def profile(request):
     friends = [person.first_name for person in User.objects.exclude(id=request.user.id)]
     profile_photo = request.user.person.photo.url
     return render(request, "profile.html", locals())
+
+
+def login_user(request):
+    args = {}
+    authentication_form = AuthenticationForm(None, request.POST or None)
+    if request.method == 'POST':
+        print('In post: ', authentication_form.errors)
+        if authentication_form.is_valid():
+            user = authentication_form.get_user()
+            login(request, user=user)
+            return redirect('/profile/')
+    args['authentication_form'] = authentication_form
+    args.update(csrf(request))
+    print(authentication_form.errors)
+    return render_to_response('login.html', args)
 
 
 def register(request):
