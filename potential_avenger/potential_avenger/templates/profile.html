@@ -10,25 +10,29 @@
           <div class="span6">
             <!-- Container -->
             <div class="row-fluid">
-              <div class="span2"><img src="{{profile_photo}}" alt="profile picture"/></div>
+              <div class="span4"><img src="{{ profile_photo }}" alt="profile picture"/></div>
               <div class="span1"></div>
-              <div class="span7">
+              <div class="span5">
                 <table class="table table-striped">
                     <tr>
                       <td><b>Name:</b></td>
-                      <td>{{full_name}}</td>
+                      <td>{{ full_name }}</td>
+                    </tr>
+                    <tr>
+                      <td><b>E-mail:</b></td>
+                      <td>{{ email }}</td>
                     </tr>
                     <tr>
                       <td><b>Gender:</b></td>
-                      <td>{{gender}}</td>
+                      <td>{{ gender }}</td>
                     </tr>
                     <tr>
                       <td><b>Age:</b></td>
-                      <td>{{age}}</td>
+                      <td>{{ age }}</td>
                     </tr>
                     <tr>
                       <td><b>City/Town:</b></td>
-                      <td>{{city}}</td>
+                      <td>{{ city }}</td>
                     </tr>
                 </table>
               </div>
@@ -37,28 +41,30 @@
           <div class="span6"><a href="#"><button class="btn btn-primary btn-large">Change Settings</button></a></div>
         </div>
       </div>
+      {% if related_to != 'None' %}
       <div class="row-fluid">
-        <div class="span12"><b>In a relationship with:</b> ###</div>
+        <div class="span12"><b>In a relationship with: </b>{{ related_to }}</div>
       </div>
+      {% else %}
+      <div class="row-fluid">
+        <div class="span12"><b>No Relationship</b></div>
+      </div>
+      {% endif %}
       <div class="row-fluid">
         <div class="span12"><b>Preferred poses</b></div>
       </div>
       <div class="row-fluid">
-          <!--for-each-->
-          <div class="span1">Pose1</div>
-          <div class="span1">Pose2</div>
-          <div class="span1">Pose3</div>
-          <!--end for-each-->
+          {% for pose in preferred_poses %}
+          <div class="span1"><img src="{{ STATIC_URL }}poses/{{ pose }}.jpg"/></div>
+          {% endfor %}
       </div>
       <div class="row-fluid">
         <div class="span12"><b>Preferred places</b></div>
       </div>
       <div class="row-fluid">
-          <!--for-each-->
-          <div class="span1">Place1</div>
-          <div class="span1">Place2</div>
-          <div class="span1">Place3</div>
-          <!--end for-each-->
+          {% for place in preferred_places %}
+          <div class="span1"><img src="{{ STATIC_URL }}places/{{ place }}.jpg"/></div>
+          {% endfor %}
       </div>
     </div>
 {% endblock %}

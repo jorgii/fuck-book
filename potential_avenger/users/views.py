@@ -9,19 +9,24 @@ from django.core.context_processors import csrf
 from django.contrib.auth import login
 
 
-from users.models import Person
+from users.models import Person, PersonPreferences
 from users.forms import PersonForm, UserForm
 
 
 @login_required
 def profile(request):
-    print(request.user.person.photo)
-    full_name = request.user.person.__str__()
+    full_name = str(request.user.person)
+    email = request.user.email
     gender = request.user.person.get_gender_display()
     age = int((date.today() - request.user.person.birth_date).days/365)
     city = request.user.person.city
-
+    preferred_poses = [str(pose) for pose in request.user.person.personpreferences.preferred_poses.all()]
+    preferred_places = [str(place) for place in request.user.person.personpreferences.preferred_places.all()]
     female_friends = User.objects.filter(person__gender='F').exclude(id=request.user.id)
+    try:
+        related_to = str(request.user.person.personpreferences.relation)
+    except PersonPreferences.DoesNotExist:
+        related_to = None
     friends = [person.first_name for person in User.objects.exclude(id=request.user.id)]
     profile_photo = request.user.person.photo.url
     return render(request, "profile.html", locals())

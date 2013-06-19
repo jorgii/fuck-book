@@ -29,12 +29,18 @@ class Person(models.Model):
 
 class PersonPreferences(models.Model):
     person = models.OneToOneField(Person)
-    relation = models.OneToOneField(Person, related_name='related user', null=True)
+    relation = models.OneToOneField(Person, related_name='related user', blank=True, null=True)
     preferred_poses = models.ManyToManyField(PosesList)
     preferred_places = models.ManyToManyField(PlacesList)
+
+    def __str__(self):
+        return self.person.__str__()
 
 
 class PersonalSettings(models.Model):
     person = models.OneToOneField(Person)
     useful_tips = models.BooleanField()
     notification_period = models.IntegerField()
+
+    def __str__(self):
+        return self.person.__str__()
