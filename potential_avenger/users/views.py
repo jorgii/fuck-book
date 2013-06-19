@@ -61,6 +61,7 @@ def register(request):
 
 @login_required
 def register_success(request):
+    print(request)
     args = {}
     person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
@@ -73,3 +74,8 @@ def register_success(request):
     args['person_form'] = person_form
     args['user_form'] = user_form
     return render_to_response('register_success.html', args)
+
+
+@login_required
+def home(request):
+    return redirect('/profile/')

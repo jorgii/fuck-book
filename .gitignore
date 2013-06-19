@@ -18,6 +18,7 @@ develop-eggs
 lib
 lib64
 profile_photos
+dev.db
 
 # Installer logs
 pip-log.txt
