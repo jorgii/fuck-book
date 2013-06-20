@@ -37,15 +37,12 @@ class PersonPreferences(models.Model):
         return self.person.__str__()
 
     def save(self):
-        other = self.relation
-        other.personpreferences.relation = self.person
-        print('my relation: ', self.relation, 'Other\'s relation: ', other.personpreferences.relation)
         super().save()
-'''        if self.relation and PersonPreferences(self.relation).relation != self.person:
-            PersonPreferences(self.relation).relation = self.person
-            PersonPreferences(self.relation).relation.save()
-            self.relation.save()
-'''
+
+        if self.relation and self.relation.personpreferences.relation != self.person:
+            self.relation.personpreferences.relation
+            self.relation.personpreferences.save()
+
 
 class PersonalSettings(models.Model):
     person = models.OneToOneField(Person)
