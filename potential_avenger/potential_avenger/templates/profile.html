@@ -73,7 +73,7 @@
           <div class="span6"><a href="{% url 'profile_edit' %}"><button class="btn btn-primary btn-large">Edit Profile</button></a></div>
         </div>
       </div>
-      {% if related_to %}
+      {% if related_to|stringformat:"s" != 'None' %}
       <div class="row-fluid">
         <div class="span12"><b>In a relationship with: </b>{{ related_to }}</div>
       </div>

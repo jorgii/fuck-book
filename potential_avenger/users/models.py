@@ -36,6 +36,16 @@ class PersonPreferences(models.Model):
     def __str__(self):
         return self.person.__str__()
 
+    def save(self):
+        other = self.relation
+        other.personpreferences.relation = self.person
+        print('my relation: ', self.relation, 'Other\'s relation: ', other.personpreferences.relation)
+        super().save()
+'''        if self.relation and PersonPreferences(self.relation).relation != self.person:
+            PersonPreferences(self.relation).relation = self.person
+            PersonPreferences(self.relation).relation.save()
+            self.relation.save()
+'''
 
 class PersonalSettings(models.Model):
     person = models.OneToOneField(Person)

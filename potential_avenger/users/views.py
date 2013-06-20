@@ -54,6 +54,7 @@ def profile(request):
         profile_photo = '/media/profile_photos/noPhoto.jpg'
     useful_tips = request.user.person.personalsettings.useful_tips
     notification_period = request.user.person.personalsettings.notification_period
+    print(request.user.person.personpreferences.relation.personpreferences.relation)
     return render(request, "profile.html", locals())
 
 
