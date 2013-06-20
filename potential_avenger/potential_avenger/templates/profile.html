@@ -16,32 +16,64 @@
                 <table class="table table-striped">
                     <tr>
                       <td><b>Name:</b></td>
+                      {% if full_name %}
                       <td>{{ full_name }}</td>
+                      {% else %}
+                      <td>Please edit your profile and enter your name</td>
+                      {% endif %}
                     </tr>
+                    {% if email %}
                     <tr>
                       <td><b>E-mail:</b></td>
                       <td>{{ email }}</td>
                     </tr>
+                    {% endif %}
+                    {% if gender %}
                     <tr>
                       <td><b>Gender:</b></td>
                       <td>{{ gender }}</td>
                     </tr>
+                    {% endif %}
+                    {% if age %}
                     <tr>
                       <td><b>Age:</b></td>
                       <td>{{ age }}</td>
                     </tr>
+                    {% endif %}
+                    {% if city %}
                     <tr>
                       <td><b>City/Town:</b></td>
                       <td>{{ city }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                      <td><b>Show useful tips:</b></td>
+                      <td>
+                        {% if useful_tips %}
+                        YES
+                        {% else %}
+                        NO
+                        {% endif %}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><b>Notification period:</b></td>
+                      <td>
+                        {% if notification_period %}
+                        {{ notification_period }}
+                        {% else %}
+                        Disabled
+                        {% endif %}
+                      </td>
                     </tr>
                 </table>
               </div>
             </div>
           </div>
-          <div class="span6"><a href="#"><button class="btn btn-primary btn-large">Change Settings</button></a></div>
+          <div class="span6"><a href="{% url 'profile_edit' %}"><button class="btn btn-primary btn-large">Edit Profile</button></a></div>
         </div>
       </div>
-      {% if related_to != 'None' %}
+      {% if related_to %}
       <div class="row-fluid">
         <div class="span12"><b>In a relationship with: </b>{{ related_to }}</div>
       </div>
@@ -54,17 +86,25 @@
         <div class="span12"><b>Preferred poses</b></div>
       </div>
       <div class="row-fluid">
+          {% if preferred_poses %}
           {% for pose in preferred_poses %}
           <div class="span1"><img src="{{ STATIC_URL }}poses/{{ pose }}.jpg"/></div>
           {% endfor %}
+          {% else %}
+          <div class="span12">No preferred poses chosen yet. Shame on you!</div>
+          {% endif %}
       </div>
       <div class="row-fluid">
         <div class="span12"><b>Preferred places</b></div>
       </div>
       <div class="row-fluid">
+          {% if preferred_places %}
           {% for place in preferred_places %}
           <div class="span1"><img src="{{ STATIC_URL }}places/{{ place }}.jpg"/></div>
           {% endfor %}
+          {% else %}
+          <div class="span12">No preferred places chosen yet. Shame on you!</div>
+          {% endif %}
       </div>
     </div>
 {% endblock %}

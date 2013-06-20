@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 
-from users.models import Person
+from users.models import Person, PersonPreferences, PersonalSettings
 
 
 class UserForm(ModelForm):
@@ -20,3 +20,15 @@ class PersonForm(ModelForm):
     class Meta:
         model = Person
         fields = ['gender', 'birth_date', 'city', 'photo']
+
+
+class PersonPreferencesForm(ModelForm):
+    class Meta:
+        model = PersonPreferences
+        fields = ['relation', 'preferred_poses', 'preferred_places']
+
+
+class PersonalSettingsForm(ModelForm):
+    class Meta:
+        model = PersonalSettings
+        fields = ['useful_tips', 'notification_period']

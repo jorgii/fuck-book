@@ -19,7 +19,7 @@ class Person(models.Model):
         ('F', 'Female')
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    birth_date = models.DateField(null=True)
+    birth_date = models.DateField(blank=True, null=True)
     city = models.CharField('City', max_length=255, blank=True, null=True)
     photo = models.FileField(upload_to=get_upload_file_name, verbose_name="Profile photo")
 
@@ -39,8 +39,8 @@ class PersonPreferences(models.Model):
 
 class PersonalSettings(models.Model):
     person = models.OneToOneField(Person)
-    useful_tips = models.BooleanField()
-    notification_period = models.IntegerField()
+    useful_tips = models.BooleanField(default=False)
+    notification_period = models.IntegerField(default=0)
 
     def __str__(self):
         return self.person.__str__()

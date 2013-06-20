@@ -5,7 +5,7 @@
 {% block form_block %}
     <form class="form" method="post" style="width: 85%" =action"{% url 'login' %}">
         {% csrf_token %}
-        {{authentication_form}}
+        {{ authentication_form }}
         <button class="btn btn-large btn-primary" type="submit">Sign in</button>
         <a class="offset2" href="{% url 'register' %}">Dare to register?</a>
     </form>
