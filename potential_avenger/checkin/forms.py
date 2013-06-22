@@ -1,0 +1,16 @@
+from django.forms import ModelForm
+
+
+from checkin.models import CheckinDetails
+
+
+class CheckinForm(ModelForm):
+    class Meta:
+        model = CheckinDetails
+        fields = [
+            'poses',
+            'places',
+            'rating',
+            'duration',
+            'contraception',
+            'with_who']
