@@ -8,6 +8,7 @@ class CheckinForm(ModelForm):
     class Meta:
         model = CheckinDetails
         fields = [
+            'address',
             'poses',
             'places',
             'rating',

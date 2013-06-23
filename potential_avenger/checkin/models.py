@@ -13,6 +13,7 @@ class Location(models.Model):
 
 class CheckinDetails(models.Model):
     location = models.OneToOneField(Location)
+    address = models.CharField('Address', max_length=255, blank=True, null=True)
     poses = models.ManyToManyField(PosesList)
     places = models.ManyToManyField(PlacesList)
     rating = models.IntegerField()
