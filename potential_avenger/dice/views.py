@@ -8,17 +8,12 @@ from django.contrib.auth.decorators import login_required
 from hardcoded_models.models import PosesList, PlacesList
 
 
-#@login_required
+@login_required
 def dice(request):
-    def select_random_pose():
-        poses_counter = PosesList.objects.count() - 1
-        index_poses = randint(0, poses_counter)
-        random_pose = PosesList.objects.all()[index_poses]
-        return random_pose
-
-    def select_random_place():
-        places_counter = PlacesList.objects.count() - 1
-        index_places = randint(0, places_counter)
-        random_place = PlacesList.objects.all()[index_places]
-        return random_place
+    poses_counter = PosesList.objects.count() - 1
+    index_poses = randint(0, poses_counter)
+    random_pose = PosesList.objects.all()[index_poses]
+    places_counter = PlacesList.objects.count() - 1
+    index_places = randint(0, places_counter)
+    random_place = PlacesList.objects.all()[index_places]
     return render(request, "dice.html", locals())
