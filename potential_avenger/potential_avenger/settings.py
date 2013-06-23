@@ -5,7 +5,7 @@ SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOGIN_REDIRECT_URL = '/profile/'
-
+PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher',)
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
 ADMINS = (
