@@ -50,10 +50,8 @@ def profile(request):
         related_to = None
     try:
         profile_photo = request.user.person.photo.url
-    except Person.DoesNotExist:
+    except ValueError:
         profile_photo = '/media/profile_photos/noPhoto.jpg'
-    useful_tips = request.user.person.personalsettings.useful_tips
-    notification_period = request.user.person.personalsettings.notification_period
     return render(request, "profile.html", locals())
 
 

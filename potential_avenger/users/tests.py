@@ -1,19 +1,18 @@
 from datetime import date
-from time import time
 
 
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
-from django.core.urlresolvers import reverse
 
 
 from users.models import Person, PersonPreferences, PersonalSettings, get_upload_file_name
-from users.views import profile
 
 
 class PersonTest(TestCase):
     def setUp(self):
+        self.client = Client()
+
         self.person1 = self.create_person(user=self.create_user())
         self.person1_preferences = self.create_person_preferences(person=self.person1)
         self.person1_personal_settings = self.create_personal_settings(person=self.person1)
@@ -36,11 +35,11 @@ class PersonTest(TestCase):
             password='pass1',
             first_name='user1 name1',
             last_name='user1 name1',):
-        return User.objects.create(
+        return User.objects.create_user(
             username=username,
             password=password,
             first_name=first_name,
-            last_name=last_name)
+            last_name=last_name,)
 
     def create_person(
             self,
@@ -78,7 +77,7 @@ class PersonTest(TestCase):
 
     def test_jpg_get_upload_file_name(self):
         filename = 'profilephoto.jpg'
-        path = 'profile_photos/{}_{}{}'.format(str(time()).replace('.', '_'), self.person1.user.id, str(filename[filename.rfind('.'):len(filename)]))
+        path = 'profile_photos/{}_{}{}'.format(self.person1.user.username, self.person1.user.id, str(filename[filename.rfind('.'):len(filename)]))
         created_path = get_upload_file_name(self.person1, filename)
         self.assertEqual(path, created_path)
 
@@ -87,3 +86,15 @@ class PersonTest(TestCase):
         self.person1_preferences.save()
         self.assertEqual(self.person1_preferences.relation, self.person2)
         self.assertEqual(self.person2_preferences.relation, self.person1)
+
+    def test_view_login_get_post(self):
+        response = self.client.get('/login/')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post('/login/', username='user1', password='pass1')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_profile(self):
+        self.client.login(username='user1', password='pass1')
+        response = self.client.get('/profile/')
+        self.assertEqual(response.status_code, 200)

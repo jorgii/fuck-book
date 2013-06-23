@@ -3,7 +3,7 @@
 {% block title %}Fuckbook - Login{% endblock %}
 {% block Caption %}Hey, you are back.. Lucky you!{% endblock %}              
 {% block form_block %}
-    <form class="form" method="post" style="width: 85%" =action"{% url 'login' %}">
+    <form class="form" method="post" style="width: 85%" action="{% url 'login' %}">
         {% csrf_token %}
         {{ authentication_form }}
         <button class="btn btn-large btn-primary" type="submit">Sign in</button>

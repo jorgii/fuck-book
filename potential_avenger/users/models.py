@@ -1,6 +1,3 @@
-from time import time
-
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -9,7 +6,7 @@ from hardcoded_models.models import PlacesList
 
 
 def get_upload_file_name(instance, filename):
-    return 'profile_photos/{}_{}{}'.format(str(time()).replace('.', '_'), instance.user.id, str(filename[filename.rfind('.'):len(filename)]))
+    return 'profile_photos/{}_{}{}'.format(instance.user.username, instance.user.id, str(filename[filename.rfind('.'):len(filename)]))
 
 
 class Person(models.Model):
