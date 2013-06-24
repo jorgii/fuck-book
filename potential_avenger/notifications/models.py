@@ -21,11 +21,11 @@ class TipNotification (models.Model):
     message = models.CharField('Notification Message', max_length=255)
     date_saved = models.DateField(default=date.today())
 
-    def __init__(self, message):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         tips_counter = TipsList.objects.count() - 1
         index_tips = randint(0, tips_counter)
         self.message = TipsList.objects.all()[index_tips]
-        return self.message
 
 
 class DifferenceNotification (models.Model):
@@ -33,6 +33,6 @@ class DifferenceNotification (models.Model):
     message = models.CharField('Notification Message', max_length=255)
     date_saved = models.DateField(default=date.today())
 
-    def __init__(self, message):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.message = " "  # To do after Diary is ready
-        return self.message
