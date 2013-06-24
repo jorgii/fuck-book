@@ -5,8 +5,35 @@
 {% block body %}
     <div class="row-fluid">
         <div class="span12">
-            <!-- Single record container -->
-            <hr width="2" size="90%">
+            <div class="row-fluid">
+                <div class="span4">
+                    <table class="table table-striped">
+                        {% for notification in periodical_notifications %}
+                        <tr>
+                            <td>{{ notification.date_saved }}: </td>
+                            <td>{{ notification.message }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="span4">
+                    <table class="table table-striped">
+                        {% for notification in periodical_notifications %}
+                        <tr>
+                            <td>{{ notification.date_saved }}: </td>
+                            <td>{{ notification.message }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="span4">
+                    <table class="table table-striped">
+                        {% for notification in periodical_notifications %}
+                        <tr>
+                            <td>{{ notification.date_saved }}: </td>
+                            <td>{{ notification.message }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
