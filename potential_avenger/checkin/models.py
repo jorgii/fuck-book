@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 
 from hardcoded_models.models import PosesList
@@ -8,7 +10,7 @@ class Location(models.Model):
     person = models.OneToOneField('users.Person')
     latitude = models.DecimalField(max_digits=16, decimal_places=6)
     longitude = models.DecimalField(max_digits=16, decimal_places=6)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    date_checked = models.DateTimeField(default=date.today())
 
 
 class CheckinDetails(models.Model):
