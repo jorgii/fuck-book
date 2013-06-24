@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Notification
+from .models import PeriodicalNotification, TipNotification, DifferenceNotification
 
 
-admin.site.register(Notification)
+admin.site.register(PeriodicalNotification)
+admin.site.register(TipNotification)
+admin.site.register(DifferenceNotification)

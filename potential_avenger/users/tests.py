@@ -67,9 +67,7 @@ class PersonTest(TestCase):
             useful_tips=False,
             notification_period=0):
         return PersonalSettings(
-            person=person,
-            useful_tips=useful_tips,
-            notification_period=notification_period)
+            person=person)
 
     def test_create_person(self):
         self.assertTrue(isinstance(self.person1, Person))

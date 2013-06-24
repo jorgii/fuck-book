@@ -31,4 +31,4 @@ class PersonPreferencesForm(ModelForm):
 class PersonalSettingsForm(ModelForm):
     class Meta:
         model = PersonalSettings
-        fields = ['useful_tips', 'notification_period']
+        exclude = ['person']
