@@ -16,6 +16,9 @@ class PersonTest(TestCase):
         self.person1 = self.create_person(user=self.create_user())
         self.person1_preferences = self.create_person_preferences(person=self.person1)
         self.person1_personal_settings = self.create_personal_settings(person=self.person1)
+        self.person1_personal_settings.save()
+        self.person1_preferences.save()
+        self.person1.save()
 
         self.person2 = self.create_person(
             user=self.create_user(
@@ -28,6 +31,9 @@ class PersonTest(TestCase):
             city='Varna')
         self.person2_preferences = self.create_person_preferences(person=self.person2)
         self.person2_personal_settings = self.create_personal_settings(person=self.person2)
+        self.person2_personal_settings.save()
+        self.person2_preferences.save()
+        self.person2.save()
 
     def create_user(
             self,
@@ -63,11 +69,15 @@ class PersonTest(TestCase):
 
     def create_personal_settings(
             self,
-            person,
-            useful_tips=False,
-            notification_period=0):
+            person):
         return PersonalSettings(
-            person=person)
+            person=person,
+            display_periodical_notification=True,
+            display_tip_notification=True,
+            display_difference_notification=True,
+            periodical_notification_period=14,
+            tip_notification_period=7,
+            difference_notification_period=30)
 
     def test_create_person(self):
         self.assertTrue(isinstance(self.person1, Person))
@@ -95,4 +105,10 @@ class PersonTest(TestCase):
     def test_view_profile(self):
         self.client.login(username='user1', password='pass1')
         response = self.client.get('/profile/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_profile_edit(self):
+        #import ipdb; ipdb.set_trace()
+        self.client.login(username='user1', password='pass1')
+        response = self.client.get('/profile_edit/')
         self.assertEqual(response.status_code, 200)

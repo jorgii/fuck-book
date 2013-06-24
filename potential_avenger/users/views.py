@@ -31,6 +31,8 @@ def profile(request):
         age = int((date.today() - request.user.person.birth_date).days/365)
     except Person.DoesNotExist:
         age = None
+    except TypeError:
+        age = None
     try:
         city = request.user.person.city
     except Person.DoesNotExist:
