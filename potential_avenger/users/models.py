@@ -43,8 +43,12 @@ class PersonPreferences(models.Model):
 
 class PersonalSettings(models.Model):
     person = models.OneToOneField(Person)
-    useful_tips = models.BooleanField(default=False)
-    notification_period = models.IntegerField(default=0)
+    display_periodical_notification = models.BooleanField(default=True)
+    display_tip_notification = models.BooleanField(default=True)
+    display_difference_notification = models.BooleanField(default=True)
+    periodical_notification_period = models.IntegerField(default=14)
+    tip_notification_period = models.IntegerField(default=7)
+    difference_notification_period = models.IntegerField(default=30)
 
     def __str__(self):
         return self.person.__str__()
