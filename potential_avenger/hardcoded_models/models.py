@@ -20,10 +20,3 @@ class TipsList(models.Model):
 
     def __str__(self):
         return self.useful_tip
-
-
-class NotificationType(models.Model):
-    notification_type = models.CharField('Notification Type', max_length=255)
-
-    def __str__(self):
-        return self.notification_type
