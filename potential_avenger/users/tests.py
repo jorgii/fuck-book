@@ -104,11 +104,22 @@ class PersonTest(TestCase):
 
     def test_view_profile(self):
         self.client.login(username='user1', password='pass1')
-        response = self.client.get('/profile/')
+        response = self.client.get('/profile/user1/')
         self.assertEqual(response.status_code, 200)
 
-    def test_view_profile_edit(self):
-        #import ipdb; ipdb.set_trace()
+    def test_view_profile_no_mandatory_data(self):
+        self.person1.birth_date = None
+        self.person1.city = None
+        self.client.login(username='user1', password='pass1')
+        response = self.client.get('/profile/user1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_profile_edit_get(self):
         self.client.login(username='user1', password='pass1')
         response = self.client.get('/profile_edit/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_profile_edit_post(self):
+        self.client.login(username='user1', password='pass1')
+        response = self.client.post('/profile_edit/', dict(birth_date=date(year=1992, month=5, day=25)))
         self.assertEqual(response.status_code, 200)
