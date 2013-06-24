@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for this_person in TipNotification.person:
             same_person = PersonalSettings.objects.get(person=this_person)
-            if this_person == same_person.person and same_person.display_tip_notification is True:
+            if same_person.display_tip_notification is True:
                 this_person_notifications = TipNotification.objects.filter(person=this_person)
                 if this_person_notifications.count() == 0:
                     TipNotification.objects.create(

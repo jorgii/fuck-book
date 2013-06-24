@@ -8,29 +8,44 @@
             <div class="row-fluid">
                 <div class="span4">
                     <table class="table table-striped">
+                        {% if current_user.display_periodical_notification %}
                         {% for notification in periodical_notifications %}
                         <tr>
                             <td>{{ notification.date_saved }}: </td>
                             <td>{{ notification.message }}</td>
                         </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr><td>There are no notifications to display.</td></tr>
+                        {% endif %}
                     </table>
                 </div>
                 <div class="span4">
                     <table class="table table-striped">
-                        {% for notification in periodical_notifications %}
+                        {% if current_user.display_tip_notification %}
+                        {% for notification in tip_notifications %}
                         <tr>
                             <td>{{ notification.date_saved }}: </td>
                             <td>{{ notification.message }}</td>
                         </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr><td>There are no notifications to display.</td></tr>
+                        {% endif %}
                     </table>
                 </div>
                 <div class="span4">
                     <table class="table table-striped">
-                        {% for notification in periodical_notifications %}
+                        {% if current_user.display_difference_notification %}
+                        {% for notification in difference_notifications %}
                         <tr>
                             <td>{{ notification.date_saved }}: </td>
                             <td>{{ notification.message }}</td>
                         </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr><td>There are no notifications to display.</td></tr>
+                        {% endif %}
                     </table>
                 </div>
             </div>
