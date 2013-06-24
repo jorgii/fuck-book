@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}Fuckbook - Profile{% endblock %}
-
 {% block body %}
     <div class="row-fluid">
       <div class="span12">
         <!-- Container -->
         <div class="row-fluid">
           <div class="span6">
-            <!-- Container -->
+            {% if not logged_user_view %}
+            <div class="row-fluid">
+              <div class="span12"><b>This is the profile of {{ full_name }}!</b></div>
+            </div>
+            {% endif %}
             <div class="row-fluid">
               <div class="span4"><img src="{{ profile_photo }}" alt="profile picture"/></div>
               <div class="span1"></div>
@@ -16,11 +19,7 @@
                 <table class="table table-striped">
                     <tr>
                       <td><b>Name:</b></td>
-                      {% if full_name %}
                       <td>{{ full_name }}</td>
-                      {% else %}
-                      <td>Please edit your profile and enter your name</td>
-                      {% endif %}
                     </tr>
                     {% if email %}
                     <tr>
@@ -50,7 +49,9 @@
               </div>
             </div>
           </div>
+          {% if logged_user_view %}
           <div class="span6"><a href="{% url 'profile_edit' %}"><button class="btn btn-primary btn-large">Edit Profile</button></a></div>
+          {% endif %}
         </div>
       </div>
       {% if related_to|stringformat:"s" != 'None' %}
@@ -70,6 +71,8 @@
           {% for pose in preferred_poses %}
           <div class="span1"><img src="{{ STATIC_URL }}poses/{{ pose }}.jpg"/></div>
           {% endfor %}
+          {% elif not preferred_poses and not logged_user_view %}
+          <div class="span12">The person hasn't chosen any preferred poses yet.</div>
           {% else %}
           <div class="span12">No preferred poses chosen yet. Shame on you!</div>
           {% endif %}
@@ -82,6 +85,8 @@
           {% for place in preferred_places %}
           <div class="span1"><img src="{{ STATIC_URL }}places/{{ place }}.jpg"/></div>
           {% endfor %}
+          {% elif not preferred_poses and not logged_user_view %}
+          <div class="span12">The person hasn't chosen any preferred poses yet.</div>
           {% else %}
           <div class="span12">No preferred places chosen yet. Shame on you!</div>
           {% endif %}

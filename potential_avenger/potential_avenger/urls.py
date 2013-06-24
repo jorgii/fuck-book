@@ -8,8 +8,8 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^profile/$', 'users.views.profile', name='profile'),
     url(r'^profile_edit/$', 'users.views.profile_edit', name='profile_edit'),
+    url(r'^profile/(?P<username>\w+)/$', 'users.views.profile', name='profile'),
     url(r'^checkin/$', 'checkin.views.checkin', name='checkin'),
     url(r'^diary/$', 'diary.views.diary', name='diary'),
     url(r'^statistics/$', 'statistics.views.statistics', name='statistics'),

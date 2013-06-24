@@ -10,14 +10,16 @@
   </head>
   <body style="padding-left: 20px; padding-right: 20px">
     <ul class="nav nav-tabs">
-      <li {% if '/profile/' == request.path %}class="active"{% endif %}><a href="{% url 'profile' %}">Profile</a></li>
+      <li {% if path == request.path %}class="active"{% endif %}><a href="{% url 'profile' request.user.username %}">Profile</a></li>
       <li {% if '/checkin/' == request.path %}class="active"{% endif %}><a href="{% url 'checkin' %}">Check In</a></li>
       <li {% if '/diary/' == request.path %}class="active"{% endif %}><a href="{% url 'diary' %}">Diary</a></li>
       <li {% if '/statistics/' == request.path %}class="active"{% endif %}><a href="{% url 'statistics' %}">Statistics</a></li>
       <li {% if '/notifications/' == request.path %}class="active"{% endif %}><a href="{% url 'notifications' %}">Notifications</a></li>
       <li {% if '/dice/' == request.path %}class="active"{% endif %}><a href="{% url 'dice' %}">Dice</a></li>
       <li {% if '/logout/' == request.path %}class="active"{% endif %}><a href="{% url 'logout' %}">Log out</a></li>
+      <li class="pull-right"><a>Logged in as <b>{{ request.user.first_name }} {{ request.user.last_name }}</b></a></li>
     </ul>
+    
     {% block body %}
     {% endblock %}
   </body>

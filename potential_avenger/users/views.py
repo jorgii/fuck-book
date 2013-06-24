@@ -1,7 +1,7 @@
 from datetime import date
 
 
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -14,52 +14,59 @@ from users.forms import PersonForm, UserForm, PersonPreferencesForm, PersonalSet
 
 
 @login_required
-def profile(request):
+def profile(request, username):
+    path = '/profile/' + username + '/'
+    logged_user_name = str(request.user.person)
+    user_to_display = User.objects.get(username=username)
+    if user_to_display == request.user:
+        logged_user_view = True
+    else:
+        logged_user_view = False
     try:
-        full_name = str(request.user.person)
+        full_name = str(user_to_display.person)
     except User.DoesNotExist:
         fll_name = None
     try:
-        email = request.user.email
+        email = user_to_display.email
     except User.DoesNotExist:
         email = None
     try:
-        gender = request.user.person.get_gender_display()
+        gender = user_to_display.person.get_gender_display()
     except Person.DoesNotExist:
         gender = None
     try:
-        age = int((date.today() - request.user.person.birth_date).days/365)
+        age = int((date.today() - user_to_display.person.birth_date).days/365)
     except Person.DoesNotExist:
         age = None
     except TypeError:
         age = None
     try:
-        city = request.user.person.city
+        city = user_to_display.person.city
     except Person.DoesNotExist:
         city = None
     try:
-        preferred_poses = [str(pose) for pose in request.user.person.personpreferences.preferred_poses.all()]
+        preferred_poses = [str(pose) for pose in user_to_display.person.personpreferences.preferred_poses.all()]
     except PersonPreferences.DoesNotExist:
         preferred_poses = None
     try:
-        preferred_places = [str(place) for place in request.user.person.personpreferences.preferred_places.all()]
+        preferred_places = [str(place) for place in user_to_display.person.personpreferences.preferred_places.all()]
     except PersonPreferences.DoesNotExist:
         preferred_places = None
-    female_friends = User.objects.filter(person__gender='F').exclude(id=request.user.id)
+    female_friends = User.objects.filter(person__gender='F').exclude(id=user_to_display.id)
     try:
-        related_to = str(request.user.person.personpreferences.relation)
+        related_to = str(user_to_display.person.personpreferences.relation)
     except PersonPreferences.DoesNotExist:
         related_to = None
     try:
-        profile_photo = request.user.person.photo.url
+        profile_photo = user_to_display.person.photo.url
     except ValueError:
         profile_photo = '/media/profile_photos/noPhoto.jpg'
-    return render(request, "profile.html", locals())
+    return render(request, 'profile.html', locals())
 
 
 @login_required
 def profile_edit(request):
-    args = {}
+    path = '/profile_edit/'
     person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
     person_preferences_form = PersonPreferencesForm(request.POST or None, request.FILES or None, instance=request.user.person.personpreferences)
@@ -70,30 +77,23 @@ def profile_edit(request):
             user_form.save()
             person_preferences_form.save()
             personal_settings_form.save()
-            return redirect('/profile/')
-    args.update(csrf(request))
-    args['person_form'] = person_form
-    args['user_form'] = user_form
-    args['person_preferences_form'] = person_preferences_form
-    args['personal_settings_form'] = personal_settings_form
-    return render_to_response('profile_edit.html', args)
+            return redirect('/profile/'+request.user.username)
+    csrf(request)
+    return render(request, 'profile_edit.html', locals())
 
 
 def login_user(request):
-    args = {}
     authentication_form = AuthenticationForm(None, request.POST or None)
     if request.method == 'POST':
         if authentication_form.is_valid():
             user = authentication_form.get_user()
             login(request, user=user)
-            return redirect('/profile/')
-    args['authentication_form'] = authentication_form
-    args.update(csrf(request))
-    return render_to_response('login.html', args)
+            return redirect('/profile/'+user.username)
+    csrf(request)
+    return render(request, 'login.html', locals())
 
 
 def register(request):
-    args = {}
     form = UserCreationForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -108,27 +108,23 @@ def register(request):
             personal_settings.save()
             login(request, user)
             return redirect('/register_success/')
-    args['form'] = form
-    args.update(csrf(request))
-    return render_to_response('register.html', args)
+    csrf(request)
+    return render(request, 'register.html', locals())
 
 
 @login_required
 def register_success(request):
-    args = {}
     person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
     if request.method == 'POST':
         if person_form.is_valid() and user_form.is_valid():
             person_form.save()
             user_form.save()
-            return redirect('/profile/')
-    args.update(csrf(request))
-    args['person_form'] = person_form
-    args['user_form'] = user_form
-    return render_to_response('register_success.html', args)
+            return redirect('/profile/'+request.user.username)
+    csrf(request)
+    return render(request, 'register_success.html', locals)
 
 
 @login_required
 def home(request):
-    return redirect('/profile/')
+    return redirect('/profile/'+request.user.username)
