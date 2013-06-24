@@ -40,5 +40,5 @@ class DifferenceNotification (models.Model):
     date_saved = models.DateField(default=date.today())
 
     def __init__(self, message):
-        self.message = " "
+        self.message = " "  # To do after Diary is ready
         return self.message
