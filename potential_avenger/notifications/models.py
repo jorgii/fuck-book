@@ -1,5 +1,5 @@
+import random
 from datetime import date
-from random import randint
 
 from django.db import models
 
@@ -17,9 +17,7 @@ class PeriodicalNotification (models.Model):
 
 
 def create_tip_message():
-    tips_counter = TipsList.objects.count() - 1
-    index_tips = randint(0, tips_counter)
-    tip_message = TipsList.objects.all()[index_tips]
+    tip_message = random.choice(TipsList.objects.all())
     return tip_message
 
 

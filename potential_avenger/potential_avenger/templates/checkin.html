@@ -2,14 +2,10 @@
 
 {% block title %}Fuckbook - Check In{% endblock %}
 
-{% block body %}
-    <div class="row-fluid">
-        <div class="span12">
-            <!-- Container -->
-            <div class="row-fluid">
-                <div class="span8"><!-- Map container --></div>
-                <div class="span4"><!-- Check In container --></div>
-            </div>
-        </div>
-    </div>
+{% block form_block %}
+<form class="form" method="post" style="width: 85%" action="{% url 'checkin' %}">
+    {% csrf_token %}
+    {{ checkin_form }}<br/>
+    <input class="btn btn-primary btn-large" type="submit" value="Checkin"/>
+</form>
 {% endblock %}
