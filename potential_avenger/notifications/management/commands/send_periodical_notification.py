@@ -7,7 +7,7 @@ from users.models import PersonalSettings
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        for this_person in PeriodicalNotification:
+        for this_person in PeriodicalNotification.person:
             same_person = PersonalSettings.objects.get(person=this_person)
             if same_person.display_periodical_notification is True:
                 this_person_notifications = PeriodicalNotification.objects.filter(person=this_person)
