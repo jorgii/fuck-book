@@ -7,7 +7,7 @@ from checkin.forms import CheckinForm
 
 @login_required
 def checkin(request):
-    checkin_form = CheckinForm(request.Post or None, inastance=request.user.person.checkin)
+    checkin_form = CheckinForm(request.POST or None)
     if request.method == 'POST':
         if checkin_form.is_valid():
             checkin_form.save()

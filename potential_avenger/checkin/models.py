@@ -7,12 +7,12 @@ from users.models import Person
 
 
 class CheckinDetails(models.Model):
-    person = models.OneToOneField(Person)
+    person = models.ForeignKey(Person)
     date_checked = models.DateField(default=date.today())
     address = models.CharField('Address', max_length=255)
     poses = models.ManyToManyField(PosesList)
     places = models.ManyToManyField(PlacesList)
-    rating = models.IntegerField()
-    duration = models.IntegerField()
-    contraception = models.BooleanField()
+    rating = models.IntegerField(default=3)
+    duration = models.IntegerField(default=10)
+    contraception = models.BooleanField(default=True)
     with_who = models.OneToOneField(Person, related_name='checkin related user', null=True)
