@@ -122,7 +122,7 @@ def register_success(request):
             user_form.save()
             return redirect('/profile/'+request.user.username)
     csrf(request)
-    return render(request, 'register_success.html', locals)
+    return render(request, 'register_success.html', locals())
 
 
 @login_required
