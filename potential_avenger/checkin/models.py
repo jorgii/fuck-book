@@ -1,5 +1,3 @@
-from datetime import date
-
 from django.db import models
 
 from hardcoded_models.models import PosesList, PlacesList
@@ -8,7 +6,7 @@ from users.models import Person
 
 class CheckinDetails(models.Model):
     person = models.ForeignKey(Person)
-    date_checked = models.DateField(default=date.today())
+    date_checked = models.DateTimeField(auto_now_add=True)
     address = models.CharField('Address', max_length=255)
     poses = models.ManyToManyField(PosesList)
     places = models.ManyToManyField(PlacesList)
