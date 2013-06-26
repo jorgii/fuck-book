@@ -1,18 +1,34 @@
+from datetime import date
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
 from checkin.models import CheckinDetails
 from checkin.forms import CheckinForm
+from notifications.models import PeriodicalNotification
+from users.models import PersonalSettings
+from diary.models import Diary
 
 
 @login_required
 def checkin(request):
-    current_person = CheckinDetails(person=request.user.person)
-    checkin_form = CheckinForm(request.POST or None, instance=current_person)
+    current_checkin = CheckinDetails(person=request.user.person)
+    checkin_form = CheckinForm(request.POST or None, instance=current_checkin)
     if request.method == 'POST':
         if checkin_form.is_valid():
             checkin_form.save()
+            person1_person2_diary = Diary.objects.filter(person1=request.user.person, person2=checkin_form.instance.with_who) or Diary.objects.filter(person1=checkin_form.instance.with_who, person2=request.user.person)
+            if person1_person2_diary:
+                pass
+            else:
+                Diary.objects.create(person1=request.user.person, person2=checkin_form.instance.with_who)
+            this_person = PersonalSettings.objects.get(person=request.user.person)
+            if this_person.display_periodical_notification is True:
+                this_person_notifications = PeriodicalNotification.objects.filter(person=request.user.person)
+                last_entry = this_person_notifications.latest('date_saved')
+                last_entry.date_saved = date.today()
+                last_entry.save(update_fields=['date_saved'])
             return redirect('/diary/')
     csrf(request)
     return render(request, "checkin.html", locals())
