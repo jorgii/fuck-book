@@ -15,4 +15,4 @@ class CheckinDetails(models.Model):
     rating = models.IntegerField(default=3)
     duration = models.IntegerField(default=10)
     contraception = models.BooleanField(default=True)
-    with_who = models.ForeignKey(Person, related_name='checkin related user', null=True)
+    with_who = models.ForeignKey(Person, related_name='checkin related user', blank=True, null=True)
