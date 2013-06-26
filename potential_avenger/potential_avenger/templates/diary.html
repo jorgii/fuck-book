@@ -3,24 +3,56 @@
 {% block title %}Fuckbook - Diary{% endblock %}
 
 {% block body %}
-<div class="container-fluid border-bottom">
+{% for diary, checkins in checkins_by_diary.items %}
+<div class="container-fluid well">
     <div class="row-fluid">
         <div class="span4">
-            <img src="http://maps.googleapis.com/maps/api/staticmap?center=New+York+NY&zoom=15&markers=color:blue|New+York+NY&sensor=false&size=600x200&key=AIzaSyB1QVnitPq0ihs7RPolDDyvFnOPNmFyMAI"/>
+            <h4>
+                Diary with:
+                  {% if request.user.person == diary.person1 and diary.person2 %}
+                    {{ diary.person2 }}
+                  {% elif request.user.person == diary.person2 and diary.person1 %}
+                    {{ diary.person1 }}
+                  {% else %}
+                     Anonymous
+                  {% endif %}
+            </h4>
         </div>
-        <div class="span2">
+        <div class="span4">
+            <h4>Date/Time Created: {{ diary.timestamp }}<h4>
+        </div>
+    </div>
+    {% for checkin in checkins %}
+    <div class="row-fluid">
+        <div class="span4">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ checkin.address }}&zoom=15&markers=color:blue|{{ checkin.address }}&sensor=false&size=600x300&key=AIzaSyB1QVnitPq0ihs7RPolDDyvFnOPNmFyMAI"/>
+        </div>
+        <div class="span4">
         <table class="table table-striped">
             <tr>
+              <td><b>Address:</b></td>
+              <td>{{ checkin.address }}</td>
+            </tr>
+            <tr>
+              <td><b>Date/Time Checked:</b></td>
+              <td>{{ checkin.date_checked }}</td>
+            </tr>
+            <tr>
               <td><b>Rating:</b></td>
-              <td>Put Raiting here</td>
+              <td>{{ checkin.rating }}</td>
             </tr>
             <tr>
               <td><b>Duration:</b></td>
-              <td>Put duration here</td>
+              <td>{{ checkin.duration }}</td>
             </tr>
             <tr>
               <td><b>Contraception:</b></td>
-              <td>Set YES or NO</td>
+              <td>{% if checkin.contraception %}
+                    YES
+                  {% else %}
+                    NO
+                  {% endif %}
+              </td>
             </tr>
         </table>
         </div>
@@ -29,14 +61,20 @@
         <div class="span12"><b>Poses</b></div>
     </div>
     <div class="row-fluid">
-        <div class="span1"><img src="{{ STATIC_URL }}poses/POSES_HERE.jpg"/></div>
+        {% for pose in checkin.poses.all %}
+        <div class="span1"><img src="{{ STATIC_URL }}poses/{{ pose }}.jpg"/></div>
+        {% endfor %}
     </div>
     <div class="row-fluid">
         <div class="span12"><b>Places</b></div>
     </div>
     <div class="row-fluid">
-        <div class="span1"><img src="{{ STATIC_URL }}poses/PLACES_HERE.jpg"/></div>
+        {% for place in checkin.places.all %}
+        <div class="span1"><img src="{{ STATIC_URL }}places/{{ place }}.jpg"/></div>
+        {% endfor %}
     </div>
+    <hr class="divider"/>
+    {% endfor %}
 </div>
-
+{% endfor %}
 {% endblock %}
