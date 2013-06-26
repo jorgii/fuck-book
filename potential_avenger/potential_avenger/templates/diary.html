@@ -3,15 +3,40 @@
 {% block title %}Fuckbook - Diary{% endblock %}
 
 {% block body %}
-{% for persons in persons_list %}
+<div class="container-fluid border-bottom">
     <div class="row-fluid">
-        <div class="span2">
-            {{ persons.0 }}
+        <div class="span4">
+            IMAGE
         </div>
         <div class="span2">
-            {{ persons.1 }}
+        <table class="table table-striped">
+            <tr>
+              <td><b>Rating:</b></td>
+              <td>Put Raiting here</td>
+            </tr>
+            <tr>
+              <td><b>Duration:</b></td>
+              <td>Put duration here</td>
+            </tr>
+            <tr>
+              <td><b>Contraception:</b></td>
+              <td>Set YES or NO</td>
+            </tr>
+        </table>
         </div>
     </div>
-    <hr width="2" size="90%">
-{% endfor %}
+    <div class="row-fluid">
+        <div class="span12"><b>Poses</b></div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1"><img src="{{ STATIC_URL }}poses/POSES_HERE.jpg"/></div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12"><b>Places</b></div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1"><img src="{{ STATIC_URL }}poses/PLACES_HERE.jpg"/></div>
+    </div>
+</div>
+
 {% endblock %}
