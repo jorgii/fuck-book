@@ -23,33 +23,32 @@ def statistics(request):
             checkins_statistics = OrderedDict()
             for group, checkins in checkins_grouped.items():
                 checkins_statistics[group] = Counter()
-                checkins_statistics[group]['average_duration'] = average(*[float(x.duration) for x in checkins])
-                checkins_statistics[group]['average_rating'] = average(*[float(x.rating) for x in checkins])
                 partners = []
                 places = []
                 poses = []
                 number_with_contraception = 0
                 number_without_contraception = 0
                 for checkin in checkins:
+                    checkins_statistics[group]['number_of_checkins'] += 1
                     for pose in checkin.poses.all():
                         poses.append(pose)
                     for place in checkin.places.all():
                         places.append(place)
-                    if request.user.person == checkin.with_who:
+                    if request.user.person == checkin.with_who and checkin.person:
                         partners.append(checkin.person)
-                    elif request.user.person == checkin.person:
+                    elif request.user.person == checkin.person and checkin.with_who:
                         partners.append(checkin.with_who)
                     if checkin.contraception:
                         number_with_contraception += 1
                     else:
                         number_without_contraception += 1
+                checkins_statistics[group]['average_duration'] = average(*[float(x.duration) for x in checkins])
+                checkins_statistics[group]['average_rating'] = average(*[float(x.rating) for x in checkins])
                 checkins_statistics[group]['top_three_partners'] = get_top_three(*partners)
                 checkins_statistics[group]['top_three_places'] = get_top_three(*places)
-                checkins_statistics[group]['top_three_places'] = get_top_three(*poses)
+                checkins_statistics[group]['top_three_poses'] = get_top_three(*poses)
                 checkins_statistics[group]['contraception'] = number_with_contraception
                 checkins_statistics[group]['no_contraception'] = number_without_contraception
-                for checkin in checkins:
-                    checkins_statistics[group]['number_of_checkins'] += 1
             print(checkins_grouped)
             print('-------------')
             print(checkins_statistics)
