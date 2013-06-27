@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 
 
-from notifications.models import TipNotification
+from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
 from users.models import Person, PersonPreferences, PersonalSettings
 from hardcoded_models.models import PosesList, TipsList, PlacesList
 
@@ -86,8 +86,20 @@ class Command(BaseCommand):
                 created_person_preferences.preferred_places.add(random.choice(PlacesList.objects.all()))
                 created_person_preferences.preferred_places.add(random.choice(PlacesList.objects.all()))
                 created_personal_settings = PersonalSettings.objects.create(person=created_person)
+                created_person_periodicalnotification = PeriodicalNotification.objects.create(
+                    person=created_person,
+                    message="Wellcome! Don't hesitate to make your first check in.")
+                created_person_tipnotification = TipNotification.objects.create(
+                    person=created_person,
+                    message="Wellcome! Go to your profile settings if you don't want to get useful tips.")
+                created_person_differencenotification = DifferenceNotification.objects.create(
+                    person=created_person,
+                    message="Wellcome! Once you're in a relation you'll start getting difference notifications.")
                 created_person_preferences.save()
                 created_personal_settings.save()
+                created_person_periodicalnotification.save()
+                created_person_tipnotification.save()
+                created_person_differencenotification.save()
                 created_person.save()
             except IntegrityError:
                 None
