@@ -27,12 +27,7 @@ class TipNotification (models.Model):
     date_saved = models.DateField(default=date.today())
 
 
-def create_difference_message():
-    difference_message = "."  # To do after Diary is ready
-    return difference_message
-
-
 class DifferenceNotification (models.Model):
     person = models.ForeignKey(Person)
-    message = models.CharField('Notification Message', max_length=255, default=create_difference_message)
+    message = models.CharField('Notification Message', max_length=255, default=" ")
     date_saved = models.DateField(default=date.today())
