@@ -50,10 +50,8 @@ class Command(BaseCommand):
                             if len(poses_counter) % 2 == 0:
                                 n = int(len(poses_counter)/2)
                             else:
-                                print("2")
                                 n = int((len(poses_counter)+1) / 2)
                             if len(places_counter) % 2 == 0:
-                                print("3")
                                 i = int(len(places_counter)/2)
                             else:
                                 i = int((len(places_counter)+1) / 2)
