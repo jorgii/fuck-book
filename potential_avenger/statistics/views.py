@@ -49,10 +49,6 @@ def statistics(request):
                 checkins_statistics[group]['top_three_poses'] = get_top_three(*poses)
                 checkins_statistics[group]['contraception'] = number_with_contraception
                 checkins_statistics[group]['no_contraception'] = number_without_contraception
-            print(checkins_grouped)
-            print('-------------')
-            print(checkins_statistics)
-            return render(request, "statistics.html", locals())
     csrf(request)
     return render(request, "statistics.html", locals())
 
