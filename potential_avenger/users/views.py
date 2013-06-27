@@ -11,6 +11,7 @@ from django.contrib.auth import login
 
 from users.models import Person, PersonPreferences, PersonalSettings
 from users.forms import PersonForm, UserForm, PersonPreferencesForm, PersonalSettingsForm
+from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
 
 
 @login_required
@@ -120,6 +121,15 @@ def register_success(request):
         if person_form.is_valid() and user_form.is_valid():
             person_form.save()
             user_form.save()
+            PeriodicalNotification.objects.create(
+                person=request.user.person,
+                message="Wellcome! Don't hesitate to make your first check in.")
+            TipNotification.objects.create(
+                person=request.user.person,
+                message="Wellcome! Go to your profile settings if you don't want to get useful tips.")
+            DifferenceNotification.objects.create(
+                person=request.user.person,
+                message="Wellcome! Once you're in a relation you'll start getting difference notifications.")
             return redirect('/profile/'+request.user.username)
     csrf(request)
     return render(request, 'register_success.html', locals())
