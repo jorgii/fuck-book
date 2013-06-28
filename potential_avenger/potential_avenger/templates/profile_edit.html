@@ -3,6 +3,7 @@
 {% block title %}Fuckbook - Edit profile{% endblock %}
 {% block body %}
     <div class="row-fluid">
+        <div class="span12">
         <form class="form" method="post" style="width: 85%" action="{% url 'profile_edit' %}">
             {% csrf_token %}
             {{ user_form }}<br/>
@@ -11,5 +12,6 @@
             {{ personal_settings_form }}<br/>
             <input class="btn btn-primary btn-large" type="submit" value="Save"/>
         </form>
+        </div>
     </div>
 {% endblock %}

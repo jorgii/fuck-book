@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+
 
 from hardcoded_models.models import PosesList
 from hardcoded_models.models import PlacesList
@@ -26,7 +28,10 @@ class Person(models.Model):
 
 class PersonPreferences(models.Model):
     person = models.OneToOneField(Person)
-    relation = models.OneToOneField(Person, related_name='related user', blank=True, null=True)
+    relation = models.OneToOneField(Person,
+                                    related_name='related user',
+                                    blank=True,
+                                    null=True)
     preferred_poses = models.ManyToManyField(PosesList, blank=True, null=True)
     preferred_places = models.ManyToManyField(PlacesList, blank=True, null=True)
 
@@ -39,6 +44,11 @@ class PersonPreferences(models.Model):
         if self.relation and self.relation.personpreferences.relation != self.person:
             self.relation.personpreferences.relation = self.person
             self.relation.personpreferences.save()
+
+    def clean(self):
+        super().clean()
+        if self.person == self.relation:
+            raise ValidationError('You cannot be related to yourself')
 
 
 class PersonalSettings(models.Model):
