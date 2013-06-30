@@ -1,4 +1,4 @@
-from random import randint
+import random
 
 
 from django.shortcuts import render
@@ -10,10 +10,6 @@ from hardcoded_models.models import PosesList, PlacesList
 
 @login_required
 def dice(request):
-    poses_counter = PosesList.objects.count() - 1
-    index_poses = randint(0, poses_counter)
-    random_pose = PosesList.objects.all()[index_poses]
-    places_counter = PlacesList.objects.count() - 1
-    index_places = randint(0, places_counter)
-    random_place = PlacesList.objects.all()[index_places]
+    random_pose = random.choice(PosesList.objects.all())
+    random_place = random.choice(PlacesList.objects.all())
     return render(request, "dice.html", locals())
