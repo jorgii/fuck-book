@@ -99,8 +99,8 @@ class PersonTest(TestCase):
         response = self.client.get('/login/')
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.post('/login/', username='user1', password='pass1')
-        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/login/', dict(username='user1', password='pass1'))
+        self.assertEqual(response.status_code, 302)
 
     def test_view_profile(self):
         self.client.login(username='user1', password='pass1')
