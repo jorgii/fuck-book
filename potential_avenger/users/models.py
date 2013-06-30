@@ -31,7 +31,8 @@ class PersonPreferences(models.Model):
     relation = models.OneToOneField(Person,
                                     related_name='related user',
                                     blank=True,
-                                    null=True)
+                                    null=True,
+                                    error_messages={'unique': 'This person is already in a relation with another user!'})
     preferred_poses = models.ManyToManyField(PosesList, blank=True, null=True)
     preferred_places = models.ManyToManyField(PlacesList, blank=True, null=True)
 
