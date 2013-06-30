@@ -18,7 +18,10 @@ def checkin(request):
     if request.method == 'POST':
         if checkin_form.is_valid():
             checkin_form.save()
-            person1_person2_diary = Diary.objects.filter(person1=request.user.person, person2=checkin_form.instance.with_who) or Diary.objects.filter(person1=checkin_form.instance.with_who, person2=request.user.person)
+            person1_person2_diary = Diary.objects.filter(person1=request.user.person,
+                                                         person2=checkin_form.instance.with_who) \
+                or Diary.objects.filter(person1=checkin_form.instance.with_who,
+                                        person2=request.user.person)
             if person1_person2_diary:
                 pass
             else:

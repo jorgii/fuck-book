@@ -21,14 +21,12 @@ class Command(BaseCommand):
                     # Get a list of all checkins of those two people since the last notification
                     start_date = last_entry.date_saved
                     end_date = date.today()
-                    latest_checkins = list(CheckinDetails.objects.filter(
-                        person=this_person,
-                        with_who=related_person,
-                        date_checked__range=(start_date, end_date)))
-                    latest_checkins.extend(CheckinDetails.objects.filter(
-                        person=related_person,
-                        with_who=this_person,
-                        date_checked__range=(start_date, end_date)))
+                    latest_checkins = list(CheckinDetails.objects.filter(person=this_person,
+                                                                         with_who=related_person,
+                                                                         date_checked__range=(start_date, end_date)))
+                    latest_checkins.extend(list(CheckinDetails.objects.filter(person=related_person,
+                                                                              with_who=this_person,
+                                                                              date_checked__range=(start_date, end_date))))
                     if latest_checkins:
                         # Get a list of all poses and a list of all places since the last notification
                         latest_poses = list()
@@ -46,7 +44,11 @@ class Command(BaseCommand):
                             places_counter[place] += 1
                         # Do some calculation magic
                         related_person_preferences = PersonPreferences.objects.get(person=related_person)
-                        if len(list(related_person_preferences.preferred_poses.all())) and len(list(related_person_preferences.preferred_places.all())):
+                        related_person_preferred_poses = list(related_person_preferences.preferred_poses.all())
+                        related_person_preferred_places = list(related_person_preferences.preferred_places.all())
+                        related_person_preferred_poses_count = len(related_person_preferred_poses)
+                        related_person_preferred_places_count = len(related_person_preferred_places)
+                        if related_person_preferred_poses_count and related_person_preferred_places_count:
                             if len(poses_counter) % 2 == 0:
                                 n = int(len(poses_counter)/2)
                             else:
@@ -57,18 +59,20 @@ class Command(BaseCommand):
                                 i = int((len(places_counter)+1) / 2)
                             counterposes = 0
                             counterplaces = 0
-                            for preferred_pose in related_person_preferences.preferred_poses.all():
+                            for preferred_pose in related_person_preferred_poses:
                                 if preferred_pose in poses_counter.most_common(n):
                                     counterposes += 1
-                            for preferred_place in related_person_preferences.preferred_places.all():
+                            for preferred_place in related_person_preferred_places:
                                 if preferred_place in places_counter.most_common(i):
                                     counterplaces += 1
                             # Get the message for the notification
-                            if counterposes/len(list(related_person_preferences.preferred_poses.all())) <= 1/2 and counterplaces/len(list(related_person_preferences.preferred_places.all())) <= 1/2:
+                            poses_index = counterposes/related_person_preferred_poses_count
+                            places_index = counterplaces/related_person_preferred_places_count
+                            if poses_index <= 1/2 and places_index <= 1/2:
                                 difference_message = "Damn, you're selfish! You need to think more about what poses and places your partner likes."
-                            elif counterposes/len(list(related_person_preferences.preferred_poses.all())) <= 1/2 and counterplaces/len(list(related_person_preferences.preferred_places.all())) > 1/2:
+                            elif poses_index <= 1/2 and places_index > 1/2:
                                 difference_message = "You're doing good with the places, but you need to think more about what poses your partner likes."
-                            elif counterposes/len(list(related_person_preferences.preferred_poses.all())) > 1/2 and counterplaces/len(list(related_person_preferences.preferred_places.all())) <= 1/2:
+                            elif poses_index > 1/2 and places_index <= 1/2:
                                 difference_message = "You're doing good with the poses, but try to spice it up with some places your partner likes."
                             else:
                                 difference_message = "Nice to see you care about what your partner likes. Keep up the good 'work'! ;)"
@@ -77,6 +81,5 @@ class Command(BaseCommand):
                     else:
                         difference_message = "Not enough data yet. You have to check in more often. ;)"
                     # And finally create the notification
-                    DifferenceNotification.objects.create(
-                        person=this_person,
-                        message=difference_message)
+                    DifferenceNotification.objects.create(person=this_person,
+                                                          message=difference_message)
