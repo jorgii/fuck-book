@@ -3,7 +3,7 @@ from itertools import groupby
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.core.context_processors import csrf
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 from statistics.forms import StatisticsForm
@@ -12,44 +12,53 @@ from checkin.models import CheckinDetails
 
 @login_required
 def statistics(request):
-    statistics_form = StatisticsForm(request.POST or None)
-    if request.method == 'POST':
-        if statistics_form.is_valid():
-            group_by = statistics_form.cleaned_data['base']
-            checkins_grouped = get_checkins_grouped(person=request.user.person,
-                                                    from_t=statistics_form.cleaned_data['from_t'],
-                                                    to_t=statistics_form.cleaned_data['to_t'],
-                                                    group_by=group_by)
-            checkins_statistics = OrderedDict()
-            for group, checkins in checkins_grouped.items():
-                checkins_statistics[group] = Counter()
-                partners = []
-                places = []
-                poses = []
-                number_with_contraception = 0
-                number_without_contraception = 0
-                for checkin in checkins:
-                    checkins_statistics[group]['number_of_checkins'] += 1
-                    for pose in checkin.poses.all():
-                        poses.append(pose)
-                    for place in checkin.places.all():
-                        places.append(place)
-                    if request.user.person == checkin.with_who and checkin.person:
-                        partners.append(checkin.person)
-                    elif request.user.person == checkin.person and checkin.with_who:
-                        partners.append(checkin.with_who)
-                    if checkin.contraception:
-                        number_with_contraception += 1
-                    else:
-                        number_without_contraception += 1
-                checkins_statistics[group]['average_duration'] = average(*[float(x.duration) for x in checkins])
-                checkins_statistics[group]['average_rating'] = average(*[float(x.rating) for x in checkins])
-                checkins_statistics[group]['top_three_partners'] = get_top_three(*partners)
-                checkins_statistics[group]['top_three_places'] = get_top_three(*places)
-                checkins_statistics[group]['top_three_poses'] = get_top_three(*poses)
-                checkins_statistics[group]['contraception'] = number_with_contraception
-                checkins_statistics[group]['no_contraception'] = number_without_contraception
-    csrf(request)
+    checkins_statistics = list()
+    statistics_form = StatisticsForm(request.GET or None)
+    if statistics_form.is_valid():
+        group_by = statistics_form.cleaned_data['base']
+        checkins_grouped = get_checkins_grouped(person=request.user.person,
+                                                from_t=statistics_form.cleaned_data['from_t'],
+                                                to_t=statistics_form.cleaned_data['to_t'],
+                                                group_by=group_by)
+        index = 0
+        for group, checkins in checkins_grouped.items():
+            checkins_statistics.append(Counter())
+            partners = []
+            places = []
+            poses = []
+            number_with_contraception = 0
+            number_without_contraception = 0
+            for checkin in checkins:
+                checkins_statistics[index]['number_of_checkins'] += 1
+                for pose in checkin.poses.all():
+                    poses.append(pose)
+                for place in checkin.places.all():
+                    places.append(place)
+                if request.user.person == checkin.with_who and checkin.person:
+                    partners.append(checkin.person)
+                elif request.user.person == checkin.person and checkin.with_who:
+                    partners.append(checkin.with_who)
+                if checkin.contraception:
+                    number_with_contraception += 1
+                else:
+                    number_without_contraception += 1
+            checkins_statistics[index]['date'] = group
+            checkins_statistics[index]['average_duration'] = average(*[float(x.duration) for x in checkins])
+            checkins_statistics[index]['average_rating'] = average(*[float(x.rating) for x in checkins])
+            checkins_statistics[index]['top_three_partners'] = get_top_three(*partners)
+            checkins_statistics[index]['top_three_places'] = get_top_three(*places)
+            checkins_statistics[index]['top_three_poses'] = get_top_three(*poses)
+            checkins_statistics[index]['contraception'] = number_with_contraception
+            checkins_statistics[index]['no_contraception'] = number_without_contraception
+            index += 1
+    paginator = Paginator(checkins_statistics, 4)
+    page = request.GET.get('page')
+    try:
+        statistics_page = paginator.page(page)
+    except PageNotAnInteger:
+        statistics_page = paginator.page(number=1)
+    except EmptyPage:
+        statistics_page = paginator.page(paginator.num_pages)
     return render(request, "statistics.html", locals())
 
 
