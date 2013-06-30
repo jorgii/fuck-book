@@ -7,13 +7,25 @@
         <div class="span12">
             <!-- Container -->
             <div class="row-fluid">
-                <div class="span6">
-                    <img src="{{ STATIC_URL }}poses/{{ random_pose }}.jpg"/>
-                    <br/>{{ random_pose }}
+                <div class="span4" style="text-align:center">
+                    <h4>Getting bored? Here's an idea:</h4>
                 </div>
-                <div class="span6">
-                    <img src="{{ STATIC_URL }}places/{{ random_place }}.jpg"/>
-                    <br/>{{ random_place }}
+            </div>
+            <div class="row-fluid">
+                <div class="span2" style="text-align:center">
+                    Try this:
+                    <br/><img src="{{ STATIC_URL }}poses/{{ random_pose }}.jpg"/>
+                    <!-- <br/>{{ random_pose }} -->
+                </div>
+                <div class="span2" style="text-align:center">
+                    Here:
+                    <br/><img src="{{ STATIC_URL }}places/{{ random_place }}.jpg"/>
+                    <!-- <br/>{{ random_place }} -->
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span4" style="text-align:center">
+                    <br/><a href="{% url 'dice' %}"><button class="btn btn-primary btn-large">Another!</button></a>
                 </div>
             </div>
         </div>
