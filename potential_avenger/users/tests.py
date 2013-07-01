@@ -35,6 +35,17 @@ class PersonTest(TestCase):
         self.person2_preferences.save()
         self.person2.save()
 
+    def person_post_data(self, user):
+        return dict(first_name=user.first_name,
+                    last_name=user.last_name,
+                    email=user.email,
+                    gender=user.person.gender,
+                    birth_date=user.person.birth_date,
+                    city=user.person.city,
+                    periodical_notification_period=user.person.personalsettings.periodical_notification_period,
+                    tip_notification_period=user.person.personalsettings.tip_notification_period,
+                    difference_notification_period=user.person.personalsettings.difference_notification_period,)
+
     def create_user(
             self,
             username='user1',
@@ -119,14 +130,7 @@ class PersonTest(TestCase):
         response = self.client.get('/profile_edit/')
         self.assertEqual(response.status_code, 200)
         user = response.context.__getitem__('user')
-        response = self.client.post('/profile_edit/', dict(first_name=user.first_name,
-                                                           last_name=user.last_name,
-                                                           email='as@as.as',
-                                                           gender='M',
-                                                           birth_date=user.person.birth_date,
-                                                           city='Haskovo',
-                                                           periodical_notification_period=user.person.personalsettings.periodical_notification_period,
-                                                           tip_notification_period=user.person.personalsettings.tip_notification_period,
-                                                           difference_notification_period=user.person.personalsettings.difference_notification_period,
-                                                           ))
-        self.assertEqual(response.status_code, 302)
+        data = self.person_post_data(user)
+        data['email'] = 'asd@asd.asd'
+        response = self.client.post('/profile_edit/', data)
+        self.assertRedirects(response, '/profile/user1/', status_code=302, target_status_code=200)
