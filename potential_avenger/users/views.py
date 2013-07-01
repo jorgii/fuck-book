@@ -62,6 +62,8 @@ def profile(request, username):
         profile_photo = user_to_display.person.photo.url
     except ValueError:
         profile_photo = '/media/profile_photos/noPhoto.jpg'
+
+    number_of_unread_notifications = get_number_of_unread_notifications(request.user.person)
     return render(request, 'profile.html', locals())
 
 
@@ -138,3 +140,10 @@ def register_success(request):
 @login_required
 def home(request):
     return redirect('/profile/'+request.user.username)
+
+
+def get_number_of_unread_notifications(this_person):
+    unread_notifications = list(PeriodicalNotification.objects.filter(person=this_person, unread=True))
+    unread_notifications.extend(list(TipNotification.objects.filter(person=this_person, unread=True)))
+    unread_notifications.extend(list(DifferenceNotification.objects.filter(person=this_person, unread=True)))
+    return int(len(unread_notifications))
