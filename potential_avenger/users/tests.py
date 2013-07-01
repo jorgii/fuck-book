@@ -114,12 +114,19 @@ class PersonTest(TestCase):
         response = self.client.get('/profile/user1/')
         self.assertEqual(response.status_code, 200)
 
-    def test_view_profile_edit_get(self):
+    def test_view_profile_edit_get_post(self):
         self.client.login(username='user1', password='pass1')
         response = self.client.get('/profile_edit/')
         self.assertEqual(response.status_code, 200)
-
-    def test_view_profile_edit_post(self):
-        self.client.login(username='user1', password='pass1')
-        response = self.client.post('/profile_edit/', dict(birth_date=date(year=1992, month=5, day=25)))
-        self.assertEqual(response.status_code, 200)
+        user = response.context.__getitem__('user')
+        response = self.client.post('/profile_edit/', dict(first_name=user.first_name,
+                                                           last_name=user.last_name,
+                                                           email='as@as.as',
+                                                           gender='M',
+                                                           birth_date=user.person.birth_date,
+                                                           city='Haskovo',
+                                                           periodical_notification_period=user.person.personalsettings.periodical_notification_period,
+                                                           tip_notification_period=user.person.personalsettings.tip_notification_period,
+                                                           difference_notification_period=user.person.personalsettings.difference_notification_period,
+                                                           ))
+        self.assertEqual(response.status_code, 302)
