@@ -4,6 +4,7 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
+from django.core.exceptions import ValidationError
 
 
 from users.models import Person, PersonPreferences, PersonalSettings, get_upload_file_name
@@ -105,6 +106,11 @@ class PersonTest(TestCase):
         self.person1_preferences.save()
         self.assertEqual(self.person1_preferences.relation, self.person2)
         self.assertEqual(self.person2_preferences.relation, self.person1)
+
+    def test_related_to_self(self):
+        self.person1.personpreferences.relation = self.person
+        self.person1.personpreferences.save()
+        self.assertRaises(ValidationError, self.person1.personpreferences.clean)
 
     def test_view_login_get_post(self):
         response = self.client.get('/login/')
