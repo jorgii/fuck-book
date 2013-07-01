@@ -67,11 +67,10 @@ def profile(request, username):
 
 @login_required
 def profile_edit(request):
-    path = '/profile_edit/'
     person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
-    person_preferences_form = PersonPreferencesForm(request.POST or None, request.FILES or None, instance=request.user.person.personpreferences)
-    personal_settings_form = PersonalSettingsForm(request.POST or None, request.FILES or None, instance=request.user.person.personalsettings)
+    person_preferences_form = PersonPreferencesForm(request.POST or None, instance=request.user.person.personpreferences)
+    personal_settings_form = PersonalSettingsForm(request.POST or None, instance=request.user.person.personalsettings)
     if request.method == 'POST':
         if person_form.is_valid() and user_form.is_valid() and person_preferences_form.is_valid() and personal_settings_form.is_valid():
             person_form.save()
