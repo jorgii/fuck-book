@@ -77,7 +77,7 @@ def profile_edit(request):
             user_form.save()
             person_preferences_form.save()
             personal_settings_form.save()
-            return redirect('/profile/'+request.user.username)
+            return redirect('/profile/'+request.user.username+'/')
     csrf(request)
     return render(request, 'profile_edit.html', locals())
 
@@ -129,7 +129,7 @@ def register_success(request):
             DifferenceNotification.objects.create(
                 person=request.user.person,
                 message="Wellcome! Once you're in a relation you'll start getting difference notifications.")
-            return redirect('/profile/'+request.user.username)
+            return redirect('/profile/'+request.user.username+'/')
     csrf(request)
     return render(request, 'register_success.html', locals())
 
