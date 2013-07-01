@@ -11,8 +11,8 @@ class CheckinDetails(models.Model):
     person = models.ForeignKey(Person)
     date_checked = models.DateField(default=date.today())
     address = models.CharField('Address (ex: Cherni vrah 47, Sofia, Bulgaria):', max_length=255)
-    poses = models.ManyToManyField(PosesList)
-    places = models.ManyToManyField(PlacesList)
+    poses = models.ManyToManyField(PosesList, blank=True, null=True)
+    places = models.ManyToManyField(PlacesList, blank=True, null=True)
     RAITING_CHOICES = (
         ('1', '1 - Horrible'),
         ('2', '2 - Meh'),
@@ -23,10 +23,7 @@ class CheckinDetails(models.Model):
     rating = models.CharField(max_length=1, choices=RAITING_CHOICES)
     duration = models.IntegerField('Duration (in minutes):', default=10)
     contraception = models.BooleanField('Contraception (y/n):', default=True)
-    with_who = models.ForeignKey(Person,
-                                 related_name='checkin related user',
-                                 blank=True,
-                                 null=True)
+    with_who = models.ForeignKey(Person, related_name='checkin related user', blank=True, null=True)
 
     def clean(self):
         super().clean()
