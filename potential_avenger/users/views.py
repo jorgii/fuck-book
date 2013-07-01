@@ -136,4 +136,4 @@ def register_success(request):
 
 @login_required
 def home(request):
-    return redirect('/profile/'+request.user.username)
+    return redirect('/profile/'+request.user.username+'/')
