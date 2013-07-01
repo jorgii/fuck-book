@@ -132,5 +132,30 @@ class PersonTest(TestCase):
         user = response.context.__getitem__('user')
         data = self.person_post_data(user)
         data['email'] = 'asd@asd.asd'
+        data['first_name'] = 'changed firstname'
+        data['periodical_notification_period'] = 66
         response = self.client.post('/profile_edit/', data)
         self.assertRedirects(response, '/profile/user1/', status_code=302, target_status_code=200)
+        self.assertEqual(User.objects.get(username='user1').email, data['email'])
+        self.assertEqual(User.objects.get(username='user1').first_name, data['first_name'])
+        self.assertEqual(User.objects.get(username='user1').person.personalsettings.periodical_notification_period, data['periodical_notification_period'])
+
+    def test_register_post(self):
+        response = self.client.post('/register/', dict(username='newone', password1='newpass', password2='newpass'))
+        self.assertRedirects(response, '/register_success/', status_code=302, target_status_code=200)
+
+    def test_register_success_get_post(self):
+        self.client.login(username='user1', password='pass1')
+        response = self.client.get('/register_success/')
+        self.assertEqual(response.status_code, 200)
+        user = response.context.__getitem__('user')
+        data = self.person_post_data(user)
+        data['email'] = 'asd@asd.asd'
+        data['first_name'] = 'changed firstname'
+        del data['periodical_notification_period']
+        del data['tip_notification_period']
+        del data['difference_notification_period']
+        response = self.client.post('/register_success/', data)
+        self.assertRedirects(response, '/profile/user1/', status_code=302, target_status_code=200)
+        self.assertEqual(User.objects.get(username='user1').email, data['email'])
+        self.assertEqual(User.objects.get(username='user1').first_name, data['first_name'])
