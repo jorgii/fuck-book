@@ -16,6 +16,16 @@
                         <tr>
                             <td>{{ notification.date_saved }}: </td>
                             <td>{{ notification.message }}</td>
+                            {% if notification.unread %}
+                            <td>
+                                <form class="form" method="post" action="{% url 'notifications' %}">
+                                    {% csrf_token %}
+                                    <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
+                                    <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
+                                    <input type="hidden" name="notification_class" value="PeriodicalNotification"/>
+                                </form>
+                            </td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                         {% endif %}
@@ -34,6 +44,16 @@
                         <tr>
                             <td>{{ notification.date_saved }}: </td>
                             <td>{{ notification.message }}</td>
+                            {% if notification.unread %}
+                            <td>
+                                <form class="form" method="post" action="{% url 'notifications' %}">
+                                    {% csrf_token %}
+                                    <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
+                                    <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
+                                    <input type="hidden" name="notification_class" value="TipNotification"/>
+                                </form>
+                            </td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                         {% endif %}
@@ -52,6 +72,16 @@
                         <tr>
                             <td>{{ notification.date_saved }}: </td>
                             <td>{{ notification.message }}</td>
+                            {% if notification.unread %}
+                            <td>
+                                <form class="form" method="post" action="{% url 'notifications' %}">
+                                    {% csrf_token %}
+                                    <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
+                                    <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
+                                    <input type="hidden" name="notification_class" value="DifferenceNotification"/>
+                                </form>
+                            </td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                         {% endif %}
