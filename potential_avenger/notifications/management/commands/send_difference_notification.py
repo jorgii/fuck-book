@@ -14,7 +14,7 @@ class Command(BaseCommand):
             this_person_settings = PersonalSettings.objects.get(person=this_person)
             this_person_preferences = PersonPreferences.objects.get(person=this_person)
             related_person = this_person_preferences.relation
-            if this_person_settings.display_difference_notification is True and related_person:
+            if this_person_settings.display_difference_notification and related_person:
                 this_person_notifications = DifferenceNotification.objects.filter(person=this_person)
                 last_entry = this_person_notifications.latest('date_saved')
                 if (date.today() - last_entry.date_saved).days >= this_person_settings.difference_notification_period:
