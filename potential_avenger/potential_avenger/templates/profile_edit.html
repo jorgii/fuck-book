@@ -4,7 +4,7 @@
 {% block body %}
     <div class="row-fluid">
         <div class="span12">
-        <form class="form" method="post" style="width: 85%" action="{% url 'profile_edit' %}">
+        <form class="form" enctype="multipart/form-data" method="post" style="width: 85%" action="{% url 'profile_edit' %}">
             {% csrf_token %}
             {{ user_form }}<br/>
             {{ person_form }}<br/>

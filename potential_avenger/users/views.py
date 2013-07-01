@@ -69,18 +69,17 @@ def profile(request, username):
 
 @login_required
 def profile_edit(request):
-    path = '/profile_edit/'
     person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
-    person_preferences_form = PersonPreferencesForm(request.POST or None, request.FILES or None, instance=request.user.person.personpreferences)
-    personal_settings_form = PersonalSettingsForm(request.POST or None, request.FILES or None, instance=request.user.person.personalsettings)
+    person_preferences_form = PersonPreferencesForm(request.POST or None, instance=request.user.person.personpreferences)
+    personal_settings_form = PersonalSettingsForm(request.POST or None, instance=request.user.person.personalsettings)
     if request.method == 'POST':
         if person_form.is_valid() and user_form.is_valid() and person_preferences_form.is_valid() and personal_settings_form.is_valid():
             person_form.save()
             user_form.save()
             person_preferences_form.save()
             personal_settings_form.save()
-            return redirect('/profile/'+request.user.username)
+            return redirect('/profile/'+request.user.username+'/')
     csrf(request)
     return render(request, 'profile_edit.html', locals())
 
@@ -132,14 +131,14 @@ def register_success(request):
             DifferenceNotification.objects.create(
                 person=request.user.person,
                 message="Wellcome! Once you're in a relation you'll start getting difference notifications.")
-            return redirect('/profile/'+request.user.username)
+            return redirect('/profile/'+request.user.username+'/')
     csrf(request)
     return render(request, 'register_success.html', locals())
 
 
 @login_required
 def home(request):
-    return redirect('/profile/'+request.user.username)
+    return redirect('/profile/'+request.user.username+'/')
 
 
 def get_number_of_unread_notifications(this_person):
