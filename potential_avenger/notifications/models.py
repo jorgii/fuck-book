@@ -17,7 +17,10 @@ class PeriodicalNotification (models.Model):
 
 
 def create_tip_message():
-    tip_message = random.choice(TipsList.objects.all())
+    try:
+        tip_message = random.choice(TipsList.objects.all())
+    except IndexError:
+        tip_message = "Sorry, no tips in the database."
     return tip_message
 
 
