@@ -1,6 +1,3 @@
-from datetime import date
-
-
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
@@ -8,35 +5,17 @@ from django.core.exceptions import ValidationError
 
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
-from users.models import Person, PersonPreferences, PersonalSettings, get_upload_file_name
+from users.models import Person, get_upload_file_name
 from users.views import get_number_of_unread_notifications
 
 
 class PersonTest(TestCase):
+    fixtures = ['users_data.json', 'persons_data.json']
+
     def setUp(self):
         self.client = Client()
-
-        self.person1 = self.create_person(user=self.create_user())
-        self.person1_preferences = self.create_person_preferences(person=self.person1)
-        self.person1_personal_settings = self.create_personal_settings(person=self.person1)
-        self.person1_personal_settings.save()
-        self.person1_preferences.save()
-        self.person1.save()
-
-        self.person2 = self.create_person(
-            user=self.create_user(
-                username='user2',
-                password='pass2',
-                first_name='user2 name1',
-                last_name='user2 name2'),
-            gender='F',
-            birth_date=date(year=1990, day=12, month=12),
-            city='Varna')
-        self.person2_preferences = self.create_person_preferences(person=self.person2)
-        self.person2_personal_settings = self.create_personal_settings(person=self.person2)
-        self.person2_personal_settings.save()
-        self.person2_preferences.save()
-        self.person2.save()
+        self.person1 = User.objects.get(username='user1').person
+        self.person2 = User.objects.get(username='user2').person
 
     def person_post_data(self, user):
         return dict(first_name=user.first_name,
@@ -48,50 +27,6 @@ class PersonTest(TestCase):
                     periodical_notification_period=user.person.personalsettings.periodical_notification_period,
                     tip_notification_period=user.person.personalsettings.tip_notification_period,
                     difference_notification_period=user.person.personalsettings.difference_notification_period,)
-
-    def create_user(
-            self,
-            username='user1',
-            password='pass1',
-            first_name='user1 name1',
-            last_name='user1 name1',):
-        return User.objects.create_user(
-            username=username,
-            password=password,
-            first_name=first_name,
-            last_name=last_name,)
-
-    def create_person(
-            self,
-            user,
-            gender='M',
-            birth_date=date.today(),
-            city='Sofia'):
-        return Person.objects.create(
-            user=user,
-            gender=gender,
-            birth_date=birth_date,
-            city=city,)
-
-    def create_person_preferences(
-            self,
-            person,
-            relation=None):
-        return PersonPreferences.objects.create(
-            person=person,
-            relation=relation)
-
-    def create_personal_settings(
-            self,
-            person):
-        return PersonalSettings(
-            person=person,
-            display_periodical_notification=True,
-            display_tip_notification=True,
-            display_difference_notification=True,
-            periodical_notification_period=14,
-            tip_notification_period=7,
-            difference_notification_period=30)
 
     def test_create_person(self):
         self.assertTrue(isinstance(self.person1, Person))
@@ -113,10 +48,10 @@ class PersonTest(TestCase):
         self.assertEqual(3, get_number_of_unread_notifications(self.person1))
 
     def test_person_relation_save(self):
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save()
-        self.assertEqual(self.person1_preferences.relation, self.person2)
-        self.assertEqual(self.person2_preferences.relation, self.person1)
+        self.person1.personpreferences.relation = self.person2
+        self.person1.personpreferences.save()
+        self.assertEqual(self.person1.personpreferences.relation, self.person2)
+        self.assertEqual(self.person2.personpreferences.relation, self.person1)
 
     def test_related_to_self(self):
         self.person1.personpreferences.relation = self.person1
