@@ -25,6 +25,9 @@ class CheckinDetails(models.Model):
     contraception = models.BooleanField('Contraception (y/n):', default=True)
     with_who = models.ForeignKey(Person, related_name='checkin related user', blank=True, null=True)
 
+    def __str__(self):
+        return '{}, {}'.format(self.date_checked, self.person.user)
+
     def clean(self):
         super().clean()
         if self.person == self.with_who:

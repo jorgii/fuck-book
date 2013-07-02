@@ -17,7 +17,7 @@ class PeriodicalNotification (models.Model):
     unread = models.BooleanField(default=True)
 
     def __str__(self):
-        return '{}, {}'.format(self.date_saved, self.person.__str__())
+        return '{}, {}'.format(self.date_saved, self.person.user)
 
 
 def create_tip_message():
@@ -35,7 +35,7 @@ class TipNotification (models.Model):
     unread = models.BooleanField(default=True)
 
     def __str__(self):
-        return '{}, {}'.format(self.date_saved, self.person.__str__())
+        return '{}, {}'.format(self.date_saved, self.person.user)
 
 
 class DifferenceNotification (models.Model):
@@ -45,4 +45,4 @@ class DifferenceNotification (models.Model):
     unread = models.BooleanField(default=True)
 
     def __str__(self):
-        return '{}, {}'.format(self.date_saved, self.person.__str__())
+        return '{}, {}'.format(self.date_saved, self.person.user)
