@@ -7,7 +7,9 @@ from django.test.client import Client
 from django.core.exceptions import ValidationError
 
 
+from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
 from users.models import Person, PersonPreferences, PersonalSettings, get_upload_file_name
+from users.views import get_number_of_unread_notifications
 
 
 class PersonTest(TestCase):
@@ -101,6 +103,15 @@ class PersonTest(TestCase):
         created_path = get_upload_file_name(self.person1, filename)
         self.assertEqual(path, created_path)
 
+    def test_get_unread_notifications(self):
+        PeriodicalNotification.objects.create(person=self.person1,
+                                              message="Wellcome! Don't hesitate to make your first check in.")
+        TipNotification.objects.create(person=self.person1,
+                                       message="Wellcome! Go to your profile settings if you don't want to get useful tips.")
+        DifferenceNotification.objects.create(person=self.person1,
+                                              message="Wellcome! Once you're in a relation you'll start getting difference notifications.")
+        self.assertEqual(3, get_number_of_unread_notifications(self.person1))
+
     def test_person_relation_save(self):
         self.person1_preferences.relation = self.person2
         self.person1_preferences.save()
@@ -108,7 +119,7 @@ class PersonTest(TestCase):
         self.assertEqual(self.person2_preferences.relation, self.person1)
 
     def test_related_to_self(self):
-        self.person1.personpreferences.relation = self.person
+        self.person1.personpreferences.relation = self.person1
         self.person1.personpreferences.save()
         self.assertRaises(ValidationError, self.person1.personpreferences.clean)
 
