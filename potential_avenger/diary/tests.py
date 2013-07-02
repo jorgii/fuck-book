@@ -17,7 +17,6 @@ class DiaryTest(TestCase):
         self.person2 = User.objects.get(username='user2').person
 
     def test_get_checkins_for_diary(self):
-        import ipdb; ipdb.set_trace()
         diary = Diary.objects.get(person1=self.person1, person2=self.person2)
         expected_checkins = list(CheckinDetails.objects.filter(person=self.person1,
                                                                with_who=self.person2))
@@ -25,3 +24,8 @@ class DiaryTest(TestCase):
                                                                with_who=self.person1))
         expected_checkins = sorted(expected_checkins, key=lambda x: x.date_checked, reverse=True)
         self.assertEqual(expected_checkins, get_checkins_for_diary(diary))
+
+    def test_diary_get(self):
+        self.client.login(username='user1', password='pass1')
+        response = self.client.get('/diary/')
+        self.assertEqual(response.status_code, 200)
