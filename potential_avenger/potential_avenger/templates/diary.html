@@ -3,9 +3,13 @@
 {% block title %}Fuckbook - Diary{% endblock %}
 
 {% block body %}
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 {% for diary, checkins in checkins_by_diary.items %}
-<div class="container-fluid well">
-    <div class="row-fluid">
+<div class="accordion" id="accordion1">
+  <div class=" accordion-group">
+    <div class="row-fluid accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent-toggle="#accordion1" href="#collapsediary{{ diary.id }}">
         <div class="span4">
             <h4>
                 Diary with:
@@ -21,60 +25,80 @@
         <div class="span4">
             <h4>Date/Time Created: {{ diary.timestamp }}<h4>
         </div>
+        </a>
     </div>
-    {% for checkin in checkins %}
-    <div class="row-fluid">
-        <div class="span4">
-            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ checkin.address }}&zoom=15&markers=color:blue|{{ checkin.address }}&sensor=false&size=600x300&key=AIzaSyB1QVnitPq0ihs7RPolDDyvFnOPNmFyMAI"/>
+    <div id="collapsediary{{ diary.id }}" class=" accordion-body collapse">
+      <div class="row-fluid accordion-inner">
+        <div class="accordion" id="accordion2">
+          {% for checkin in checkins %}
+            <div class=" accordion-group">
+              <div class="row-fluid accordion-heading">
+                <div class="row-fluid accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent-toggle="#accordion1" href="#collapsecheckin{{ checkin.id }}">
+                    Date/Time Checked: {{ checkin.date_checked }}
+                  </a>
+                </div>
+                <div id="collapsecheckin{{ checkin.id }}" class=" accordion-body collapse">
+                  <div class="row-fluid accordion-inner">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ checkin.address }}&zoom=15&markers=color:blue|{{ checkin.address }}&sensor=false&size=600x300&key=AIzaSyB1QVnitPq0ihs7RPolDDyvFnOPNmFyMAI"/>
+                        </div>
+                        <div class="span4">
+                        <table class="table table-striped">
+                            <tr>
+                              <td><b>Address:</b></td>
+                              <td>{{ checkin.address }}</td>
+                            </tr>
+                            <tr>
+                              <td><b>Date/Time Checked:</b></td>
+                              <td>{{ checkin.date_checked }}</td>
+                            </tr>
+                            <tr>
+                              <td><b>Rating:</b></td>
+                              <td>{{ checkin.get_rating_display }}</td>
+                            </tr>
+                            <tr>
+                              <td><b>Duration:</b></td>
+                              <td>{{ checkin.duration }}</td>
+                            </tr>
+                            <tr>
+                              <td><b>Contraception:</b></td>
+                              <td>{% if checkin.contraception %}
+                                    YES
+                                  {% else %}
+                                    NO
+                                  {% endif %}
+                              </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12"><b>Poses</b></div>
+                    </div>
+                    <div class="row-fluid">
+                        {% for pose in checkin.poses.all %}
+                        <div class="span1"><img src="{{ STATIC_URL }}poses/{{ pose }}.jpg"/></div>
+                        {% endfor %}
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12"><b>Places</b></div>
+                    </div>
+                    <div class="row-fluid">
+                        {% for place in checkin.places.all %}
+                        <div class="span1"><img src="{{ STATIC_URL }}places/{{ place }}.jpg"/></div>
+                        {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
         </div>
-        <div class="span4">
-        <table class="table table-striped">
-            <tr>
-              <td><b>Address:</b></td>
-              <td>{{ checkin.address }}</td>
-            </tr>
-            <tr>
-              <td><b>Date/Time Checked:</b></td>
-              <td>{{ checkin.date_checked }}</td>
-            </tr>
-            <tr>
-              <td><b>Rating:</b></td>
-              <td>{{ checkin.rating }}</td>
-            </tr>
-            <tr>
-              <td><b>Duration:</b></td>
-              <td>{{ checkin.duration }}</td>
-            </tr>
-            <tr>
-              <td><b>Contraception:</b></td>
-              <td>{% if checkin.contraception %}
-                    YES
-                  {% else %}
-                    NO
-                  {% endif %}
-              </td>
-            </tr>
-        </table>
-        </div>
+      </div>
     </div>
-    <div class="row-fluid">
-        <div class="span12"><b>Poses</b></div>
-    </div>
-    <div class="row-fluid">
-        {% for pose in checkin.poses.all %}
-        <div class="span1"><img src="{{ STATIC_URL }}poses/{{ pose }}.jpg"/></div>
-        {% endfor %}
-    </div>
-    <div class="row-fluid">
-        <div class="span12"><b>Places</b></div>
-    </div>
-    <div class="row-fluid">
-        {% for place in checkin.places.all %}
-        <div class="span1"><img src="{{ STATIC_URL }}places/{{ place }}.jpg"/></div>
-        {% endfor %}
-    </div>
-    <hr class="divider"/>
-    {% endfor %}
+  </div>
 </div>
 {% endfor %}
 {% endblock %}
