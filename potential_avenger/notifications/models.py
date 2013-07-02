@@ -16,6 +16,9 @@ class PeriodicalNotification (models.Model):
     date_saved = models.DateField(default=date.today())
     unread = models.BooleanField(default=True)
 
+    def __str__(self):
+        return '{}, {}'.format(self.date_saved, self.person.__str__())
+
 
 def create_tip_message():
     try:
@@ -31,9 +34,15 @@ class TipNotification (models.Model):
     date_saved = models.DateField(default=date.today())
     unread = models.BooleanField(default=True)
 
+    def __str__(self):
+        return '{}, {}'.format(self.date_saved, self.person.__str__())
+
 
 class DifferenceNotification (models.Model):
     person = models.ForeignKey(Person)
     message = models.CharField('Notification Message', max_length=255, default=" ")
     date_saved = models.DateField(default=date.today())
     unread = models.BooleanField(default=True)
+
+    def __str__(self):
+        return '{}, {}'.format(self.date_saved, self.person.__str__())
