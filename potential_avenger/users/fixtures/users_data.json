@@ -1,0 +1,146 @@
+[
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$gMTJmBCH25Of$a313b82491a0beafc8ccf4b205958951", 
+        "is_staff": true, 
+        "first_name": "", 
+        "email": "as@as.as", 
+        "user_permissions": [], 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": true, 
+        "date_joined": "2013-07-02T15:16:28.436", 
+        "groups": [], 
+        "username": "admin", 
+        "last_login": "2013-07-02T15:16:28.436"
+    }, 
+    "pk": 1
+},
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$CLlZ0XsKdJNK$1de24754b8a875aa346a0bbbdf9bc1cd", 
+        "is_staff": false, 
+        "first_name": "User1Name1", 
+        "email": "", 
+        "user_permissions": [], 
+        "last_name": "User1Name2", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "date_joined": "2013-07-02T15:16:51.710", 
+        "groups": [], 
+        "username": "user1", 
+        "last_login": "2013-07-02T15:16:51.710"
+    }, 
+    "pk": 2
+},
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$8GvAsZWFhkOc$6939953c62e32c61828a2d4043d9f399", 
+        "is_staff": false, 
+        "first_name": "User2Name1", 
+        "email": "", 
+        "user_permissions": [], 
+        "last_name": "User2Name2", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "date_joined": "2013-07-02T15:16:51.908", 
+        "groups": [], 
+        "username": "user2", 
+        "last_login": "2013-07-02T15:16:51.908"
+    }, 
+    "pk": 3
+},
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$yFVAmAflK0mc$f3f53218b0e1aa36c56cb8bbfb919dcf", 
+        "is_staff": false, 
+        "first_name": "User3Name1", 
+        "email": "", 
+        "user_permissions": [], 
+        "last_name": "User3Name2", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "date_joined": "2013-07-02T15:16:52.076", 
+        "groups": [], 
+        "username": "user3", 
+        "last_login": "2013-07-02T15:16:52.076"
+    }, 
+    "pk": 4
+},
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$oYOqpXhHf23j$8af2935bce4b17a3449193c1e1fb68d6", 
+        "is_staff": false, 
+        "first_name": "User4Name1", 
+        "email": "", 
+        "user_permissions": [], 
+        "last_name": "User4Name2", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "date_joined": "2013-07-02T15:16:52.245", 
+        "groups": [], 
+        "username": "user4", 
+        "last_login": "2013-07-02T15:16:52.245"
+    }, 
+    "pk": 5
+},
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$Lyf7ipV1EFQW$d04d96fee53ab5392c96af968a2bd3f0", 
+        "is_staff": false, 
+        "first_name": "User5Name1", 
+        "email": "", 
+        "user_permissions": [], 
+        "last_name": "User5Name2", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "date_joined": "2013-07-02T15:16:52.424", 
+        "groups": [], 
+        "username": "user5", 
+        "last_login": "2013-07-02T15:16:52.424"
+    }, 
+    "pk": 6
+},
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$AQB4Ip1VjgYZ$0a907c6f963b177437106f286e4e65c3", 
+        "is_staff": false, 
+        "first_name": "User6Name1", 
+        "email": "", 
+        "user_permissions": [], 
+        "last_name": "User6Name2", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "date_joined": "2013-07-02T15:16:52.593", 
+        "groups": [], 
+        "username": "user6", 
+        "last_login": "2013-07-02T15:16:52.593"
+    }, 
+    "pk": 7
+},
+{
+    "model": "auth.user", 
+    "fields": {
+        "password": "md5$WxeCoh2z6PD5$efa2f57a7e84df717e830d14a28717f7", 
+        "is_staff": false, 
+        "first_name": "User7Name1", 
+        "email": "", 
+        "user_permissions": [], 
+        "last_name": "User7Name2", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "date_joined": "2013-07-02T15:16:52.866", 
+        "groups": [], 
+        "username": "user7", 
+        "last_login": "2013-07-02T15:16:52.866"
+    }, 
+    "pk": 8
+}
+]

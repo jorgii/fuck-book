@@ -1,0 +1,29 @@
+[
+{
+    "pk": 1, 
+    "fields": {
+        "timestamp": "2013-07-02T15:32:47.562", 
+        "person2": 3, 
+        "person1": 2
+    }, 
+    "model": "diary.diary"
+},
+{
+    "pk": 2, 
+    "fields": {
+        "timestamp": "2013-07-02T15:33:25.151", 
+        "person2": 4, 
+        "person1": 2
+    }, 
+    "model": "diary.diary"
+},
+{
+    "pk": 3, 
+    "fields": {
+        "timestamp": "2013-07-02T15:34:12.025", 
+        "person2": null, 
+        "person1": 2
+    }, 
+    "model": "diary.diary"
+}
+]

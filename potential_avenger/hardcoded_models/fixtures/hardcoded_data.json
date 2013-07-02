@@ -1,0 +1,198 @@
+[
+{
+    "fields": {
+        "pose": "advanced_sex"
+    }, 
+    "pk": 1, 
+    "model": "hardcoded_models.poseslist"
+},
+{
+    "fields": {
+        "pose": "leg_lock"
+    }, 
+    "pk": 2, 
+    "model": "hardcoded_models.poseslist"
+},
+{
+    "fields": {
+        "pose": "missionary"
+    }, 
+    "pk": 3, 
+    "model": "hardcoded_models.poseslist"
+},
+{
+    "fields": {
+        "pose": "side_sex"
+    }, 
+    "pk": 4, 
+    "model": "hardcoded_models.poseslist"
+},
+{
+    "fields": {
+        "pose": "spider_web"
+    }, 
+    "pk": 5, 
+    "model": "hardcoded_models.poseslist"
+},
+{
+    "fields": {
+        "pose": "the_mermaid"
+    }, 
+    "pk": 6, 
+    "model": "hardcoded_models.poseslist"
+},
+{
+    "fields": {
+        "pose": "water_sex"
+    }, 
+    "pk": 7, 
+    "model": "hardcoded_models.poseslist"
+},
+{
+    "fields": {
+        "place": "bathtub"
+    }, 
+    "pk": 1, 
+    "model": "hardcoded_models.placeslist"
+},
+{
+    "fields": {
+        "place": "chair"
+    }, 
+    "pk": 2, 
+    "model": "hardcoded_models.placeslist"
+},
+{
+    "fields": {
+        "place": "desk"
+    }, 
+    "pk": 3, 
+    "model": "hardcoded_models.placeslist"
+},
+{
+    "fields": {
+        "place": "double_bed"
+    }, 
+    "pk": 4, 
+    "model": "hardcoded_models.placeslist"
+},
+{
+    "fields": {
+        "place": "table"
+    }, 
+    "pk": 5, 
+    "model": "hardcoded_models.placeslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 1"
+    }, 
+    "pk": 1, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 2"
+    }, 
+    "pk": 2, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 3"
+    }, 
+    "pk": 3, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 4"
+    }, 
+    "pk": 4, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 5"
+    }, 
+    "pk": 5, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 6"
+    }, 
+    "pk": 6, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 7"
+    }, 
+    "pk": 7, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 8"
+    }, 
+    "pk": 8, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 9"
+    }, 
+    "pk": 9, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 10"
+    }, 
+    "pk": 10, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 11"
+    }, 
+    "pk": 11, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 12"
+    }, 
+    "pk": 12, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 13"
+    }, 
+    "pk": 13, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 14"
+    }, 
+    "pk": 14, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 15"
+    }, 
+    "pk": 15, 
+    "model": "hardcoded_models.tipslist"
+},
+{
+    "fields": {
+        "useful_tip": "Tip 16"
+    }, 
+    "pk": 16, 
+    "model": "hardcoded_models.tipslist"
+}
+]
