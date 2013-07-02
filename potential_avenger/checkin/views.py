@@ -13,25 +13,30 @@ from diary.models import Diary
 
 @login_required
 def checkin(request):
-    current_checkin = CheckinDetails(person=request.user.person)
+    this_person = request.user.person
+    current_checkin = CheckinDetails(person=this_person)
     checkin_form = CheckinForm(request.POST or None, instance=current_checkin)
+
     if request.method == 'POST':
         if checkin_form.is_valid():
             checkin_form.save()
-            person1_person2_diary = Diary.objects.filter(person1=request.user.person,
-                                                         person2=checkin_form.instance.with_who) \
-                or Diary.objects.filter(person1=checkin_form.instance.with_who,
-                                        person2=request.user.person)
-            if person1_person2_diary:
-                pass
-            else:
+
+            person1_person2_diary = Diary.objects.filter(person1=this_person, person2=checkin_form.instance.with_who) \
+                or Diary.objects.filter(person1=checkin_form.instance.with_who, person2=this_person)
+            if not person1_person2_diary:
                 Diary.objects.create(person1=request.user.person, person2=checkin_form.instance.with_who)
-            this_person = PersonalSettings.objects.get(person=request.user.person)
-            if this_person.display_periodical_notification is True:
-                this_person_notifications = PeriodicalNotification.objects.filter(person=request.user.person)
-                last_entry = this_person_notifications.latest('date_saved')
-                last_entry.date_saved = date.today()
-                last_entry.save(update_fields=['date_saved'])
+
+            this_person_settings = PersonalSettings.objects.get(person=this_person)
+            if this_person_settings.display_periodical_notification:
+                update_last_periodical_notification(request.user.person)
+
             return redirect('/diary/')
     csrf(request)
     return render(request, "checkin.html", locals())
+
+
+def update_last_periodical_notification(person):
+    this_person_notifications = PeriodicalNotification.objects.filter(person=person)
+    last_entry = this_person_notifications.latest('date_saved')
+    last_entry.date_saved = date.today()
+    last_entry.save(update_fields=['date_saved'])
