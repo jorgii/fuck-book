@@ -97,6 +97,7 @@
         </div>
     </div>
     {% endfor %}
+    {% if paginator.num_pages > 1 %}
     <div class="pagination">
         <ul>
             {% if statistics_page.has_previous %}
@@ -108,4 +109,5 @@
             {% endif %}
         </ul>
     </div>
+    {% endif %}
 {% endblock %}
