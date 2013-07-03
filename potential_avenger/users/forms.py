@@ -23,6 +23,11 @@ class PersonForm(ModelForm):
 
 
 class PersonPreferencesForm(ModelForm):
+    def __init__(self, data=None, instance=None, *args, **kwargs):
+        super(PersonPreferencesForm, self).__init__(data=data, instance=instance, *args, **kwargs)
+        relation_set = self.fields['relation'].queryset
+        self.fields['relation'].queryset = relation_set.exclude(id=instance.person.id).filter(personpreferences__relation=None)
+
     class Meta:
         model = PersonPreferences
         fields = ['relation', 'preferred_poses', 'preferred_places']
