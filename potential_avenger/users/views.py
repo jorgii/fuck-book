@@ -16,7 +16,6 @@ from notifications.models import PeriodicalNotification, TipNotification, Differ
 
 @login_required
 def profile(request, username):
-    path = '/profile/' + username + '/'
     logged_user_name = str(request.user.person)
     user_to_display = User.objects.get(username=username)
     if user_to_display == request.user:
@@ -24,45 +23,16 @@ def profile(request, username):
     else:
         logged_user_view = False
     try:
-        full_name = str(user_to_display.person)
-    except User.DoesNotExist:
-        fll_name = None
-    try:
-        email = user_to_display.email
-    except User.DoesNotExist:
-        email = None
-    try:
-        gender = user_to_display.person.get_gender_display()
-    except Person.DoesNotExist:
-        gender = None
-    try:
         age = int((date.today() - user_to_display.person.birth_date).days/365)
-    except Person.DoesNotExist:
-        age = None
     except TypeError:
         age = None
-    try:
-        city = user_to_display.person.city
-    except Person.DoesNotExist:
-        city = None
-    try:
-        preferred_poses = [str(pose) for pose in user_to_display.person.personpreferences.preferred_poses.all()]
-    except PersonPreferences.DoesNotExist:
-        preferred_poses = None
-    try:
-        preferred_places = [str(place) for place in user_to_display.person.personpreferences.preferred_places.all()]
-    except PersonPreferences.DoesNotExist:
-        preferred_places = None
-    female_friends = User.objects.filter(person__gender='F').exclude(id=user_to_display.id)
-    try:
-        related_to = str(user_to_display.person.personpreferences.relation)
-    except PersonPreferences.DoesNotExist:
-        related_to = None
+    preferred_poses = [str(pose) for pose in user_to_display.person.personpreferences.preferred_poses.all()]
+    preferred_places = [str(place) for place in user_to_display.person.personpreferences.preferred_places.all()]
+    related_to = str(user_to_display.person.personpreferences.relation)
     try:
         profile_photo = user_to_display.person.photo.url
     except ValueError:
         profile_photo = '/media/profile_photos/noPhoto.jpg'
-
     number_of_unread_notifications = get_number_of_unread_notifications(request.user.person)
     return render(request, 'profile.html', locals())
 

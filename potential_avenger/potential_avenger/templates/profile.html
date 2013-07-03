@@ -19,18 +19,18 @@
                 <table class="table table-striped">
                     <tr>
                       <td><b>Name:</b></td>
-                      <td>{{ full_name }}</td>
+                      <td>{{ user_to_display.person }}</td>
                     </tr>
-                    {% if email %}
+                    {% if user_to_display.email %}
                     <tr>
                       <td><b>E-mail:</b></td>
-                      <td>{{ email }}</td>
+                      <td>{{ user_to_display.email }}</td>
                     </tr>
                     {% endif %}
-                    {% if gender %}
+                    {% if user_to_display.person.get_gender_display %}
                     <tr>
                       <td><b>Gender:</b></td>
-                      <td>{{ gender }}</td>
+                      <td>{{ user_to_display.person.get_gender_display }}</td>
                     </tr>
                     {% endif %}
                     {% if age %}
@@ -39,10 +39,10 @@
                       <td>{{ age }}</td>
                     </tr>
                     {% endif %}
-                    {% if city %}
+                    {% if user_to_display.person.city %}
                     <tr>
                       <td><b>City/Town:</b></td>
-                      <td>{{ city }}</td>
+                      <td>{{ user_to_display.person.city }}</td>
                     </tr>
                     {% endif %}
                 </table>
@@ -63,9 +63,9 @@
           {% endif %}
         </div>
       </div>
-      {% if related_to|stringformat:"s" != 'None' %}
+      {% if user_to_display.person.personpreferences.relation %}
       <div class="row-fluid">
-        <div class="span12"><b>In a relationship with: </b>{{ related_to }}</div>
+        <div class="span12"><b>In a relationship with: </b>{{ user_to_display.person.personpreferences.relation }}</div>
       </div>
       {% else %}
       <div class="row-fluid">
