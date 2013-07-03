@@ -86,5 +86,8 @@ def average(*args):
 
 
 def get_top_three(*args):
+    '''
+    Returns most common three elements in given list or arguments.
+    '''
     top_three = [x[0] for x in Counter(args).most_common(3)]
     return top_three
