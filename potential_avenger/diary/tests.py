@@ -38,3 +38,9 @@ class DiaryTest(TestCase):
         self.client.login(username='user1', password='pass1')
         response = self.client.get('/diary/')
         self.assertEqual(response.status_code, 200)
+
+    def test_empty_diary(self):
+        self.client.login(username='user7', password='pass7')
+        response = self.client.get('/diary/')
+        received_diary_list = response.context['diary_list']
+        self.assertEqual(list(), received_diary_list)
