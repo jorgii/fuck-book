@@ -1,106 +1,106 @@
 [
 {
+    "pk": 1, 
+    "model": "checkin.checkindetails", 
     "fields": {
+        "date_checked": "2013-07-02", 
+        "duration": 10, 
+        "address": "Sofia, Mladost 1", 
+        "places": [
+            2, 
+            3
+        ], 
+        "contraception": true, 
         "poses": [
             3, 
             4
         ], 
-        "contraception": true, 
-        "date_checked": "2013-07-02", 
-        "with_who": 2, 
-        "person": 1, 
-        "places": [
-            2, 
-            3
-        ], 
+        "person": 2, 
         "rating": "2", 
-        "address": "Sofia, Mladost 1", 
-        "duration": 10
-    }, 
-    "model": "checkin.checkindetails", 
-    "pk": 1
+        "with_who": 3
+    }
 },
 {
+    "pk": 2, 
+    "model": "checkin.checkindetails", 
     "fields": {
-        "poses": [
-            1, 
-            2, 
-            3
-        ], 
-        "contraception": true, 
         "date_checked": "2013-07-02", 
-        "with_who": 3, 
-        "person": 1, 
+        "duration": 10, 
+        "address": "Cherni vrah 47, Sofia, Bulgaria", 
         "places": [
             4, 
             5
         ], 
+        "contraception": true, 
+        "poses": [
+            1, 
+            2, 
+            3
+        ], 
+        "person": 2, 
         "rating": "4", 
-        "address": "Cherni vrah 47, Sofia, Bulgaria", 
-        "duration": 10
-    }, 
-    "model": "checkin.checkindetails", 
-    "pk": 2
+        "with_who": 4
+    }
 },
 {
+    "pk": 3, 
+    "model": "checkin.checkindetails", 
     "fields": {
-        "poses": [
-            4, 
-            6
-        ], 
-        "contraception": true, 
         "date_checked": "2013-07-02", 
-        "with_who": 2, 
-        "person": 1, 
+        "duration": 10, 
+        "address": "Paris, Louvre", 
         "places": [
             2, 
             4
         ], 
-        "rating": "4", 
-        "address": "Paris, Louvre", 
-        "duration": 10
-    }, 
-    "model": "checkin.checkindetails", 
-    "pk": 3
-},
-{
-    "fields": {
+        "contraception": true, 
         "poses": [
             4, 
-            7
+            6
         ], 
-        "contraception": true, 
+        "person": 2, 
+        "rating": "4", 
+        "with_who": 3
+    }
+},
+{
+    "pk": 4, 
+    "model": "checkin.checkindetails", 
+    "fields": {
         "date_checked": "2013-07-02", 
-        "with_who": null, 
-        "person": 1, 
+        "duration": 25, 
+        "address": "New York", 
         "places": [
             1, 
             2
         ], 
+        "contraception": true, 
+        "poses": [
+            4, 
+            7
+        ], 
+        "person": 2, 
         "rating": "5", 
-        "address": "New York", 
-        "duration": 25
-    }, 
-    "model": "checkin.checkindetails", 
-    "pk": 4
+        "with_who": null
+    }
 },
 {
+    "pk": 5, 
+    "model": "checkin.checkindetails", 
     "fields": {
-        "poses": [
-            2
-        ], 
-        "contraception": true, 
         "date_checked": "2013-07-02", 
-        "with_who": 1, 
-        "person": 2, 
+        "duration": 10, 
+        "address": "Bangcok", 
         "places": [
             3
         ], 
+        "contraception": true, 
+        "poses": [
+            2
+        ], 
+        "person": 3, 
         "rating": "3", 
-        "address": "Bangcok", 
-        "duration": 10
-    }, 
-    "model": "checkin.checkindetails", 
-    "pk": 5
+        "with_who": 2
+    }
 }
 ]

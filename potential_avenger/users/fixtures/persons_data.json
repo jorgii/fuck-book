@@ -1,301 +1,299 @@
 [
 {
-    "pk": 1, 
+    "model": "users.person", 
     "fields": {
+        "user": 8, 
         "photo": "", 
-        "gender": "M", 
-        "birth_date": "1990-01-25", 
         "city": "Sofia1", 
-        "user": 2
+        "gender": "M", 
+        "birth_date": "1990-01-25"
     }, 
-    "model": "users.person"
+    "pk": 1
 },
 {
-    "pk": 2, 
+    "model": "users.person", 
     "fields": {
+        "user": 2, 
         "photo": "", 
-        "gender": "F", 
-        "birth_date": "1991-02-25", 
         "city": "Sofia2", 
-        "user": 3
+        "gender": "F", 
+        "birth_date": "1991-02-25"
     }, 
-    "model": "users.person"
+    "pk": 2
 },
 {
-    "pk": 3, 
+    "model": "users.person", 
     "fields": {
+        "user": 3, 
         "photo": "", 
-        "gender": "F", 
-        "birth_date": "1992-03-25", 
         "city": "Sofia3", 
-        "user": 4
+        "gender": "F", 
+        "birth_date": "1992-03-25"
     }, 
-    "model": "users.person"
+    "pk": 3
 },
 {
-    "pk": 4, 
+    "model": "users.person", 
     "fields": {
+        "user": 4, 
         "photo": "", 
-        "gender": "M", 
-        "birth_date": "1993-04-25", 
         "city": "Sofia4", 
-        "user": 5
-    }, 
-    "model": "users.person"
-},
-{
-    "pk": 5, 
-    "fields": {
-        "photo": "", 
-        "gender": "F", 
-        "birth_date": "1994-05-25", 
-        "city": "Sofia5", 
-        "user": 6
-    }, 
-    "model": "users.person"
-},
-{
-    "pk": 6, 
-    "fields": {
-        "photo": "", 
         "gender": "M", 
-        "birth_date": "1995-06-25", 
-        "city": "Sofia6", 
-        "user": 7
+        "birth_date": "1993-04-25"
     }, 
-    "model": "users.person"
+    "pk": 4
 },
 {
-    "pk": 7, 
+    "model": "users.person", 
     "fields": {
+        "user": 5, 
         "photo": "", 
+        "city": "Sofia5", 
         "gender": "F", 
-        "birth_date": "1996-07-25", 
+        "birth_date": "1994-05-25"
+    }, 
+    "pk": 5
+},
+{
+    "model": "users.person", 
+    "fields": {
+        "user": 6, 
+        "photo": "", 
+        "city": "Sofia6", 
+        "gender": "M", 
+        "birth_date": "1995-06-25"
+    }, 
+    "pk": 6
+},
+{
+    "model": "users.person", 
+    "fields": {
+        "user": 7, 
+        "photo": "", 
         "city": "Sofia7", 
-        "user": 8
+        "gender": "F", 
+        "birth_date": "1996-07-25"
     }, 
-    "model": "users.person"
+    "pk": 7
 },
 {
-    "pk": 1, 
+    "model": "users.personpreferences", 
     "fields": {
-        "preferred_poses": [
-            1, 
-            2, 
-            3, 
-            7
-        ], 
-        "relation": null, 
         "preferred_places": [
-            1, 
-            2, 
-            4, 
-            5
-        ], 
-        "person": 1
-    }, 
-    "model": "users.personpreferences"
-},
-{
-    "pk": 2, 
-    "fields": {
-        "preferred_poses": [
             1, 
             2, 
             5
         ], 
-        "relation": null, 
-        "preferred_places": [
+        "person": 1, 
+        "preferred_poses": [
             2, 
             3, 
             4, 
             5
         ], 
-        "person": 2
+        "relation": null
     }, 
-    "model": "users.personpreferences"
+    "pk": 1
 },
 {
-    "pk": 3, 
+    "model": "users.personpreferences", 
     "fields": {
-        "preferred_poses": [
-            1, 
-            4, 
-            5, 
-            6
-        ], 
-        "relation": null, 
         "preferred_places": [
             1, 
+            2, 
             3
         ], 
-        "person": 3
-    }, 
-    "model": "users.personpreferences"
-},
-{
-    "pk": 4, 
-    "fields": {
+        "person": 2, 
         "preferred_poses": [
-            1, 
-            4, 
-            6, 
-            7
-        ], 
-        "relation": null, 
-        "preferred_places": [
             2, 
             4, 
-            5
+            6
         ], 
-        "person": 4
+        "relation": null
     }, 
-    "model": "users.personpreferences"
+    "pk": 2
 },
 {
-    "pk": 5, 
+    "model": "users.personpreferences", 
     "fields": {
-        "preferred_poses": [
+        "preferred_places": [
+            1, 
             3, 
+            5
+        ], 
+        "person": 3, 
+        "preferred_poses": [
+            2, 
+            4, 
+            6
+        ], 
+        "relation": null
+    }, 
+    "pk": 3
+},
+{
+    "model": "users.personpreferences", 
+    "fields": {
+        "preferred_places": [
+            1, 
+            3, 
+            5
+        ], 
+        "person": 4, 
+        "preferred_poses": [
+            2, 
             5, 
             6, 
             7
         ], 
-        "relation": null, 
-        "preferred_places": [
-            2, 
-            3, 
-            4
-        ], 
-        "person": 5
+        "relation": null
     }, 
-    "model": "users.personpreferences"
+    "pk": 4
 },
 {
-    "pk": 6, 
+    "model": "users.personpreferences", 
     "fields": {
+        "preferred_places": [
+            2, 
+            4, 
+            5
+        ], 
+        "person": 5, 
+        "preferred_poses": [
+            1, 
+            4, 
+            6, 
+            7
+        ], 
+        "relation": null
+    }, 
+    "pk": 5
+},
+{
+    "model": "users.personpreferences", 
+    "fields": {
+        "preferred_places": [
+            1, 
+            3, 
+            5
+        ], 
+        "person": 6, 
         "preferred_poses": [
             3, 
             6, 
             7
         ], 
-        "relation": null, 
+        "relation": null
+    }, 
+    "pk": 6
+},
+{
+    "model": "users.personpreferences", 
+    "fields": {
         "preferred_places": [
             1, 
             2, 
+            3, 
             5
         ], 
-        "person": 6
-    }, 
-    "model": "users.personpreferences"
-},
-{
-    "pk": 7, 
-    "fields": {
-        "preferred_poses": [
-            1, 
-            3, 
-            7
-        ], 
-        "relation": null, 
-        "preferred_places": [
-            1, 
-            2, 
-            4
-        ], 
-        "person": 7
-    }, 
-    "model": "users.personpreferences"
-},
-{
-    "pk": 1, 
-    "fields": {
-        "display_difference_notification": true, 
-        "display_tip_notification": true, 
-        "periodical_notification_period": 14, 
-        "difference_notification_period": 30, 
-        "person": 1, 
-        "display_periodical_notification": true, 
-        "tip_notification_period": 7
-    }, 
-    "model": "users.personalsettings"
-},
-{
-    "pk": 2, 
-    "fields": {
-        "display_difference_notification": true, 
-        "display_tip_notification": true, 
-        "periodical_notification_period": 14, 
-        "difference_notification_period": 30, 
-        "person": 2, 
-        "display_periodical_notification": true, 
-        "tip_notification_period": 7
-    }, 
-    "model": "users.personalsettings"
-},
-{
-    "pk": 3, 
-    "fields": {
-        "display_difference_notification": true, 
-        "display_tip_notification": true, 
-        "periodical_notification_period": 14, 
-        "difference_notification_period": 30, 
-        "person": 3, 
-        "display_periodical_notification": true, 
-        "tip_notification_period": 7
-    }, 
-    "model": "users.personalsettings"
-},
-{
-    "pk": 4, 
-    "fields": {
-        "display_difference_notification": true, 
-        "display_tip_notification": true, 
-        "periodical_notification_period": 14, 
-        "difference_notification_period": 30, 
-        "person": 4, 
-        "display_periodical_notification": true, 
-        "tip_notification_period": 7
-    }, 
-    "model": "users.personalsettings"
-},
-{
-    "pk": 5, 
-    "fields": {
-        "display_difference_notification": true, 
-        "display_tip_notification": true, 
-        "periodical_notification_period": 14, 
-        "difference_notification_period": 30, 
-        "person": 5, 
-        "display_periodical_notification": true, 
-        "tip_notification_period": 7
-    }, 
-    "model": "users.personalsettings"
-},
-{
-    "pk": 6, 
-    "fields": {
-        "display_difference_notification": true, 
-        "display_tip_notification": true, 
-        "periodical_notification_period": 14, 
-        "difference_notification_period": 30, 
-        "person": 6, 
-        "display_periodical_notification": true, 
-        "tip_notification_period": 7
-    }, 
-    "model": "users.personalsettings"
-},
-{
-    "pk": 7, 
-    "fields": {
-        "display_difference_notification": true, 
-        "display_tip_notification": true, 
-        "periodical_notification_period": 14, 
-        "difference_notification_period": 30, 
         "person": 7, 
-        "display_periodical_notification": true, 
-        "tip_notification_period": 7
+        "preferred_poses": [
+            3, 
+            6
+        ], 
+        "relation": null
     }, 
-    "model": "users.personalsettings"
+    "pk": 7
+},
+{
+    "model": "users.personalsettings", 
+    "fields": {
+        "display_periodical_notification": true, 
+        "display_difference_notification": true, 
+        "display_tip_notification": true, 
+        "person": 1, 
+        "tip_notification_period": 7, 
+        "difference_notification_period": 30, 
+        "periodical_notification_period": 14
+    }, 
+    "pk": 1
+},
+{
+    "model": "users.personalsettings", 
+    "fields": {
+        "display_periodical_notification": true, 
+        "display_difference_notification": true, 
+        "display_tip_notification": true, 
+        "person": 2, 
+        "tip_notification_period": 7, 
+        "difference_notification_period": 30, 
+        "periodical_notification_period": 14
+    }, 
+    "pk": 2
+},
+{
+    "model": "users.personalsettings", 
+    "fields": {
+        "display_periodical_notification": true, 
+        "display_difference_notification": true, 
+        "display_tip_notification": true, 
+        "person": 3, 
+        "tip_notification_period": 7, 
+        "difference_notification_period": 30, 
+        "periodical_notification_period": 14
+    }, 
+    "pk": 3
+},
+{
+    "model": "users.personalsettings", 
+    "fields": {
+        "display_periodical_notification": true, 
+        "display_difference_notification": true, 
+        "display_tip_notification": true, 
+        "person": 4, 
+        "tip_notification_period": 7, 
+        "difference_notification_period": 30, 
+        "periodical_notification_period": 14
+    }, 
+    "pk": 4
+},
+{
+    "model": "users.personalsettings", 
+    "fields": {
+        "display_periodical_notification": true, 
+        "display_difference_notification": true, 
+        "display_tip_notification": true, 
+        "person": 5, 
+        "tip_notification_period": 7, 
+        "difference_notification_period": 30, 
+        "periodical_notification_period": 14
+    }, 
+    "pk": 5
+},
+{
+    "model": "users.personalsettings", 
+    "fields": {
+        "display_periodical_notification": true, 
+        "display_difference_notification": true, 
+        "display_tip_notification": true, 
+        "person": 6, 
+        "tip_notification_period": 7, 
+        "difference_notification_period": 30, 
+        "periodical_notification_period": 14
+    }, 
+    "pk": 6
+},
+{
+    "model": "users.personalsettings", 
+    "fields": {
+        "display_periodical_notification": true, 
+        "display_difference_notification": true, 
+        "display_tip_notification": true, 
+        "person": 7, 
+        "tip_notification_period": 7, 
+        "difference_notification_period": 30, 
+        "periodical_notification_period": 14
+    }, 
+    "pk": 7
 }
 ]

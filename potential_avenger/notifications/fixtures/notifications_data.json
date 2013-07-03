@@ -1,212 +1,212 @@
 [
 {
+    "pk": 1, 
     "fields": {
-        "unread": true, 
+        "person": 1, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Don't hesitate to make your first check in.", 
-        "person": 1
+        "unread": true, 
+        "message": "Wellcome! Don't hesitate to make your first check in."
     }, 
-    "model": "notifications.periodicalnotification", 
-    "pk": 1
+    "model": "notifications.periodicalnotification"
 },
 {
+    "pk": 2, 
     "fields": {
-        "unread": true, 
+        "person": 2, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Don't hesitate to make your first check in.", 
-        "person": 2
+        "unread": true, 
+        "message": "Wellcome! Don't hesitate to make your first check in."
     }, 
-    "model": "notifications.periodicalnotification", 
-    "pk": 2
+    "model": "notifications.periodicalnotification"
 },
 {
+    "pk": 3, 
     "fields": {
-        "unread": true, 
+        "person": 3, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Don't hesitate to make your first check in.", 
-        "person": 3
+        "unread": true, 
+        "message": "Wellcome! Don't hesitate to make your first check in."
     }, 
-    "model": "notifications.periodicalnotification", 
-    "pk": 3
+    "model": "notifications.periodicalnotification"
 },
 {
+    "pk": 4, 
     "fields": {
-        "unread": true, 
+        "person": 4, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Don't hesitate to make your first check in.", 
-        "person": 4
+        "unread": true, 
+        "message": "Wellcome! Don't hesitate to make your first check in."
     }, 
-    "model": "notifications.periodicalnotification", 
-    "pk": 4
+    "model": "notifications.periodicalnotification"
 },
 {
+    "pk": 5, 
     "fields": {
-        "unread": true, 
+        "person": 5, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Don't hesitate to make your first check in.", 
-        "person": 5
+        "unread": true, 
+        "message": "Wellcome! Don't hesitate to make your first check in."
     }, 
-    "model": "notifications.periodicalnotification", 
-    "pk": 5
+    "model": "notifications.periodicalnotification"
 },
 {
+    "pk": 6, 
     "fields": {
-        "unread": true, 
+        "person": 6, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Don't hesitate to make your first check in.", 
-        "person": 6
+        "unread": true, 
+        "message": "Wellcome! Don't hesitate to make your first check in."
     }, 
-    "model": "notifications.periodicalnotification", 
-    "pk": 6
+    "model": "notifications.periodicalnotification"
 },
 {
+    "pk": 7, 
     "fields": {
-        "unread": true, 
+        "person": 7, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Don't hesitate to make your first check in.", 
-        "person": 7
+        "unread": true, 
+        "message": "Wellcome! Don't hesitate to make your first check in."
     }, 
-    "model": "notifications.periodicalnotification", 
-    "pk": 7
+    "model": "notifications.periodicalnotification"
 },
 {
+    "pk": 1, 
     "fields": {
-        "unread": true, 
+        "person": 1, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips.", 
-        "person": 1
+        "unread": true, 
+        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips."
     }, 
-    "model": "notifications.tipnotification", 
-    "pk": 1
+    "model": "notifications.tipnotification"
 },
 {
+    "pk": 2, 
     "fields": {
-        "unread": true, 
+        "person": 2, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips.", 
-        "person": 2
+        "unread": true, 
+        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips."
     }, 
-    "model": "notifications.tipnotification", 
-    "pk": 2
+    "model": "notifications.tipnotification"
 },
 {
+    "pk": 3, 
     "fields": {
-        "unread": true, 
+        "person": 3, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips.", 
-        "person": 3
+        "unread": true, 
+        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips."
     }, 
-    "model": "notifications.tipnotification", 
-    "pk": 3
+    "model": "notifications.tipnotification"
 },
 {
+    "pk": 4, 
     "fields": {
-        "unread": true, 
+        "person": 4, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips.", 
-        "person": 4
+        "unread": true, 
+        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips."
     }, 
-    "model": "notifications.tipnotification", 
-    "pk": 4
+    "model": "notifications.tipnotification"
 },
 {
+    "pk": 5, 
     "fields": {
-        "unread": true, 
+        "person": 5, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips.", 
-        "person": 5
+        "unread": true, 
+        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips."
     }, 
-    "model": "notifications.tipnotification", 
-    "pk": 5
+    "model": "notifications.tipnotification"
 },
 {
+    "pk": 6, 
     "fields": {
-        "unread": true, 
+        "person": 6, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips.", 
-        "person": 6
+        "unread": true, 
+        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips."
     }, 
-    "model": "notifications.tipnotification", 
-    "pk": 6
+    "model": "notifications.tipnotification"
 },
 {
+    "pk": 7, 
     "fields": {
-        "unread": true, 
+        "person": 7, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips.", 
-        "person": 7
+        "unread": true, 
+        "message": "Wellcome! Go to your profile settings if you don't want to get useful tips."
     }, 
-    "model": "notifications.tipnotification", 
-    "pk": 7
+    "model": "notifications.tipnotification"
 },
 {
+    "pk": 1, 
     "fields": {
-        "unread": true, 
+        "person": 1, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications.", 
-        "person": 1
+        "unread": true, 
+        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications."
     }, 
-    "model": "notifications.differencenotification", 
-    "pk": 1
+    "model": "notifications.differencenotification"
 },
 {
+    "pk": 2, 
     "fields": {
-        "unread": true, 
+        "person": 2, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications.", 
-        "person": 2
+        "unread": true, 
+        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications."
     }, 
-    "model": "notifications.differencenotification", 
-    "pk": 2
+    "model": "notifications.differencenotification"
 },
 {
+    "pk": 3, 
     "fields": {
-        "unread": true, 
+        "person": 3, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications.", 
-        "person": 3
+        "unread": true, 
+        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications."
     }, 
-    "model": "notifications.differencenotification", 
-    "pk": 3
+    "model": "notifications.differencenotification"
 },
 {
+    "pk": 4, 
     "fields": {
-        "unread": true, 
+        "person": 4, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications.", 
-        "person": 4
+        "unread": true, 
+        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications."
     }, 
-    "model": "notifications.differencenotification", 
-    "pk": 4
+    "model": "notifications.differencenotification"
 },
 {
+    "pk": 5, 
     "fields": {
-        "unread": true, 
+        "person": 5, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications.", 
-        "person": 5
+        "unread": true, 
+        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications."
     }, 
-    "model": "notifications.differencenotification", 
-    "pk": 5
+    "model": "notifications.differencenotification"
 },
 {
+    "pk": 6, 
     "fields": {
-        "unread": true, 
+        "person": 6, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications.", 
-        "person": 6
+        "unread": true, 
+        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications."
     }, 
-    "model": "notifications.differencenotification", 
-    "pk": 6
+    "model": "notifications.differencenotification"
 },
 {
+    "pk": 7, 
     "fields": {
-        "unread": true, 
+        "person": 7, 
         "date_saved": "2013-07-02", 
-        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications.", 
-        "person": 7
+        "unread": true, 
+        "message": "Wellcome! Once you're in a relation you'll start getting difference notifications."
     }, 
-    "model": "notifications.differencenotification", 
-    "pk": 7
+    "model": "notifications.differencenotification"
 }
 ]
