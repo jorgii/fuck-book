@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
@@ -59,46 +60,80 @@ class PersonTest(TestCase):
         self.assertRaises(ValidationError, self.person1.personpreferences.clean)
 
     def test_view_login_get_post(self):
-        response = self.client.get('/login/')
+        url = reverse('login',)
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.post('/login/', dict(username='user1', password='pass1'))
+        response = self.client.post(url, dict(username='user1', password='pass1'))
         self.assertEqual(response.status_code, 302)
 
-    def test_view_profile(self):
+    def test_view_profile_get(self):
         self.client.login(username='user1', password='pass1')
-        response = self.client.get('/profile/user1/')
+        url = reverse('profile', args=[self.person1.user.username])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_other_profile_get(self):
+        self.client.login(username='user1', password='pass1')
+        url = reverse('profile', args=[self.person2.user.username])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_profile_empty_birthday(self):
+        self.client.login(username='user1', password='pass1')
+        self.person1.birth_date = None
+        self.person1.save()
+        url = reverse('profile', args=[self.person1.user.username])
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_view_profile_no_mandatory_data(self):
         self.person1.birth_date = None
         self.person1.city = None
         self.client.login(username='user1', password='pass1')
-        response = self.client.get('/profile/user1/')
+        url = reverse('profile', args=[self.person1.user.username])
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_view_profile_edit_get_post(self):
         self.client.login(username='user1', password='pass1')
-        response = self.client.get('/profile_edit/')
+        url = reverse('profile_edit')
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         user = response.context.__getitem__('user')
         data = self.person_post_data(user)
         data['email'] = 'asd@asd.asd'
         data['first_name'] = 'changed firstname'
         data['periodical_notification_period'] = 66
-        response = self.client.post('/profile_edit/', data)
-        self.assertRedirects(response, '/profile/user1/', status_code=302, target_status_code=200)
+        response = self.client.post(url, data)
+        expected_url = reverse('profile', args=[self.person1.user.username])
+        self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
         self.assertEqual(User.objects.get(username='user1').email, data['email'])
         self.assertEqual(User.objects.get(username='user1').first_name, data['first_name'])
         self.assertEqual(User.objects.get(username='user1').person.personalsettings.periodical_notification_period, data['periodical_notification_period'])
 
+    def test_home_get(self):
+        url = reverse('home')
+        self.client.login(username='user1', password='pass1')
+        response = self.client.get(url)
+        expected_url = reverse('profile', args=[self.person1.user.username])
+        self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
+
+    def test_register_get(self):
+        url = reverse('register')
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
+
     def test_register_post(self):
-        response = self.client.post('/register/', dict(username='newone', password1='newpass', password2='newpass'))
-        self.assertRedirects(response, '/register_success/', status_code=302, target_status_code=200)
+        url = reverse('register')
+        response = self.client.post(url, dict(username='newone', password1='newpass', password2='newpass'))
+        expected_url = reverse('register_success')
+        self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
 
     def test_register_success_get_post(self):
         self.client.login(username='user1', password='pass1')
-        response = self.client.get('/register_success/')
+        url = reverse('register_success')
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         user = response.context.__getitem__('user')
         data = self.person_post_data(user)
@@ -107,7 +142,8 @@ class PersonTest(TestCase):
         del data['periodical_notification_period']
         del data['tip_notification_period']
         del data['difference_notification_period']
-        response = self.client.post('/register_success/', data)
-        self.assertRedirects(response, '/profile/user1/', status_code=302, target_status_code=200)
+        response = self.client.post(url, data)
+        expected_url = reverse('profile', args=[self.person1.user.username])
+        self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
         self.assertEqual(User.objects.get(username='user1').email, data['email'])
         self.assertEqual(User.objects.get(username='user1').first_name, data['first_name'])
