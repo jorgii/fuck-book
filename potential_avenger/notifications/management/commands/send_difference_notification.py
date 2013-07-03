@@ -27,24 +27,27 @@ class Command(BaseCommand):
                         latest_poses = self.get_latest_items("poses", latest_checkins)
                         latest_places = self.get_latest_items("places", latest_checkins)
 
-                        poses_counter = self.get_items_usage(latest_poses)
-                        places_counter = self.get_items_usage(latest_places)
-
-                        related_person_preferences = PersonPreferences.objects.get(person=related_person)
-                        related_person_preferred_poses = list(related_person_preferences.preferred_poses.all())
-                        related_person_preferred_places = list(related_person_preferences.preferred_places.all())
-                        related_person_preferred_poses_count = len(related_person_preferred_poses)
-                        related_person_preferred_places_count = len(related_person_preferred_places)
-
-                        if related_person_preferred_poses_count == 0 or related_person_preferred_places_count == 0:
-                            difference_message = "Your partner hasn't specified all of his/her preferences yet."
+                        if not latest_poses or not latest_places:
+                            difference_message = "If you want to get these, you have to specify poses and places when you checkin."
                         else:
-                            difference_message = self.get_difference_message(poses_counter,
-                                                                             places_counter,
-                                                                             related_person_preferred_poses,
-                                                                             related_person_preferred_places,
-                                                                             related_person_preferred_poses_count,
-                                                                             related_person_preferred_places_count)
+                            poses_counter = self.get_items_usage(latest_poses)
+                            places_counter = self.get_items_usage(latest_places)
+
+                            related_person_preferences = PersonPreferences.objects.get(person=related_person)
+                            related_person_preferred_poses = list(related_person_preferences.preferred_poses.all())
+                            related_person_preferred_places = list(related_person_preferences.preferred_places.all())
+                            related_person_preferred_poses_count = len(related_person_preferred_poses)
+                            related_person_preferred_places_count = len(related_person_preferred_places)
+
+                            if related_person_preferred_poses_count == 0 or related_person_preferred_places_count == 0:
+                                difference_message = "Your partner hasn't specified all of his/her preferences yet."
+                            else:
+                                difference_message = self.get_difference_message(poses_counter,
+                                                                                 places_counter,
+                                                                                 related_person_preferred_poses,
+                                                                                 related_person_preferred_places,
+                                                                                 related_person_preferred_poses_count,
+                                                                                 related_person_preferred_places_count)
 
                     DifferenceNotification.objects.create(person=this_person,
                                                           message=difference_message)
