@@ -1,10 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
-
-from hardcoded_models.models import PosesList
-from hardcoded_models.models import PlacesList
 
 
 def get_upload_file_name(instance, filename):
@@ -12,7 +7,7 @@ def get_upload_file_name(instance, filename):
 
 
 class Person(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField('auth.User')
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female')
@@ -27,14 +22,14 @@ class Person(models.Model):
 
 
 class PersonPreferences(models.Model):
-    person = models.OneToOneField(Person)
-    relation = models.OneToOneField(Person,
+    person = models.OneToOneField('users.Person')
+    relation = models.OneToOneField('users.Person',
                                     related_name='related user',
                                     blank=True,
                                     null=True,
                                     error_messages={'unique': 'This person is already in a relation with another user!'})
-    preferred_poses = models.ManyToManyField(PosesList, blank=True, null=True)
-    preferred_places = models.ManyToManyField(PlacesList, blank=True, null=True)
+    preferred_poses = models.ManyToManyField('hardcoded_models.PosesList', blank=True, null=True)
+    preferred_places = models.ManyToManyField('hardcoded_models.PlacesList', blank=True, null=True)
 
     def __str__(self):
         return self.person.__str__()
@@ -53,7 +48,7 @@ class PersonPreferences(models.Model):
 
 
 class PersonalSettings(models.Model):
-    person = models.OneToOneField(Person)
+    person = models.OneToOneField('users.Person')
     display_periodical_notification = models.BooleanField(default=True)
     display_tip_notification = models.BooleanField(default=True)
     display_difference_notification = models.BooleanField(default=True)
