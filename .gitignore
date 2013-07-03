@@ -19,7 +19,7 @@ lib
 lib64
 profile_photos
 dev.db
-
+htmlcov
 # Installer logs
 pip-log.txt
 
