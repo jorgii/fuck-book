@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
@@ -153,3 +154,33 @@ class PersonTest(TestCase):
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
         self.assertEqual(User.objects.get(username='user1').email, data['email'])
         self.assertEqual(User.objects.get(username='user1').first_name, data['first_name'])
+
+
+class FormsTest(TestCase):
+    fixtures = ['users_data.json', 'persons_data.json', 'hardcoded_data.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.person1 = User.objects.get(username='user1').person
+        self.person2 = User.objects.get(username='user2').person
+
+    def test_personpreferences_init_with_relation(self):
+        self.client.login(username='user1', password='pass1')
+        self.person1.personpreferences.relation = self.person2
+        self.person1.personpreferences.save()
+        url = reverse('profile_edit')
+        response = self.client.get(url)
+        received_relation_queryset = response.context['person_preferences_form'].fields['relation'].queryset
+        expected_relation_queryset = Person.objects.exclude(id=self.person1.id).filter(
+            Q(personpreferences__relation=None) | Q(id=self.person1.personpreferences.relation.id)
+        )
+        self.assertQuerysetEqual(received_relation_queryset, map(repr, expected_relation_queryset), ordered=False)
+
+    def test_personpreferences_init_with_no_relation(self):
+        self.client.login(username='user1', password='pass1')
+        url = reverse('profile_edit')
+        response = self.client.get(url)
+        received_relation_queryset = response.context['person_preferences_form'].fields['relation'].queryset
+        expected_relation_queryset = Person.objects.exclude(
+            id=self.person1.id).filter(personpreferences__relation=None)
+        self.assertQuerysetEqual(received_relation_queryset, map(repr, expected_relation_queryset), ordered=False)
