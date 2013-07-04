@@ -39,6 +39,12 @@ class PersonTest(TestCase):
         created_path = get_upload_file_name(self.person1, filename)
         self.assertEqual(path, created_path)
 
+    def test_personpreferences_str(self):
+        self.assertEqual(str(self.person1.personpreferences), '{} {}'.format(self.person1.user.first_name, self.person1.user.last_name))
+
+    def test_personalsettings_str(self):
+        self.assertEqual(str(self.person1.personalsettings), '{} {}'.format(self.person1.user.first_name, self.person1.user.last_name))
+
     def test_get_unread_notifications(self):
         PeriodicalNotification.objects.create(person=self.person1,
                                               message="Wellcome! Don't hesitate to make your first check in.")
