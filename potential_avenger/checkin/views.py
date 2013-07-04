@@ -28,7 +28,7 @@ def checkin(request):
 
             this_person_settings = PersonalSettings.objects.get(person=this_person)
             if this_person_settings.display_periodical_notification:
-                update_last_periodical_notification(request.user.person)
+                update_last_periodical_notification(this_person)
 
             return redirect('/diary/')
     csrf(request)
