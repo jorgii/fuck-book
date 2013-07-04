@@ -30,10 +30,8 @@ def statistics(request):
             number_without_contraception = 0
             for checkin in checkins:
                 checkins_statistics[index]['number_of_checkins'] += 1
-                for pose in checkin.poses.all():
-                    poses.append(pose)
-                for place in checkin.places.all():
-                    places.append(place)
+                poses.extend(checkin.poses.all())
+                places.append(checkin.places.all())
                 if request.user.person == checkin.with_who and checkin.person:
                     partners.append(checkin.person)
                 elif request.user.person == checkin.person and checkin.with_who:
