@@ -25,6 +25,14 @@ class DiaryTest(TestCase):
         expected_checkins = sorted(expected_checkins, key=lambda x: x.date_checked, reverse=True)
         self.assertEqual(expected_checkins, get_checkins_for_diary(intended_diary))
 
+    def test_diary_str(self):
+        diary = Diary.objects.get(person1=self.person1, person2=self.person2)
+        self.assertEqual(str(diary), '{}, {}, {}'.format(diary.timestamp, str(self.person1.user.username), str(self.person2.user.username)))
+
+    def test_diary_str_no_person2(self):
+        diary = Diary.objects.get(person1=self.person1, person2=None)
+        self.assertEqual(str(diary), '{}, {}, {}'.format(diary.timestamp, str(self.person1.user.username), None))
+
     def test_diary_list_view(self):
         self.client.login(username='user1', password='pass1')
         expected_diary_list = list(Diary.objects.filter(person1=self.person1))
