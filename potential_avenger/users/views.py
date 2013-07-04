@@ -16,6 +16,7 @@ from notifications.models import PeriodicalNotification, TipNotification, Differ
 
 @login_required
 def profile(request, username):
+    path = '/profile/' + request.user.username + '/'  # to point the path in the base html template
     logged_user_name = str(request.user.person)
     user_to_display = User.objects.get(username=username)
     if user_to_display == request.user:
@@ -39,6 +40,7 @@ def profile(request, username):
 
 @login_required
 def profile_edit(request):
+    path = '/profile_edit/'  # to point the path in the base html template
     person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
     person_preferences_form = PersonPreferencesForm(request.POST or None, instance=request.user.person.personpreferences)
