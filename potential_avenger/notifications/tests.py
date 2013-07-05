@@ -53,3 +53,11 @@ class CheckinTest(TestCase):
                     notification_class='PeriodicalNotification')
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 200)
+
+    def test_mark_notification_as_read_for_tip_notifications(self):
+        mark_notification_as_read(key=2, cls="TipNotification")
+        self.assertFalse(TipNotification.objects.get(id=2).unread)
+
+    def test_mark_notification_as_read_for_difference_notifications(self):
+        mark_notification_as_read(key=2, cls="DifferenceNotification")
+        self.assertFalse(DifferenceNotification.objects.get(id=2).unread)
