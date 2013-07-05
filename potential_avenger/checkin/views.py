@@ -36,6 +36,11 @@ def checkin(request):
 
 
 def update_last_periodical_notification(person):
+    ''' Takes one parameter - the curren logged person
+    Finds the last periodical notification this person got
+    and updates the date_saved of this notification to the
+    date of the new chekin made in this request.
+    '''
     this_person_notifications = PeriodicalNotification.objects.filter(person=person)
     last_entry = this_person_notifications.latest('date_saved')
     last_entry.date_saved = date.today()

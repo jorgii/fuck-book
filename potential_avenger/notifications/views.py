@@ -24,6 +24,12 @@ def notifications(request):
 
 
 def mark_notification_as_read(key, cls):
+    ''' Takes:
+    - key - an id of the notification the user wants to mark as read
+    - cls - the class of this same notification
+    Updates the notification's unread field from True to False so
+    it won't be displayd as new any more.
+    '''
     if cls == "PeriodicalNotification":
         notification = PeriodicalNotification.objects.get(id=key)
     elif cls == "TipNotification":

@@ -13,9 +13,12 @@ def dice(request):
     try:
         random_pose = random.choice(PosesList.objects.all())
     except IndexError:
-        random_pose = "Sorry, no available poses to choose from."
+        random_pose = dice.ERROR_MESSAGE['pose']
     try:
         random_place = random.choice(PlacesList.objects.all())
     except IndexError:
-        random_place = "Sorry, no available places to choose from."
+        random_place = dice.ERROR_MESSAGE['place']
     return render(request, "dice.html", locals())
+
+    ERROR_MESSAGE = {'pose': "Sorry, no available poses to choose from.",
+                     'place': "Sorry, no available places to choose from."}
