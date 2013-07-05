@@ -35,6 +35,10 @@ class PersonPreferences(models.Model):
         return self.person.__str__()
 
     def save(self, *args, **kwargs):
+        '''Redefined save method to handle creation of the relation between 2 Persons.
+        It sets the relation for both Persons
+
+        '''
         super().save()
 
         if self.relation and self.relation.personpreferences.relation != self.person:
@@ -42,9 +46,12 @@ class PersonPreferences(models.Model):
             self.relation.personpreferences.save()
 
     def clean(self):
+        '''Redefined clean method to make sure relation cannot be set to self.
+
+        '''
         super().clean()
         if self.person == self.relation:
-            raise ValidationError('You cannot be related to yourself')
+            raise ValidationError('One person cannot be related to itself')
 
 
 class PersonalSettings(models.Model):

@@ -21,6 +21,10 @@ def diary(request):
 
 
 def get_checkins_for_diary(diary):
+    '''Takes a diary as a parameter and returns all checkins connected to this diary.
+    Gathers all checkins with person1 and person2 or person2 and person1.
+
+    '''
     checkins = list(CheckinDetails.objects.filter(person=diary.person1,
                                                   with_who=diary.person2))
     checkins.extend(CheckinDetails.objects.filter(person=diary.person2,

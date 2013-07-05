@@ -12,6 +12,11 @@ from checkin.models import CheckinDetails
 
 @login_required
 def statistics(request):
+    '''Takes all checkins for the person:
+     - Groups them by the base selected
+     - For each group takes all checkins and calculates each statistic piece (average_duration, average_rating and so on)
+
+    '''
     checkins_statistics = list()
     statistics_form = StatisticsForm(request.GET or None)
     if statistics_form.is_valid():
@@ -61,6 +66,11 @@ def statistics(request):
 
 
 def get_checkins_grouped(person, from_t, to_t, group_by):
+    '''Takes a person, period and a base for grouping.
+    Returns all checkins that the person is included in
+    (if being person or with_who in the record) by the group specified.
+
+    '''
     checkins_all = list(CheckinDetails.objects.filter(date_checked__gte=from_t,
                                                       date_checked__lte=to_t,
                                                       person=person))
@@ -80,6 +90,10 @@ def get_checkins_grouped(person, from_t, to_t, group_by):
 
 
 def average(*args):
+    '''Return average of given arguments formatted in
+    two digits after the decimal point.
+
+    '''
     return '{:.2f}'.format(sum(args) / len(args))
 
 
