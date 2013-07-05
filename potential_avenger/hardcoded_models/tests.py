@@ -1,16 +1,26 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
+from django.test.client import Client
+
+from hardcoded_models.models import PosesList, PlacesList, TipsList
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+class HardcodedModelsTest(TestCase):
+    fixtures = ['hardcoded_data.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.pose = PosesList.objects.get(id=1)
+        self.place = PlacesList.objects.get(id=1)
+        self.tip = TipsList.objects.get(id=1)
+
+    def test_create_pose(self):
+        self.assertTrue(isinstance(self.pose, PosesList))
+        self.assertEqual(str(self.pose), str(self.pose.pose))
+
+    def test_create_place(self):
+        self.assertTrue(isinstance(self.place, PlacesList))
+        self.assertEqual(str(self.place), str(self.place.place))
+
+    def test_create_tip(self):
+        self.assertTrue(isinstance(self.tip, TipsList))
+        self.assertEqual(str(self.tip), str(self.tip.useful_tip))
