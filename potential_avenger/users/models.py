@@ -36,7 +36,8 @@ class PersonPreferences(models.Model):
 
     def save(self, *args, **kwargs):
         '''Redefined save method to handle creation of the relation between 2 Persons.
-        It sets the relation for both Persons
+        It sets the relation for both Persons.
+        Works in the oposite direction, removes relation for both persons
 
         '''
         super().save()
@@ -44,6 +45,11 @@ class PersonPreferences(models.Model):
         if self.relation and self.relation.personpreferences.relation != self.person:
             self.relation.personpreferences.relation = self.person
             self.relation.personpreferences.save()
+
+        if not self.relation and Person.objects.filter(personpreferences__relation=self.person).exists():
+            other_person = Person.objects.get(personpreferences__relation=self.person)
+            other_person.personpreferences.relation = None
+            other_person.personpreferences.save()
 
     def clean(self):
         '''Redefined clean method to make sure relation cannot be set to self.
