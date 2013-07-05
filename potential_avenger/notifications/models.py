@@ -19,6 +19,9 @@ class PeriodicalNotification (models.Model):
 
 
 def create_tip_message():
+    '''Function that choses random tip
+    for each tip notification created.
+    '''
     try:
         tip_message = random.choice(TipsList.objects.all())
     except IndexError:
