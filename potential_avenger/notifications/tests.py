@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 from users.models import PersonalSettings, PersonPreferences
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification, create_tip_message
 from notifications.views import mark_notification_as_read
+from checkin.models import CheckinDetails
+from hardcoded_models.models import PosesList, PlacesList
 # from notifications.management.commands import send_periodical_notification
 
 
@@ -67,13 +69,15 @@ class NotificationTest(TestCase):
 
 
 class CommandsTestCase(TestCase):
-    fixtures = ['users_data.json', 'persons_data.json', 'notifications_data.json']
+    fixtures = ['users_data.json', 'persons_data.json', 'notifications_data.json', 'hardcoded_data.json']
 
     def setUp(self):
         self.person1 = User.objects.get(username='user1').person
         self.person2 = User.objects.get(username='user2').person
         self.person1_settings = PersonalSettings.objects.get(person=self.person1)
         self.person1_preferences = PersonPreferences.objects.get(person=self.person1)
+        self.pose = PosesList.objects.get(id=1)
+        self.place = PlacesList.objects.get(id=1)
 
     def test_send_periodical_notification(self):
         self.person1_settings.periodical_notification_period = 1
@@ -96,6 +100,43 @@ class CommandsTestCase(TestCase):
         self.person1_settings.save(update_fields=['difference_notification_period'])
         self.person1_preferences.relation = self.person2
         self.person1_preferences.save(update_fields=['relation'])
+        args = []
+        opts = {}
+        call_command('send_difference_notification', *args, **opts)
+        self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
+        self.assertEqual("Not enough data yet. You have to check in more often. ;)", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
+
+    def test_send_difference_notification_with_existing_checkin(self):
+        self.person1_settings.difference_notification_period = 1
+        self.person1_settings.save(update_fields=['difference_notification_period'])
+        self.person1_preferences.relation = self.person2
+        self.person1_preferences.save(update_fields=['relation'])
+        CheckinDetails.objects.create(person=self.person1,
+                                      date_checked=date(year=2013, month=7, day=3),
+                                      address="Sofia, Bulgaria",
+                                      rating=3,
+                                      duration=30,
+                                      with_who=self.person2,)
+        args = []
+        opts = {}
+        call_command('send_difference_notification', *args, **opts)
+        self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
+        self.assertEqual("If you want to get these, you have to specify poses and places when you checkin.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
+
+    def test_send_difference_notification_with_existing_checkin_with_poses_and_places(self):
+        self.person1_settings.difference_notification_period = 1
+        self.person1_settings.save(update_fields=['difference_notification_period'])
+        self.person1_preferences.relation = self.person2
+        self.person1_preferences.save(update_fields=['relation'])
+        checkin = CheckinDetails.objects.create(person=self.person1,
+                                                date_checked=date(year=2013, month=7, day=3),
+                                                address="Sofia, Bulgaria",
+                                                rating=3,
+                                                duration=30,
+                                                with_who=self.person2,)
+        checkin.poses.add(self.pose)
+        checkin.places.add(self.place)
+        checkin.save()
         args = []
         opts = {}
         call_command('send_difference_notification', *args, **opts)
