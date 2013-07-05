@@ -11,7 +11,7 @@ from notifications.models import PeriodicalNotification, TipNotification, Differ
 from notifications.views import mark_notification_as_read
 from checkin.models import CheckinDetails
 from hardcoded_models.models import PosesList, PlacesList
-# from notifications.management.commands import send_periodical_notification
+from notifications.management.commands.send_difference_notification import Command
 
 
 class NotificationTest(TestCase):
@@ -106,7 +106,7 @@ class CommandsTestCase(TestCase):
         self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
         self.assertEqual("Not enough data yet. You have to check in more often. ;)", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
 
-    def test_send_difference_notification_with_existing_checkin(self):
+    def test_send_difference_notification_with_checkin(self):
         self.person1_settings.difference_notification_period = 1
         self.person1_settings.save(update_fields=['difference_notification_period'])
         self.person1_preferences.relation = self.person2
@@ -123,7 +123,7 @@ class CommandsTestCase(TestCase):
         self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
         self.assertEqual("If you want to get these, you have to specify poses and places when you checkin.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
 
-    def test_send_difference_notification_with_existing_checkin_with_poses_and_places(self):
+    def test_send_difference_notification_with_checkin_with_poses_and_places(self):
         self.person1_settings.difference_notification_period = 1
         self.person1_settings.save(update_fields=['difference_notification_period'])
         self.person1_preferences.relation = self.person2
@@ -141,3 +141,97 @@ class CommandsTestCase(TestCase):
         opts = {}
         call_command('send_difference_notification', *args, **opts)
         self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
+        self.assertEqual("Damn, you're selfish! You need to think more about what poses and places your partner likes.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
+
+    def test_send_difference_notification_with_checkin_with_no_preferred_poses_and_places(self):
+        self.person1_settings.difference_notification_period = 1
+        self.person1_settings.save(update_fields=['difference_notification_period'])
+        self.person1_preferences.relation = self.person2
+        self.person1_preferences.save(update_fields=['relation'])
+        checkin = CheckinDetails.objects.create(person=self.person1,
+                                                date_checked=date(year=2013, month=7, day=3),
+                                                address="Sofia, Bulgaria",
+                                                rating=3,
+                                                duration=30,
+                                                with_who=self.person2,)
+        checkin.poses.add(self.pose)
+        checkin.places.add(self.place)
+        checkin.save()
+        self.person2.personpreferences.preferred_poses.clear()
+        args = []
+        opts = {}
+        call_command('send_difference_notification', *args, **opts)
+        self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
+        self.assertEqual("Your partner hasn't specified all of his/her preferences yet.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
+
+    def test_count_matching_items(self):
+        preferred_poses = PosesList.objects.all()
+        poses_counter = Command.get_items_usage(self, preferred_poses)
+        matching_poses = Command.count_matching_items(self, preferred_items=preferred_poses, items_counter=poses_counter, half=2)
+        self.assertEqual(2, matching_poses)
+
+    def test_send_difference_notification_with_checkin_with_preferred_poses_and_places(self):
+        self.person1_settings.difference_notification_period = 1
+        self.person1_settings.save(update_fields=['difference_notification_period'])
+        self.person1_preferences.relation = self.person2
+        self.person1_preferences.save(update_fields=['relation'])
+        checkin = CheckinDetails.objects.create(person=self.person1,
+                                                date_checked=date(year=2013, month=7, day=3),
+                                                address="Sofia, Bulgaria",
+                                                rating=3,
+                                                duration=30,
+                                                with_who=self.person2,)
+        checkin.poses = self.person2.personpreferences.preferred_poses.get_query_set()
+        checkin.places.add(self.place)
+        checkin.save()
+        args = []
+        opts = {}
+        call_command('send_difference_notification', *args, **opts)
+        self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
+        self.assertEqual("You're doing good with the poses, but try to spice it up with some places your partner likes.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
+
+    def test_send_difference_notification_with_checkin_with_poses_and_preferred_places(self):
+        self.person1_settings.difference_notification_period = 1
+        self.person1_settings.save(update_fields=['difference_notification_period'])
+        self.person1_preferences.relation = self.person2
+        self.person1_preferences.save(update_fields=['relation'])
+        checkin = CheckinDetails.objects.create(person=self.person1,
+                                                date_checked=date(year=2013, month=7, day=3),
+                                                address="Sofia, Bulgaria",
+                                                rating=3,
+                                                duration=30,
+                                                with_who=self.person2,)
+        checkin.poses.add(self.pose)
+        checkin.places = self.person2.personpreferences.preferred_places.get_query_set()
+        checkin.save()
+        args = []
+        opts = {}
+        call_command('send_difference_notification', *args, **opts)
+        self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
+        self.assertEqual("You're doing good with the places, but you need to think more about what poses your partner likes.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
+
+    def test_send_difference_notification_with_checkin_with_preferred_poses_and_preferred_places(self):
+        self.person1_settings.difference_notification_period = 1
+        self.person1_settings.save(update_fields=['difference_notification_period'])
+        self.person1_preferences.relation = self.person2
+        self.person1_preferences.save(update_fields=['relation'])
+        checkin = CheckinDetails.objects.create(person=self.person1,
+                                                date_checked=date(year=2013, month=7, day=3),
+                                                address="Sofia, Bulgaria",
+                                                rating=3,
+                                                duration=30,
+                                                with_who=self.person2,)
+        checkin.poses = self.person2.personpreferences.preferred_poses.get_query_set()
+        checkin.places = self.person2.personpreferences.preferred_places.get_query_set()
+        checkin.save()
+        args = []
+        opts = {}
+        call_command('send_difference_notification', *args, **opts)
+        self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
+        self.assertEqual("Nice to see you care about what your partner likes. Keep up the good 'work'! ;)", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
+
+    def test_calculate_half_of_used_items(self):
+        preferred_poses = ['leg_lock', 'missionary', 'advanced_sex', 'water_sex']
+        poses_counter = Command.get_items_usage(self, preferred_poses)
+        half = Command.calculate_half_of_used_items(self, poses_counter)
+        self.assertEqual(2, half)
