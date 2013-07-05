@@ -13,9 +13,9 @@ def dice(request):
     try:
         random_pose = random.choice(PosesList.objects.all())
     except IndexError:
-        random_pose = list()
+        random_pose = "Sorry, no available poses to choose from."
     try:
         random_place = random.choice(PlacesList.objects.all())
     except IndexError:
-        random_place = list()
+        random_place = "Sorry, no available places to choose from."
     return render(request, "dice.html", locals())

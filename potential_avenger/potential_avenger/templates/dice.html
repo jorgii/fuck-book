@@ -14,13 +14,21 @@
             <div class="row-fluid">
                 <div class="span2" style="text-align:center">
                     Try this:
+                    {% if random_pose == "Sorry, no available poses to choose from." %}
+                    <br/>{{ random_pose }}
+                    {% else %}
                     <br/><img src="{{ STATIC_URL }}poses/{{ random_pose }}.jpg"/>
                     <!-- <br/>{{ random_pose }} -->
+                    {% endif %}
                 </div>
                 <div class="span2" style="text-align:center">
                     Here:
+                    {% if random_place == "Sorry, no available places to choose from." %}
+                    <br/>{{ random_place }}
+                    {% else %}
                     <br/><img src="{{ STATIC_URL }}places/{{ random_place }}.jpg"/>
                     <!-- <br/>{{ random_place }} -->
+                    {% endif %}
                 </div>
             </div>
             <div class="row-fluid">
