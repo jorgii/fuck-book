@@ -1,15 +1,18 @@
 from datetime import date
 
 from django.contrib.auth.models import User
+from django.core.management import call_command
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
+from users.models import PersonalSettings, PersonPreferences
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification, create_tip_message
 from notifications.views import mark_notification_as_read
+# from notifications.management.commands import send_periodical_notification
 
 
-class CheckinTest(TestCase):
+class NotificationTest(TestCase):
     fixtures = ['users_data.json', 'persons_data.json', 'notifications_data.json']
 
     def setUp(self):
@@ -61,3 +64,39 @@ class CheckinTest(TestCase):
     def test_mark_notification_as_read_for_difference_notifications(self):
         mark_notification_as_read(key=2, cls="DifferenceNotification")
         self.assertFalse(DifferenceNotification.objects.get(id=2).unread)
+
+
+class CommandsTestCase(TestCase):
+    fixtures = ['users_data.json', 'persons_data.json', 'notifications_data.json']
+
+    def setUp(self):
+        self.person1 = User.objects.get(username='user1').person
+        self.person2 = User.objects.get(username='user2').person
+        self.person1_settings = PersonalSettings.objects.get(person=self.person1)
+        self.person1_preferences = PersonPreferences.objects.get(person=self.person1)
+
+    def test_send_periodical_notification(self):
+        self.person1_settings.periodical_notification_period = 1
+        self.person1_settings.save(update_fields=['periodical_notification_period'])
+        args = []
+        opts = {}
+        call_command('send_periodical_notification', *args, **opts)
+        self.assertTrue(PeriodicalNotification.objects.get(person=self.person1, date_saved=date.today()))
+
+    def test_send_tip_notification(self):
+        self.person1_settings.tip_notification_period = 1
+        self.person1_settings.save(update_fields=['tip_notification_period'])
+        args = []
+        opts = {}
+        call_command('send_tip_notification', *args, **opts)
+        self.assertTrue(TipNotification.objects.get(person=self.person1, date_saved=date.today()))
+
+    def test_send_difference_notification(self):
+        self.person1_settings.difference_notification_period = 1
+        self.person1_settings.save(update_fields=['difference_notification_period'])
+        self.person1_preferences.relation = self.person2
+        self.person1_preferences.save(update_fields=['relation'])
+        args = []
+        opts = {}
+        call_command('send_difference_notification', *args, **opts)
+        self.assertTrue(DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()))
