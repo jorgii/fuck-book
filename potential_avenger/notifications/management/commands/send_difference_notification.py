@@ -100,18 +100,19 @@ class Command(BaseCommand):
         return message
 
     def calculate_half_of_used_items(self, items_counter):
-            if len(items_counter) % 2 == 0:
-                half = int(len(items_counter)/2)
-            else:
-                half = int((len(items_counter)+1)/2)
-            return half
+        if len(items_counter) % 2 == 0:
+            half = int(len(items_counter)/2)
+        else:
+            half = int((len(items_counter)+1)/2)
+        return half
 
     def count_matching_items(self, preferred_items, items_counter, half):
-            counter = 0
-            for item in preferred_items:
-                if item in items_counter.most_common(half):
-                    counter += 1
-            return counter
+        counter = 0
+        list_of_items = [x[0] for x in items_counter.most_common(half)]
+        for item in preferred_items:
+            if item in list_of_items:
+                counter += 1
+        return counter
 
 
 def get_most_recent_notification(person, cls):
