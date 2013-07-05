@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from hardcoded_models.models import PosesList, PlacesList
 
 
-class CheckinTest(TestCase):
+class DiceTest(TestCase):
     fixtures = ['users_data.json', 'persons_data.json', 'hardcoded_data.json']
 
     def setUp(self):
