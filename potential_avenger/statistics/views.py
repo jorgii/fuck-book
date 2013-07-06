@@ -36,7 +36,7 @@ def statistics(request):
             for checkin in checkins:
                 checkins_statistics[index]['number_of_checkins'] += 1
                 poses.extend(checkin.poses.all())
-                places.append(checkin.places.all())
+                places.extend(checkin.places.all())
                 if request.user.person == checkin.with_who and checkin.person:
                     partners.append(checkin.person)
                 elif request.user.person == checkin.person and checkin.with_who:
