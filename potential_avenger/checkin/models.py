@@ -20,7 +20,7 @@ class CheckinDetails(models.Model):
     rating = models.CharField(max_length=1, choices=RAITING_CHOICES)
     duration = models.IntegerField('Duration (in minutes):', default=10)
     contraception = models.BooleanField('Contraception (y/n):', default=True)
-    with_who = models.ForeignKey('users.Person', related_name='checkin related user', blank=True, null=True)
+    with_who = models.ForeignKey('users.Person', related_name='checkin_related_user', blank=True, null=True)
 
     def __str__(self):
         return '{}, {}'.format(self.date_checked, self.person.user)
