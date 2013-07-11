@@ -40,7 +40,7 @@ class PersonPreferences(models.Model):
         Works in the oposite direction, removes relation for both persons
 
         '''
-        super().save()
+        super().save(*args, **kwargs)
 
         if self.relation and self.relation.personpreferences.relation != self.person:
             self.relation.personpreferences.relation = self.person

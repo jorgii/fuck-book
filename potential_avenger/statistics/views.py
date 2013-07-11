@@ -71,14 +71,14 @@ def get_checkins_grouped(person, from_t, to_t, group_by):
     (if being person or with_who in the record) by the group specified.
 
     '''
-    checkins_all = list(CheckinDetails.objects.filter(date_checked__gte=from_t,
+    checkins_all = (
+        CheckinDetails.objects.filter(date_checked__gte=from_t,
                                                       date_checked__lte=to_t,
-                                                      person=person))
-
-    checkins_all.extend(CheckinDetails.objects.filter(date_checked__gte=from_t,
+                                                      person=person)
+        | CheckinDetails.objects.filter(date_checked__gte=from_t,
                                                       date_checked__lte=to_t,
-                                                      with_who=person))
-    checkins_all = sorted(checkins_all, key=lambda x: x.date_checked, reverse=True)
+                                                      with_who=person)
+    ).order_by('-date_checked')
     checkins_grouped_dict = OrderedDict()
     if group_by == 'd':
         for day, checkins_grouped in groupby(checkins_all, key=lambda x: x.date_checked):

@@ -11,7 +11,7 @@ class PeriodicalNotification (models.Model):
     message = models.CharField('Notification Message',
                                max_length=255,
                                default="Haven't checked-in in a while. Sex life getting slow?")
-    date_saved = models.DateField(default=date.today())
+    date_saved = models.DateField(default=date.today)
     unread = models.BooleanField(default=True)
 
     def __str__(self):
@@ -32,7 +32,7 @@ def create_tip_message():
 class TipNotification (models.Model):
     person = models.ForeignKey('users.Person')
     message = models.CharField('Notification Message', max_length=255, default=create_tip_message)
-    date_saved = models.DateField(default=date.today())
+    date_saved = models.DateField(default=date.today)
     unread = models.BooleanField(default=True)
 
     def __str__(self):
@@ -42,7 +42,7 @@ class TipNotification (models.Model):
 class DifferenceNotification (models.Model):
     person = models.ForeignKey('users.Person')
     message = models.CharField('Notification Message', max_length=255, default=" ")
-    date_saved = models.DateField(default=date.today())
+    date_saved = models.DateField(default=date.today)
     unread = models.BooleanField(default=True)
 
     def __str__(self):

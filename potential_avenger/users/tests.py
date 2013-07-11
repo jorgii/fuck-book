@@ -31,7 +31,6 @@ class PersonTest(TestCase):
                     difference_notification_period=user.person.personalsettings.difference_notification_period,)
 
     def test_create_person(self):
-        self.assertTrue(isinstance(self.person1, Person))
         self.assertEqual(str(self.person1), self.person1.user.first_name + ' ' + self.person1.user.last_name)
 
     def test_jpg_get_upload_file_name(self):
@@ -107,7 +106,7 @@ class PersonTest(TestCase):
         url = reverse('profile_edit')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        user = response.context.__getitem__('user')
+        user = response.context['user']
         data = self.person_post_data(user)
         data['email'] = 'asd@asd.asd'
         data['first_name'] = 'changed firstname'

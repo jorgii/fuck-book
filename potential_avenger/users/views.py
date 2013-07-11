@@ -16,8 +16,8 @@ from notifications.models import PeriodicalNotification, TipNotification, Differ
 
 @login_required
 def profile(request, username):
-    path = '/profile/' + request.user.username + '/'  # to point the path in the base html template
-    logged_user_name = str(request.user.person)
+    path = request.path_info  # to point the path in the base html template
+    #logged_user_name = str(request.user.person)
     user_to_display = User.objects.get(username=username)
     if user_to_display == request.user:
         logged_user_view = True
@@ -27,9 +27,9 @@ def profile(request, username):
         age = int((date.today() - user_to_display.person.birth_date).days/365)
     except TypeError:
         age = None
-    preferred_poses = [str(pose) for pose in user_to_display.person.personpreferences.preferred_poses.all()]
-    preferred_places = [str(place) for place in user_to_display.person.personpreferences.preferred_places.all()]
-    related_to = str(user_to_display.person.personpreferences.relation)
+    preferred_poses = user_to_display.person.personpreferences.preferred_poses.all()
+    preferred_places = user_to_display.person.personpreferences.preferred_places.all()
+    related_to = user_to_display.person.personpreferences.relation
     try:
         profile_photo = user_to_display.person.photo.url
     except ValueError:
@@ -110,11 +110,12 @@ def register_success(request):
 
 @login_required
 def home(request):
-    return redirect('/profile/'+request.user.username+'/')
+
+    return redirect('profile', username=request.user.username)
 
 
 def get_number_of_unread_notifications(this_person):
-    unread_notifications = list(PeriodicalNotification.objects.filter(person=this_person, unread=True))
-    unread_notifications.extend(list(TipNotification.objects.filter(person=this_person, unread=True)))
-    unread_notifications.extend(list(DifferenceNotification.objects.filter(person=this_person, unread=True)))
-    return int(len(unread_notifications))
+    unread_notifications_count = PeriodicalNotification.objects.filter(person=this_person, unread=True).count()
+    unread_notifications_count += TipNotification.objects.filter(person=this_person, unread=True).count()
+    unread_notifications_count += DifferenceNotification.objects.filter(person=this_person, unread=True).count()
+    return unread_notifications_count

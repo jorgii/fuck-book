@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-
+from django.db.models import Q
 
 from users.models import Person, PersonPreferences, PersonalSettings
 
@@ -26,7 +26,9 @@ class PersonPreferencesForm(ModelForm):
     def __init__(self, data=None, instance=None, *args, **kwargs):
         super(PersonPreferencesForm, self).__init__(data=data, instance=instance, *args, **kwargs)
         relation_set = self.fields['relation'].queryset
-        self.fields['relation'].queryset = relation_set.exclude(id=instance.person.id)
+        self.fields['relation'].queryset = relation_set.exclude(id=instance.person.id).filter(
+            Q(personpreferences__relation=None) | Q(personpreferences__relation=self.instance)
+        )
 
     class Meta:
         model = PersonPreferences
