@@ -1,1 +1,1 @@
-web: python mysite/manage.py collectstatic --noinput; python mysite/manage.py migrate; python mysite/manage.py runserver 0.0.0.0:$PORT --noreload
+web: python potential-avenger/manage.py collectstatic --noinput; python potential-avenger/manage.py migrate; python potential-avenger/manage.py runserver 0.0.0.0:$PORT --noreload
