@@ -3,4 +3,3 @@ django-extensions==1.2.2
 six==1.4.1
 dj-database-url==0.2.2
 psycopg2==2.5.1
-django-imagekit==3.0.3
