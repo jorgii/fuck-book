@@ -1,4 +1,5 @@
 from datetime import date
+import hashlib
 
 
 from django.shortcuts import render, redirect
@@ -30,8 +31,10 @@ def profile(request, username):
     preferred_poses = user_to_display.person.personpreferences.preferred_poses.all()
     preferred_places = user_to_display.person.personpreferences.preferred_places.all()
     related_to = user_to_display.person.personpreferences.relation
+    md5_hash = hashlib.md5()
+    md5_hash.update(request.user.email.encode('utf-8'))
     try:
-        profile_photo = user_to_display.person.photo.url
+        profile_photo = 'http://www.gravatar.com/avatar/' + md5_hash.hexdigest()
     except ValueError:
         profile_photo = '/media/profile_photos/noPhoto.jpg'
     number_of_unread_notifications = get_number_of_unread_notifications(request.user.person)
