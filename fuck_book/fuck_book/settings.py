@@ -1,4 +1,4 @@
-# Django settings for potential_avenger project.
+# Django settings for fuck_book project.
 import os
 import dj_database_url
 
@@ -111,10 +111,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'potential_avenger.urls'
+ROOT_URLCONF = 'fuck_book.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'potential_avenger.wsgi.application'
+WSGI_APPLICATION = 'fuck_book.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates')
@@ -174,6 +174,6 @@ LOGGING = {
 }
 
 try:
-    from potential_avenger.local_settings import *
+    from fuck_book.local_settings import *
 except ImportError as e:
     print('Unable to load local_settings.py:', e)
