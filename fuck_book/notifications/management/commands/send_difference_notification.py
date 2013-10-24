@@ -1,5 +1,6 @@
 from datetime import date
 from collections import Counter
+from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 
@@ -52,7 +53,7 @@ class Command(BaseCommand):
                     DifferenceNotification.objects.create(person=this_person,
                                                           message=difference_message)
 
-    INDEX_CONSTANT = 1/2
+    INDEX_CONSTANT = Decimal(1)/Decimal(2)
     DIFFERENCE_MESSAGE = {'no_checkins': "Not enough data yet. You have to check in more often. ;)",
                           'no_poses_or_paces': "If you want to get these, you have to specify poses and places when you checkin.",
                           'no_preferred_poses_or_places': "Your partner hasn't specified all of his/her preferences yet.",
@@ -118,8 +119,8 @@ class Command(BaseCommand):
         matching_poses = self.count_matching_items(preferred_items1, items_counter1, poses_half)
         matching_places = self.count_matching_items(preferred_items2, items_counter2, places_half)
 
-        poses_index = matching_poses/preferred_items_count1
-        places_index = matching_places/preferred_items_count2
+        poses_index = Decimal(matching_poses)/Decimal(preferred_items_count1)
+        places_index = Decimal(matching_places)/Decimal(preferred_items_count2)
 
         if poses_index <= self.INDEX_CONSTANT and places_index <= self.INDEX_CONSTANT:
             message = self.DIFFERENCE_MESSAGE['both_not_enough']

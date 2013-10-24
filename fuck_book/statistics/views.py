@@ -1,5 +1,6 @@
 from collections import OrderedDict, Counter
 from itertools import groupby
+from decimal import Decimal
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -94,7 +95,7 @@ def average(*args):
     two digits after the decimal point.
 
     '''
-    return '{:.2f}'.format(sum(args) / len(args))
+    return '{:.2f}'.format(Decimal(sum(args)) / Decimal(len(args)))
 
 
 def get_top_three(*args):
