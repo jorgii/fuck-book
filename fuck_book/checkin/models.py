@@ -31,7 +31,7 @@ class CheckinDetails(models.Model):
         - person cannot checkin with negative duration number
         - person cannot checkin with too large duration number
         '''
-        super().clean()
+        super(CheckinDetails, self).clean()
         if self.person == self.with_who:
             raise ValidationError("'Loving' yourself might be great, but that's not what we're looking for here. ;)")
         if self.duration <= 0:
