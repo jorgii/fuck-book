@@ -17,8 +17,8 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-DEFAULT_FILE_STORAGE = 'potential_avenger.s3utils.MediaRootS3BotoStorage'
-STATICFILES_STORAGE = 'potential_avenger.s3utils.StaticRootS3BotoStorage'
+DEFAULT_FILE_STORAGE = 'fuck_book.s3utils.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'fuck_book.s3utils.StaticRootS3BotoStorage'
 
 S3_URL = 'http://' + str(AWS_STORAGE_BUCKET_NAME) + '.s3.amazonaws.com/'
 

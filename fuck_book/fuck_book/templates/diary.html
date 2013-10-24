@@ -4,7 +4,7 @@
 
 {% block body %}
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 {% for diary, checkins in checkins_by_diary.items %}
 <div class="accordion" id="accordion1">
   <div class=" accordion-group">
