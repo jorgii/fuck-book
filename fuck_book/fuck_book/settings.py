@@ -2,7 +2,7 @@
 import os
 import dj_database_url
 
-SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOGIN_REDIRECT_URL = '/profile/'
@@ -10,8 +10,19 @@ PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher',)
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('George Goranov', 'g.p.goranov@gmail.com')
 )
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+DEFAULT_FILE_STORAGE = 'potential_avenger.s3utils.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'potential_avenger.s3utils.StaticRootS3BotoStorage'
+
+S3_URL = 'http://' + str(AWS_STORAGE_BUCKET_NAME) + '.s3.amazonaws.com/'
+
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 MANAGERS = ADMINS
 
@@ -32,6 +43,9 @@ DATABASES['default'] = dj_database_url.config()
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -58,22 +72,22 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = '/media/'
+MEDIA_URL = S3_URL + 'media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(SITE_ROOT, '../static')
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
+STATIC_URL = S3_URL + 'static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -135,6 +149,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'django_extensions',
+    'storages',
     'users',
     'checkin',
     'diary',
