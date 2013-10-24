@@ -1,5 +1,7 @@
 Django==1.5.4
-django-extensions==1.2.2
-six==1.4.1
+South==0.8.2
+boto==2.15.0
 dj-database-url==0.2.2
-psycopg2==2.5.1
+django-extensions==1.2.4
+django-storages==1.1.8
+six==1.4.1
