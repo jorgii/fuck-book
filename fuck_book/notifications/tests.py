@@ -78,6 +78,7 @@ class CommandsTestCase(TestCase):
         self.person1_preferences = PersonPreferences.objects.get(person=self.person1)
         self.pose = PosesList.objects.get(id=1)
         self.place = PlacesList.objects.get(id=1)
+        self.cmd = Command()
 
     def test_send_periodical_notification(self):
         self.person1_settings.periodical_notification_period = 1
@@ -166,8 +167,8 @@ class CommandsTestCase(TestCase):
 
     def test_count_matching_items(self):
         preferred_poses = PosesList.objects.all()
-        poses_counter = Command.get_items_usage(self, preferred_poses)
-        matching_poses = Command.count_matching_items(self, preferred_items=preferred_poses, items_counter=poses_counter, half=2)
+        poses_counter = self.cmd.get_items_usage(preferred_poses)
+        matching_poses = self.cmd.count_matching_items(preferred_items=preferred_poses, items_counter=poses_counter, half=2)
         self.assertEqual(2, matching_poses)
 
     def test_send_difference_notification_with_checkin_with_preferred_poses_and_places(self):
@@ -232,6 +233,6 @@ class CommandsTestCase(TestCase):
 
     def test_calculate_half_of_used_items(self):
         preferred_poses = ['leg_lock', 'missionary', 'advanced_sex', 'water_sex']
-        poses_counter = Command.get_items_usage(self, preferred_poses)
-        half = Command.calculate_half_of_used_items(self, poses_counter)
+        poses_counter = self.cmd.get_items_usage(preferred_poses)
+        half = self.cmd.calculate_half_of_used_items(poses_counter)
         self.assertEqual(2, half)
