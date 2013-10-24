@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from fuck_book import settings
 
 
 def get_upload_file_name(instance, filename):
@@ -40,7 +41,7 @@ class PersonPreferences(models.Model):
         Works in the oposite direction, removes relation for both persons
 
         '''
-        super().save(*args, **kwargs)
+        super(PersonPreferences, self).save(*args, **kwargs)
 
         if self.relation and self.relation.personpreferences.relation != self.person:
             self.relation.personpreferences.relation = self.person
@@ -55,7 +56,7 @@ class PersonPreferences(models.Model):
         '''Redefined clean method to make sure relation cannot be set to self.
 
         '''
-        super().clean()
+        super(PersonPreferences, self).clean()
         if self.person == self.relation:
             raise ValidationError('One person cannot be related to itself')
 
