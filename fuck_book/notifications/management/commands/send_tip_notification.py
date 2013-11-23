@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from notifications.models import TipNotification
-from users.models import Person, PersonalSettings
+from persons.models import Person, PersonalSettings
 from notifications.management.commands.send_difference_notification import get_most_recent_notification, time_to_send_notification
 
 

@@ -7,8 +7,8 @@ from django.db.models import Q
 
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
-from users.models import Person, get_upload_file_name
-from users.views import get_number_of_unread_notifications
+from persons.models import Person, get_upload_file_name
+from persons.views import get_number_of_unread_notifications
 
 
 class PersonTest(TestCase):

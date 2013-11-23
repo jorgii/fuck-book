@@ -5,7 +5,7 @@ from decimal import Decimal
 from django.core.management.base import BaseCommand
 
 from notifications.models import DifferenceNotification
-from users.models import Person, PersonalSettings, PersonPreferences
+from persons.models import Person, PersonalSettings, PersonPreferences
 from checkin.models import CheckinDetails
 
 

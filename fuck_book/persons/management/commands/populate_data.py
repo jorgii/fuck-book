@@ -7,7 +7,7 @@ from django.db import IntegrityError
 
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
-from users.models import Person, PersonPreferences, PersonalSettings
+from persons.models import Person, PersonPreferences, PersonalSettings
 from hardcoded_models.models import PosesList, TipsList, PlacesList
 
 

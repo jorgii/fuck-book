@@ -23,8 +23,8 @@ class Person(models.Model):
 
 
 class PersonPreferences(models.Model):
-    person = models.OneToOneField('users.Person')
-    relation = models.OneToOneField('users.Person',
+    person = models.OneToOneField('persons.Person')
+    relation = models.OneToOneField('persons.Person',
                                     related_name='related user',
                                     blank=True,
                                     null=True,
@@ -62,7 +62,7 @@ class PersonPreferences(models.Model):
 
 
 class PersonalSettings(models.Model):
-    person = models.OneToOneField('users.Person')
+    person = models.OneToOneField('persons.Person')
     display_periodical_notification = models.BooleanField(default=True)
     display_tip_notification = models.BooleanField(default=True)
     display_difference_notification = models.BooleanField(default=True)

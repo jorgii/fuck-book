@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
-from users.models import PersonalSettings
+from persons.models import PersonalSettings
 
 
 @login_required

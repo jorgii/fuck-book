@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-from users.models import Person, PersonPreferences, PersonalSettings
+from persons.models import Person, PersonPreferences, PersonalSettings
 
 
 class UserForm(ModelForm):

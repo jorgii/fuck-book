@@ -10,8 +10,8 @@ from django.core.context_processors import csrf
 from django.contrib.auth import login
 
 
-from users.models import Person, PersonPreferences, PersonalSettings
-from users.forms import PersonForm, UserForm, PersonPreferencesForm, PersonalSettingsForm
+from persons.models import Person, PersonPreferences, PersonalSettings
+from persons.forms import PersonForm, UserForm, PersonPreferencesForm, PersonalSettingsForm
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
 
 

@@ -8,7 +8,7 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 
 
-from users.models import Person
+from persons.models import Person
 from checkin.models import CheckinDetails
 from statistics.views import get_checkins_grouped, average, get_top_three
 from hardcoded_models.models import PosesList, PlacesList

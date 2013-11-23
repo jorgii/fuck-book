@@ -150,7 +150,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_extensions',
     'storages',
-    'users',
+    'persons',
     'checkin',
     'diary',
     'statistics',

@@ -1,6 +1,6 @@
 [
 {
-    "model": "users.person", 
+    "model": "persons.person", 
     "fields": {
         "user": 8, 
         "photo": "", 
@@ -11,7 +11,7 @@
     "pk": 1
 },
 {
-    "model": "users.person", 
+    "model": "persons.person", 
     "fields": {
         "user": 2, 
         "photo": "", 
@@ -22,7 +22,7 @@
     "pk": 2
 },
 {
-    "model": "users.person", 
+    "model": "persons.person", 
     "fields": {
         "user": 3, 
         "photo": "", 
@@ -33,7 +33,7 @@
     "pk": 3
 },
 {
-    "model": "users.person", 
+    "model": "persons.person", 
     "fields": {
         "user": 4, 
         "photo": "", 
@@ -44,7 +44,7 @@
     "pk": 4
 },
 {
-    "model": "users.person", 
+    "model": "persons.person", 
     "fields": {
         "user": 5, 
         "photo": "", 
@@ -55,7 +55,7 @@
     "pk": 5
 },
 {
-    "model": "users.person", 
+    "model": "persons.person", 
     "fields": {
         "user": 6, 
         "photo": "", 
@@ -66,7 +66,7 @@
     "pk": 6
 },
 {
-    "model": "users.person", 
+    "model": "persons.person", 
     "fields": {
         "user": 7, 
         "photo": "", 
@@ -77,7 +77,7 @@
     "pk": 7
 },
 {
-    "model": "users.personpreferences", 
+    "model": "persons.personpreferences", 
     "fields": {
         "preferred_places": [
             1, 
@@ -96,7 +96,7 @@
     "pk": 1
 },
 {
-    "model": "users.personpreferences", 
+    "model": "persons.personpreferences", 
     "fields": {
         "preferred_places": [
             1, 
@@ -114,7 +114,7 @@
     "pk": 2
 },
 {
-    "model": "users.personpreferences", 
+    "model": "persons.personpreferences", 
     "fields": {
         "preferred_places": [
             1, 
@@ -132,7 +132,7 @@
     "pk": 3
 },
 {
-    "model": "users.personpreferences", 
+    "model": "persons.personpreferences", 
     "fields": {
         "preferred_places": [
             1, 
@@ -151,7 +151,7 @@
     "pk": 4
 },
 {
-    "model": "users.personpreferences", 
+    "model": "persons.personpreferences", 
     "fields": {
         "preferred_places": [
             2, 
@@ -170,7 +170,7 @@
     "pk": 5
 },
 {
-    "model": "users.personpreferences", 
+    "model": "persons.personpreferences", 
     "fields": {
         "preferred_places": [
             1, 
@@ -188,7 +188,7 @@
     "pk": 6
 },
 {
-    "model": "users.personpreferences", 
+    "model": "persons.personpreferences", 
     "fields": {
         "preferred_places": [
             1, 
@@ -206,7 +206,7 @@
     "pk": 7
 },
 {
-    "model": "users.personalsettings", 
+    "model": "persons.personalsettings", 
     "fields": {
         "display_periodical_notification": true, 
         "display_difference_notification": true, 
@@ -219,7 +219,7 @@
     "pk": 1
 },
 {
-    "model": "users.personalsettings", 
+    "model": "persons.personalsettings", 
     "fields": {
         "display_periodical_notification": true, 
         "display_difference_notification": true, 
@@ -232,7 +232,7 @@
     "pk": 2
 },
 {
-    "model": "users.personalsettings", 
+    "model": "persons.personalsettings", 
     "fields": {
         "display_periodical_notification": true, 
         "display_difference_notification": true, 
@@ -245,7 +245,7 @@
     "pk": 3
 },
 {
-    "model": "users.personalsettings", 
+    "model": "persons.personalsettings", 
     "fields": {
         "display_periodical_notification": true, 
         "display_difference_notification": true, 
@@ -258,7 +258,7 @@
     "pk": 4
 },
 {
-    "model": "users.personalsettings", 
+    "model": "persons.personalsettings", 
     "fields": {
         "display_periodical_notification": true, 
         "display_difference_notification": true, 
@@ -271,7 +271,7 @@
     "pk": 5
 },
 {
-    "model": "users.personalsettings", 
+    "model": "persons.personalsettings", 
     "fields": {
         "display_periodical_notification": true, 
         "display_difference_notification": true, 
@@ -284,7 +284,7 @@
     "pk": 6
 },
 {
-    "model": "users.personalsettings", 
+    "model": "persons.personalsettings", 
     "fields": {
         "display_periodical_notification": true, 
         "display_difference_notification": true, 

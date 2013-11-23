@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 from checkin.models import CheckinDetails
 from checkin.forms import CheckinForm
 from notifications.models import PeriodicalNotification
-from users.models import PersonalSettings
+from persons.models import PersonalSettings
 from diary.models import Diary
 
 

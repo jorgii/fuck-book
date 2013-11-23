@@ -6,7 +6,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
-from users.models import PersonalSettings, PersonPreferences
+from persons.models import PersonalSettings, PersonPreferences
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification, create_tip_message
 from notifications.views import mark_notification_as_read
 from checkin.models import CheckinDetails
