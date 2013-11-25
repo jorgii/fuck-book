@@ -3,13 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
-from persons.models import PersonalSettings
+from persons.models import Person
 
 
 @login_required
 def notifications(request):
     current_person = request.user.person
-    current_person_settings = PersonalSettings.objects.get(person=current_person)
+    current_person_settings = Person.objects.get(person=current_person)
 
     periodical_notifications = PeriodicalNotification.objects.filter(person=current_person).order_by('-date_saved')
     tip_notifications = TipNotification.objects.filter(person=current_person).order_by('-date_saved')

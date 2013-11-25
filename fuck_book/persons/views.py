@@ -10,8 +10,8 @@ from django.core.context_processors import csrf
 from django.contrib.auth import login
 
 
-from persons.models import Person, PersonPreferences, PersonalSettings
-from persons.forms import PersonForm, UserForm, PersonPreferencesForm, PersonalSettingsForm
+from persons.models import Person
+from persons.forms import PersonRegisterForm, UserForm, ProfileEditForm
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
 
 
@@ -28,9 +28,9 @@ def profile(request, username):
         age = int((date.today() - user_to_display.person.birth_date).days/365)
     except TypeError:
         age = None
-    preferred_poses = user_to_display.person.personpreferences.preferred_poses.all()
-    preferred_places = user_to_display.person.personpreferences.preferred_places.all()
-    related_to = user_to_display.person.personpreferences.relation
+    preferred_poses = user_to_display.person.preferred_poses.all()
+    preferred_places = user_to_display.person.preferred_places.all()
+    related_to = user_to_display.person.relation
     md5_hash = hashlib.md5()
     md5_hash.update(request.user.email.encode('utf-8'))
     try:
@@ -44,16 +44,12 @@ def profile(request, username):
 @login_required
 def profile_edit(request):
     path = '/profile_edit/'  # to point the path in the base html template
-    person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
+    person_form = ProfileEditForm(request.user.person, request.POST or None, request.FILES or None)
     user_form = UserForm(request.POST or None, instance=request.user)
-    person_preferences_form = PersonPreferencesForm(request.POST or None, instance=request.user.person.personpreferences)
-    personal_settings_form = PersonalSettingsForm(request.POST or None, instance=request.user.person.personalsettings)
     if request.method == 'POST':
-        if person_form.is_valid() and user_form.is_valid() and person_preferences_form.is_valid() and personal_settings_form.is_valid():
+        if person_form.is_valid() and user_form.is_valid():
             person_form.save()
             user_form.save()
-            person_preferences_form.save()
-            personal_settings_form.save()
             return redirect('/profile/'+request.user.username+'/')
     csrf(request)
     return render(request, 'profile_edit.html', locals())
@@ -79,10 +75,6 @@ def register(request):
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             created_person = Person(user=user)
             created_person.save()
-            person_preferences = PersonPreferences(person=created_person)
-            person_preferences.save()
-            personal_settings = PersonalSettings(person=created_person)
-            personal_settings.save()
             login(request, user)
             return redirect('/register_success/')
     csrf(request)
@@ -91,7 +83,7 @@ def register(request):
 
 @login_required
 def register_success(request):
-    person_form = PersonForm(request.POST or None, request.FILES or None, instance=request.user.person)
+    person_form = PersonRegisterForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
     if request.method == 'POST':
         if person_form.is_valid() and user_form.is_valid():
