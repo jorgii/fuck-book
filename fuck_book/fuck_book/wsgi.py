@@ -30,3 +30,8 @@ application = get_wsgi_application()
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
+
+try:
+    from fuck_book.local_wsgi import *
+except ImportError as e:
+    print('Unable to load local_wsgi.py:', e)
