@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-from persons.models import Person, PersonPreferences, PersonalSettings
+from persons.models import Person
 
 
 class UserForm(ModelForm):
@@ -16,26 +16,32 @@ class UserForm(ModelForm):
         fields = ['first_name', 'last_name', 'email']
 
 
-class PersonForm(ModelForm):
+class PersonRegisterForm(ModelForm):
     class Meta:
         model = Person
         fields = ['gender', 'birth_date', 'city', 'photo']
 
 
-class PersonPreferencesForm(ModelForm):
-    def __init__(self, data=None, instance=None, *args, **kwargs):
-        super(PersonPreferencesForm, self).__init__(data=data, instance=instance, *args, **kwargs)
+class ProfileEditForm(ModelForm):
+    def __init__(self, instance=None, *args, **kwargs):
+        super(ProfileEditForm, self).__init__(instance=instance, *args, **kwargs)
         relation_set = self.fields['relation'].queryset
-        self.fields['relation'].queryset = relation_set.exclude(id=instance.person.id).filter(
-            Q(personpreferences__relation=None) | Q(personpreferences__relation=self.instance)
-        )
+        self.fields['relation'].queryset = relation_set.exclude(id=instance.id).filter(
+            Q(relation=None) | Q(relation=self.instance)
+        )   
 
     class Meta:
-        model = PersonPreferences
-        fields = ['relation', 'preferred_poses', 'preferred_places']
-
-
-class PersonalSettingsForm(ModelForm):
-    class Meta:
-        model = PersonalSettings
-        exclude = ['person']
+        model = Person
+        fields = ['gender',
+                  'birth_date',
+                  'city',
+                  'photo',
+                  'relation',
+                  'preferred_poses',
+                  'preferred_places',
+                  'display_periodical_notification',
+                  'display_tip_notification',
+                  'display_difference_notification',
+                  'periodical_notification_period',
+                  'tip_notification_period',
+                  'difference_notification_period']
