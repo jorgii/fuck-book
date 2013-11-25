@@ -37,3 +37,4 @@ nosetests.xml
 local_settings*
 local_wsgi*
 log.txt
+media
