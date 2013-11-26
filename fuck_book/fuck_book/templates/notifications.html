@@ -8,7 +8,7 @@
             <div class="row-fluid">
                 <div class="span4">
                     <table class="table table-striped">
-                        {% if current_person_settings.display_periodical_notification %}
+                        {% if current_person.display_periodical_notification %}
                         {% if periodical_notifications.count == 0 %}
                         <tr><td>You have no notifications to display.</td></tr>
                         {% else %}
@@ -36,7 +36,7 @@
                 </div>
                 <div class="span4">
                     <table class="table table-striped">
-                        {% if current_person_settings.display_tip_notification %}
+                        {% if current_person.display_tip_notification %}
                         {% if tip_notifications.count == 0 %}
                         <tr><td>You have no notifications to display.</td></tr>
                         {% else %}
@@ -64,7 +64,7 @@
                 </div>
                 <div class="span4">
                     <table class="table table-striped">
-                        {% if current_person_settings.display_difference_notification %}
+                        {% if current_person.display_difference_notification %}
                         {% if difference_notifications.count == 0 %}
                         <tr><td>You have no notifications to display.</td></tr>
                         {% else %}
