@@ -5,21 +5,19 @@ from decimal import Decimal
 from django.core.management.base import BaseCommand
 
 from notifications.models import DifferenceNotification
-from persons.models import Person, PersonalSettings, PersonPreferences
+from persons.models import Person
 from checkin.models import CheckinDetails
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for this_person in Person.objects.all():
-            this_person_settings = PersonalSettings.objects.get(person=this_person)
-            this_person_preferences = PersonPreferences.objects.get(person=this_person)
-            related_person = this_person_preferences.relation
+            related_person = this_person.relation
 
-            if this_person_settings.display_difference_notification and related_person:
+            if this_person.display_difference_notification and related_person:
                 last_entry = get_most_recent_notification(this_person, DifferenceNotification)
 
-                if time_to_send_notification(last_entry, this_person_settings.difference_notification_period):
+                if time_to_send_notification(last_entry, this_person.difference_notification_period):
                     latest_checkins = self.get_couple_latest_checkins(this_person, related_person, last_entry)
 
                     if not latest_checkins:
@@ -33,10 +31,8 @@ class Command(BaseCommand):
                         else:
                             poses_counter = self.get_items_usage(latest_poses)
                             places_counter = self.get_items_usage(latest_places)
-
-                            related_person_preferences = PersonPreferences.objects.get(person=related_person)
-                            related_person_preferred_poses = list(related_person_preferences.preferred_poses.all())
-                            related_person_preferred_places = list(related_person_preferences.preferred_places.all())
+                            related_person_preferred_poses = list(related_person.preferred_poses.all())
+                            related_person_preferred_places = list(related_person.preferred_places.all())
                             related_person_preferred_poses_count = len(related_person_preferred_poses)
                             related_person_preferred_places_count = len(related_person_preferred_places)
 
