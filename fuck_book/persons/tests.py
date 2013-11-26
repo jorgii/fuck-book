@@ -26,9 +26,9 @@ class PersonTest(TestCase):
                     gender=user.person.gender,
                     birth_date=user.person.birth_date,
                     city=user.person.city,
-                    periodical_notification_period=user.person.personalsettings.periodical_notification_period,
-                    tip_notification_period=user.person.personalsettings.tip_notification_period,
-                    difference_notification_period=user.person.personalsettings.difference_notification_period,)
+                    periodical_notification_period=user.person.periodical_notification_period,
+                    tip_notification_period=user.person.tip_notification_period,
+                    difference_notification_period=user.person.difference_notification_period,)
 
     def test_create_person(self):
         self.assertEqual(str(self.person1), self.person1.user.first_name + ' ' + self.person1.user.last_name)
@@ -38,12 +38,6 @@ class PersonTest(TestCase):
         path = 'profile_photos/{}_{}{}'.format(self.person1.user.username, self.person1.user.id, str(filename[filename.rfind('.'):len(filename)]))
         created_path = get_upload_file_name(self.person1, filename)
         self.assertEqual(path, created_path)
-
-    def test_personpreferences_str(self):
-        self.assertEqual(str(self.person1.personpreferences), '{} {}'.format(self.person1.user.first_name, self.person1.user.last_name))
-
-    def test_personalsettings_str(self):
-        self.assertEqual(str(self.person1.personalsettings), '{} {}'.format(self.person1.user.first_name, self.person1.user.last_name))
 
     def test_get_unread_notifications(self):
         PeriodicalNotification.objects.create(person=self.person1,
@@ -55,15 +49,15 @@ class PersonTest(TestCase):
         self.assertEqual(3, get_number_of_unread_notifications(self.person1))
 
     def test_person_relation_save(self):
-        self.person1.personpreferences.relation = self.person2
-        self.person1.personpreferences.save()
-        self.assertEqual(self.person1.personpreferences.relation, self.person2)
-        self.assertEqual(self.person2.personpreferences.relation, self.person1)
+        self.person1.relation = self.person2
+        self.person1.save()
+        self.assertEqual(self.person1.relation, self.person2)
+        self.assertEqual(self.person2.relation, self.person1)
 
     def test_related_to_self(self):
-        self.person1.personpreferences.relation = self.person1
-        self.person1.personpreferences.save()
-        self.assertRaises(ValidationError, self.person1.personpreferences.clean)
+        self.person1.relation = self.person1
+        self.person1.save()
+        self.assertRaises(ValidationError, self.person1.clean)
 
     def test_view_login_get_post(self):
         url = reverse('login',)
@@ -116,7 +110,7 @@ class PersonTest(TestCase):
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
         self.assertEqual(User.objects.get(username='user1').email, data['email'])
         self.assertEqual(User.objects.get(username='user1').first_name, data['first_name'])
-        self.assertEqual(User.objects.get(username='user1').person.personalsettings.periodical_notification_period, data['periodical_notification_period'])
+        self.assertEqual(User.objects.get(username='user1').person.periodical_notification_period, data['periodical_notification_period'])
 
     def test_home_get(self):
         url = reverse('home')
@@ -165,13 +159,13 @@ class FormsTest(TestCase):
 
     def test_personpreferences_init_with_relation(self):
         self.client.login(username='user1', password='pass1')
-        self.person1.personpreferences.relation = self.person2
-        self.person1.personpreferences.save()
+        self.person1.relation = self.person2
+        self.person1.save()
         url = reverse('profile_edit')
         response = self.client.get(url)
-        received_relation_queryset = response.context['person_preferences_form'].fields['relation'].queryset
+        received_relation_queryset = response.context['person_form'].fields['relation'].queryset
         expected_relation_queryset = Person.objects.exclude(id=self.person1.id).filter(
-            Q(personpreferences__relation=None) | Q(id=self.person1.personpreferences.relation.id)
+            Q(relation=None) | Q(id=self.person1.relation.id)
         )
         self.assertQuerysetEqual(received_relation_queryset, map(repr, expected_relation_queryset), ordered=False)
 
@@ -179,7 +173,7 @@ class FormsTest(TestCase):
         self.client.login(username='user1', password='pass1')
         url = reverse('profile_edit')
         response = self.client.get(url)
-        received_relation_queryset = response.context['person_preferences_form'].fields['relation'].queryset
+        received_relation_queryset = response.context['person_form'].fields['relation'].queryset
         expected_relation_queryset = Person.objects.exclude(
-            id=self.person1.id).filter(personpreferences__relation=None)
+            id=self.person1.id).filter(relation=None)
         self.assertQuerysetEqual(received_relation_queryset, map(repr, expected_relation_queryset), ordered=False)
