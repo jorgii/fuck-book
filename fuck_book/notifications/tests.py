@@ -6,7 +6,6 @@ from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
-from persons.models import PersonalSettings, PersonPreferences
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification, create_tip_message
 from notifications.views import mark_notification_as_read
 from checkin.models import CheckinDetails
@@ -74,33 +73,31 @@ class CommandsTestCase(TestCase):
     def setUp(self):
         self.person1 = User.objects.get(username='user1').person
         self.person2 = User.objects.get(username='user2').person
-        self.person1_settings = PersonalSettings.objects.get(person=self.person1)
-        self.person1_preferences = PersonPreferences.objects.get(person=self.person1)
         self.pose = PosesList.objects.get(id=1)
         self.place = PlacesList.objects.get(id=1)
         self.cmd = Command()
 
     def test_send_periodical_notification(self):
-        self.person1_settings.periodical_notification_period = 1
-        self.person1_settings.save(update_fields=['periodical_notification_period'])
+        self.person1.periodical_notification_period = 1
+        self.person1.save(update_fields=['periodical_notification_period'])
         args = []
         opts = {}
         call_command('send_periodical_notification', *args, **opts)
         self.assertTrue(PeriodicalNotification.objects.get(person=self.person1, date_saved=date.today()))
 
     def test_send_tip_notification(self):
-        self.person1_settings.tip_notification_period = 1
-        self.person1_settings.save(update_fields=['tip_notification_period'])
+        self.person1.tip_notification_period = 1
+        self.person1.save(update_fields=['tip_notification_period'])
         args = []
         opts = {}
         call_command('send_tip_notification', *args, **opts)
         self.assertTrue(TipNotification.objects.get(person=self.person1, date_saved=date.today()))
 
     def test_send_difference_notification(self):
-        self.person1_settings.difference_notification_period = 1
-        self.person1_settings.save(update_fields=['difference_notification_period'])
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save(update_fields=['relation'])
+        self.person1.difference_notification_period = 1
+        self.person1.save(update_fields=['difference_notification_period'])
+        self.person1.relation = self.person2
+        self.person1.save(update_fields=['relation'])
         args = []
         opts = {}
         call_command('send_difference_notification', *args, **opts)
@@ -108,10 +105,10 @@ class CommandsTestCase(TestCase):
         self.assertEqual("Not enough data yet. You have to check in more often. ;)", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
 
     def test_send_difference_notification_with_checkin(self):
-        self.person1_settings.difference_notification_period = 1
-        self.person1_settings.save(update_fields=['difference_notification_period'])
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save(update_fields=['relation'])
+        self.person1.difference_notification_period = 1
+        self.person1.save(update_fields=['difference_notification_period'])
+        self.person1.relation = self.person2
+        self.person1.save(update_fields=['relation'])
         CheckinDetails.objects.create(person=self.person1,
                                       date_checked=date(year=2013, month=7, day=3),
                                       address="Sofia, Bulgaria",
@@ -125,10 +122,10 @@ class CommandsTestCase(TestCase):
         self.assertEqual("If you want to get these, you have to specify poses and places when you checkin.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
 
     def test_send_difference_notification_with_checkin_with_poses_and_places(self):
-        self.person1_settings.difference_notification_period = 1
-        self.person1_settings.save(update_fields=['difference_notification_period'])
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save(update_fields=['relation'])
+        self.person1.difference_notification_period = 1
+        self.person1.save(update_fields=['difference_notification_period'])
+        self.person1.relation = self.person2
+        self.person1.save(update_fields=['relation'])
         checkin = CheckinDetails.objects.create(person=self.person1,
                                                 date_checked=date(year=2013, month=7, day=3),
                                                 address="Sofia, Bulgaria",
@@ -145,10 +142,10 @@ class CommandsTestCase(TestCase):
         self.assertEqual("Damn, you're selfish! You need to think more about what poses and places your partner likes.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
 
     def test_send_difference_notification_with_checkin_with_no_preferred_poses_and_places(self):
-        self.person1_settings.difference_notification_period = 1
-        self.person1_settings.save(update_fields=['difference_notification_period'])
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save(update_fields=['relation'])
+        self.person1.difference_notification_period = 1
+        self.person1.save(update_fields=['difference_notification_period'])
+        self.person1.relation = self.person2
+        self.person1.save(update_fields=['relation'])
         checkin = CheckinDetails.objects.create(person=self.person1,
                                                 date_checked=date(year=2013, month=7, day=3),
                                                 address="Sofia, Bulgaria",
@@ -158,7 +155,7 @@ class CommandsTestCase(TestCase):
         checkin.poses.add(self.pose)
         checkin.places.add(self.place)
         checkin.save()
-        self.person2.personpreferences.preferred_poses.clear()
+        self.person2.preferred_poses.clear()
         args = []
         opts = {}
         call_command('send_difference_notification', *args, **opts)
@@ -172,17 +169,17 @@ class CommandsTestCase(TestCase):
         self.assertEqual(2, matching_poses)
 
     def test_send_difference_notification_with_checkin_with_preferred_poses_and_places(self):
-        self.person1_settings.difference_notification_period = 1
-        self.person1_settings.save(update_fields=['difference_notification_period'])
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save(update_fields=['relation'])
+        self.person1.difference_notification_period = 1
+        self.person1.save(update_fields=['difference_notification_period'])
+        self.person1.relation = self.person2
+        self.person1.save(update_fields=['relation'])
         checkin = CheckinDetails.objects.create(person=self.person1,
                                                 date_checked=date(year=2013, month=7, day=3),
                                                 address="Sofia, Bulgaria",
                                                 rating=3,
                                                 duration=30,
                                                 with_who=self.person2,)
-        checkin.poses = self.person2.personpreferences.preferred_poses.get_query_set()
+        checkin.poses = self.person2.preferred_poses.get_query_set()
         checkin.places.add(self.place)
         checkin.save()
         args = []
@@ -192,10 +189,10 @@ class CommandsTestCase(TestCase):
         self.assertEqual("You're doing good with the poses, but try to spice it up with some places your partner likes.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
 
     def test_send_difference_notification_with_checkin_with_poses_and_preferred_places(self):
-        self.person1_settings.difference_notification_period = 1
-        self.person1_settings.save(update_fields=['difference_notification_period'])
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save(update_fields=['relation'])
+        self.person1.difference_notification_period = 1
+        self.person1.save(update_fields=['difference_notification_period'])
+        self.person1.relation = self.person2
+        self.person1.save(update_fields=['relation'])
         checkin = CheckinDetails.objects.create(person=self.person1,
                                                 date_checked=date(year=2013, month=7, day=3),
                                                 address="Sofia, Bulgaria",
@@ -203,7 +200,7 @@ class CommandsTestCase(TestCase):
                                                 duration=30,
                                                 with_who=self.person2,)
         checkin.poses.add(self.pose)
-        checkin.places = self.person2.personpreferences.preferred_places.get_query_set()
+        checkin.places = self.person2.preferred_places.get_query_set()
         checkin.save()
         args = []
         opts = {}
@@ -212,18 +209,18 @@ class CommandsTestCase(TestCase):
         self.assertEqual("You're doing good with the places, but you need to think more about what poses your partner likes.", DifferenceNotification.objects.get(person=self.person1, date_saved=date.today()).message)
 
     def test_send_difference_notification_with_checkin_with_preferred_poses_and_preferred_places(self):
-        self.person1_settings.difference_notification_period = 1
-        self.person1_settings.save(update_fields=['difference_notification_period'])
-        self.person1_preferences.relation = self.person2
-        self.person1_preferences.save(update_fields=['relation'])
+        self.person1.difference_notification_period = 1
+        self.person1.save(update_fields=['difference_notification_period'])
+        self.person1.relation = self.person2
+        self.person1.save(update_fields=['relation'])
         checkin = CheckinDetails.objects.create(person=self.person1,
                                                 date_checked=date(year=2013, month=7, day=3),
                                                 address="Sofia, Bulgaria",
                                                 rating=3,
                                                 duration=30,
                                                 with_who=self.person2,)
-        checkin.poses = self.person2.personpreferences.preferred_poses.get_query_set()
-        checkin.places = self.person2.personpreferences.preferred_places.get_query_set()
+        checkin.poses = self.person2.preferred_poses.get_query_set()
+        checkin.places = self.person2.preferred_places.get_query_set()
         checkin.save()
         args = []
         opts = {}
