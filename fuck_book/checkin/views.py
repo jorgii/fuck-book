@@ -26,7 +26,7 @@ def checkin(request):
             if not person1_person2_diary:
                 Diary.objects.create(person1=request.user.person, person2=checkin_form.instance.with_who)
 
-            this_person_settings = Person.objects.get(person=this_person)
+            this_person_settings = Person.objects.get(id=this_person.id)
             if this_person_settings.display_periodical_notification:
                 update_last_periodical_notification(this_person)
 
