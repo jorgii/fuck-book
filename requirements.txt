@@ -6,3 +6,5 @@ django-extensions==1.2.5
 django-storages==1.1.8
 six==1.4.1
 psycopg2==2.5.1
+django-imagekit==3.0.4
+Pillow==2.2.1
