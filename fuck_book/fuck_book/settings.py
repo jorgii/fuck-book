@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_extensions',
     'storages',
+    'imagekit',
     'persons',
     'checkin',
     'diary',
