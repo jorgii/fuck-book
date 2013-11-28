@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
 
 
 def get_upload_file_name(instance, filename):
@@ -15,7 +17,11 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(blank=True, null=True)
     city = models.CharField('City', max_length=255, blank=True, null=True)
-    photo = models.FileField(upload_to=get_upload_file_name, verbose_name="Profile photo", blank=True, null=True)
+    photo = ProcessedImageField(upload_to=get_upload_file_name,
+                                       verbose_name="Profile photo",
+                                       processors=[ResizeToFit(500,500,upscale=False)],
+                                       format='JPEG',
+                                       options={'quality':60})
     relation = models.OneToOneField('persons.Person',
                                     related_name='related user',
                                     blank=True,

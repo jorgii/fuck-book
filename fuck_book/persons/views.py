@@ -34,7 +34,8 @@ def profile(request, username):
     md5_hash = hashlib.md5()
     md5_hash.update(request.user.email.encode('utf-8'))
     try:
-        profile_photo = 'http://www.gravatar.com/avatar/' + md5_hash.hexdigest()
+        #profile_photo = 'http://www.gravatar.com/avatar/' + md5_hash.hexdigest()
+        profile_photo = user_to_display.person.photo.url
     except ValueError:
         profile_photo = '/media/profile_photos/noPhoto.jpg'
     number_of_unread_notifications = get_number_of_unread_notifications(request.user.person)
