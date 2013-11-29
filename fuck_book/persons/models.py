@@ -24,6 +24,7 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(blank=True, null=True)
     city = models.CharField('City', max_length=255, blank=True, null=True)
+    nickname = models.CharField('Nickname', max_length=255, blank=True, null=True)
     orientation = models.CharField(max_length=1, choices=ORIENTATION_CHOICES, blank=True, null=True)
     photo = ProcessedImageField(upload_to=get_upload_file_name,
                                        verbose_name="Profile photo",
