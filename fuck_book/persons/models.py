@@ -14,9 +14,17 @@ class Person(models.Model):
         ('M', 'Male'),
         ('F', 'Female')
     )
+    ORIENTATION_CHOICES = (
+        ('H', 'Heterosexual'),
+        ('L', 'Lesbian'),
+        ('G', 'Gay'),
+        ('BM', 'Bisexual(Male)'),
+        ('BF', 'Bisexual(Female)'),
+    )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(blank=True, null=True)
     city = models.CharField('City', max_length=255, blank=True, null=True)
+    orientation = models.CharField(max_length=1, choices=ORIENTATION_CHOICES, blank=True, null=True)
     photo = ProcessedImageField(upload_to=get_upload_file_name,
                                        verbose_name="Profile photo",
                                        processors=[ResizeToFit(500,500,upscale=False)],
