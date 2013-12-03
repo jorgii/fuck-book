@@ -30,7 +30,6 @@ def profile(request, username):
         age = None
     preferred_poses = user_to_display.person.preferred_poses.all()
     preferred_places = user_to_display.person.preferred_places.all()
-    related_to = user_to_display.person.relation
     md5_hash = hashlib.md5()
     md5_hash.update(request.user.email.encode('utf-8'))
     try:

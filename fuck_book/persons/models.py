@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
 
@@ -31,11 +30,6 @@ class Person(models.Model):
                                        processors=[ResizeToFit(500,500,upscale=False)],
                                        format='JPEG',
                                        options={'quality':60})
-    relation = models.OneToOneField('persons.Person',
-                                    related_name='related user',
-                                    blank=True,
-                                    null=True,
-                                    error_messages={'unique': 'This person is already in a relation with another user!'})
     preferred_poses = models.ManyToManyField('hardcoded_models.PosesList', blank=True, null=True)
     preferred_places = models.ManyToManyField('hardcoded_models.PlacesList', blank=True, null=True)
     display_periodical_notification = models.BooleanField(default=True)
@@ -45,30 +39,3 @@ class Person(models.Model):
     periodical_notification_period = models.IntegerField(default=14)
     tip_notification_period = models.IntegerField(default=7)
     difference_notification_period = models.IntegerField(default=30)
-
-    def save(self, *args, **kwargs):
-        '''Redefined save method to handle creation of the relation between 2 Persons.
-        It sets the relation for both Persons.
-        Works in the oposite direction, removes relation for both persons
-
-        '''
-        super(Person, self).save(*args, **kwargs)
-
-        if self.relation and self.relation.relation != self:
-            self.relation.relation = self
-            self.relation.save()
-
-        if not self.relation and Person.objects.filter(relation=self).exists():
-            other_person = Person.objects.get(relation=self)
-            other_person.relation = None
-            other_person.save()
-
-    def clean(self):
-        '''Redefined clean method to make sure relation cannot be set to self.
-
-        '''
-        super(Person, self).clean()
-        if self == self.relation:
-            raise ValidationError('One person cannot be related to itself')
-    def __str__(self):
-        return '{} {}'.format(self.user.first_name, self.user.last_name)

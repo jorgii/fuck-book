@@ -1,13 +1,11 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
-from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 
 
 from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
-from persons.models import Person, get_upload_file_name
+from persons.models import get_upload_file_name
 from persons.views import get_number_of_unread_notifications
 
 
@@ -47,17 +45,6 @@ class PersonTest(TestCase):
         DifferenceNotification.objects.create(person=self.person1,
                                               message="Wellcome! Once you're in a relation you'll start getting difference notifications.")
         self.assertEqual(3, get_number_of_unread_notifications(self.person1))
-
-    def test_person_relation_save(self):
-        self.person1.relation = self.person2
-        self.person1.save()
-        self.assertEqual(self.person1.relation, self.person2)
-        self.assertEqual(self.person2.relation, self.person1)
-
-    def test_related_to_self(self):
-        self.person1.relation = self.person1
-        self.person1.save()
-        self.assertRaises(ValidationError, self.person1.clean)
 
     def test_view_login_get_post(self):
         url = reverse('login',)
@@ -156,24 +143,3 @@ class FormsTest(TestCase):
         self.client = Client()
         self.person1 = User.objects.get(username='user1').person
         self.person2 = User.objects.get(username='user2').person
-
-    def test_personpreferences_init_with_relation(self):
-        self.client.login(username='user1', password='pass1')
-        self.person1.relation = self.person2
-        self.person1.save()
-        url = reverse('profile_edit')
-        response = self.client.get(url)
-        received_relation_queryset = response.context['person_form'].fields['relation'].queryset
-        expected_relation_queryset = Person.objects.exclude(id=self.person1.id).filter(
-            Q(relation=None) | Q(id=self.person1.relation.id)
-        )
-        self.assertQuerysetEqual(received_relation_queryset, map(repr, expected_relation_queryset), ordered=False)
-
-    def test_personpreferences_init_with_no_relation(self):
-        self.client.login(username='user1', password='pass1')
-        url = reverse('profile_edit')
-        response = self.client.get(url)
-        received_relation_queryset = response.context['person_form'].fields['relation'].queryset
-        expected_relation_queryset = Person.objects.exclude(
-            id=self.person1.id).filter(relation=None)
-        self.assertQuerysetEqual(received_relation_queryset, map(repr, expected_relation_queryset), ordered=False)
