@@ -10,6 +10,16 @@ class Diary(models.Model):
     def __str__(self):
         return 'DateTime: {},Creator: {},Participants: {}'.format(self.datetime_created, str(self.creator.user.username), [str(p.user.username) for p in self.participants.all()])
 
+
+    @staticmethod
+    def get_diaries_for_exact_people(*people):
+        gathered_diaries = Diary.get_diaries_for_people(*people)
+        for diary in gathered_diaries:
+            if diary.participants.count() != len(people):
+                gathered_diaries = gathered_diaries.exclude(id=diary.id)
+        return gathered_diaries
+
+
     @staticmethod
     def get_diaries_for_people(*people):
         for person in people:
