@@ -29,7 +29,9 @@ class Person(models.Model):
                                        verbose_name="Profile photo",
                                        processors=[ResizeToFit(500,500,upscale=False)],
                                        format='JPEG',
-                                       options={'quality':60})
+                                       options={'quality':60},
+                                       blank=True,
+                                       null=True)
     preferred_poses = models.ManyToManyField('hardcoded_models.PosesList', blank=True, null=True)
     preferred_places = models.ManyToManyField('hardcoded_models.PlacesList', blank=True, null=True)
     display_periodical_notification = models.BooleanField(default=True)
@@ -39,3 +41,6 @@ class Person(models.Model):
     periodical_notification_period = models.IntegerField(default=14)
     tip_notification_period = models.IntegerField(default=7)
     difference_notification_period = models.IntegerField(default=30)
+
+    def __str__(self):
+        return '{} {}'.format(self.user.first_name, self.user.last_name)
