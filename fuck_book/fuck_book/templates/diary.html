@@ -23,7 +23,7 @@
             </h4>
         </div>
         <div class="span4">
-            <h4>Date/Time Created: {{ diary.timestamp }}<h4>
+            <h4>Date/Time Created: {{ diary.datetime_created }}<h4>
         </div>
         </a>
     </div>
@@ -35,7 +35,7 @@
               <div class="row-fluid accordion-heading">
                 <div class="row-fluid accordion-heading">
                   <a class="accordion-toggle" data-toggle="collapse" data-parent-toggle="#accordion1" href="#collapsecheckin{{ checkin.id }}">
-                    Date/Time Checked: {{ checkin.date_checked }}
+                    Date/Time Checked: {{ checkin.datetime_created }}
                   </a>
                 </div>
                 <div id="collapsecheckin{{ checkin.id }}" class=" accordion-body collapse">
@@ -52,7 +52,7 @@
                             </tr>
                             <tr>
                               <td><b>Date/Time Checked:</b></td>
-                              <td>{{ checkin.date_checked }}</td>
+                              <td>{{ checkin.datetime_created }}</td>
                             </tr>
                             <tr>
                               <td><b>Rating:</b></td>
