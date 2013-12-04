@@ -9,3 +9,12 @@ class Diary(models.Model):
 
     def __str__(self):
         return 'DateTime: {},Creator: {},Participants: {}'.format(self.datetime_created, str(self.creator.user.username), [str(p.user.username) for p in self.participants.all()])
+
+    @staticmethod
+    def get_diaries_for_people(*people):
+        for person in people:
+            if person == people[0]:
+                gathered_diaries = Diary.objects.filter(participants__id=person.id)
+            else:
+                gathered_diaries=gathered_diaries.filter(participants__id=person.id)
+        return gathered_diaries
