@@ -12,7 +12,7 @@ class Diary(models.Model):
 
 
     @staticmethod
-    def get_diaries_for_exact_people(*people):
+    def get_diary_for_exact_people(*people):
         gathered_diaries = Diary.get_diaries_for_people(*people)
         for diary in gathered_diaries:
             if diary.participants.count() != len(people):
