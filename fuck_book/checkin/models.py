@@ -1,12 +1,11 @@
-from datetime import date
-
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 
 class CheckinDetails(models.Model):
-    person = models.ForeignKey('persons.Person')
-    date_checked = models.DateField(default=date.today())
+    creator = models.ForeignKey('persons.Person')
+    datetime_created = models.DateTimeField(auto_now_add=True)
     longitude = models.DecimalField('Longitude', max_digits=9, decimal_places=6 ,null=True, blank=True)
     latitude = models.DecimalField('Latitude', max_digits=9, decimal_places=6, null=True, blank=True)
     address = models.CharField('Address (ex: Cherni vrah 47, Sofia, Bulgaria):', max_length=255)
@@ -22,10 +21,10 @@ class CheckinDetails(models.Model):
     rating = models.CharField(max_length=1, choices=RAITING_CHOICES)
     duration = models.IntegerField('Duration (in minutes):', default=10)
     contraception = models.BooleanField('Contraception (y/n):', default=True)
-    with_who = models.ManyToManyField('persons.Person', related_name='checkin_related_users', blank=True, null=True)
+    participants = models.ManyToManyField('persons.Person', related_name='checkin_related_users', blank=True, null=True)
 
     def __str__(self):
-        return '{}, {}'.format(self.date_checked, self.person.user)
+        return '{}, {}'.format(self.datetime_created, self.creator.user)
 
     def clean(self):
         ''' Redefined clean method to make sure:
@@ -34,9 +33,16 @@ class CheckinDetails(models.Model):
         - person cannot checkin with too large duration number
         '''
         super(CheckinDetails, self).clean()
-        if self.person in self.with_who.all():
-            raise ValidationError("'Loving' yourself might be great, but that's not what we're looking for here. ;)")
         if self.duration <= 0:
             raise ValidationError("Man! Either you were faster than the light's speed or you entered the wrong number. Try positive values the next time.")
         elif self.duration > 600:
             raise ValidationError("Always thought that 'all night long' was just an expression. Try a smaller number next time. :)")
+
+    @staticmethod
+    def get_checkins_for_people(*people):
+        for person in people:
+            if person == people[0]:
+                gathered_checkins = CheckinDetails.objects.filter(participants__id__contains=person.id)
+            else:
+                gathered_checkins=gathered_checkins.filter(participants__id__contains=person.id)
+        return gathered_checkins

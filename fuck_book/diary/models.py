@@ -2,12 +2,10 @@ from django.db import models
 
 
 class Diary(models.Model):
-    person1 = models.ForeignKey('persons.Person')
-    person2 = models.ForeignKey('persons.Person', related_name='diary related user', blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey('persons.Person')
+    participants = models.ManyToManyField('persons.Person', related_name='diary participants', blank=True, null=True)
+    checkins = models.ManyToManyField('checkin.CheckinDetails')
+    datetime_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        if self.person2:
-            return '{}, {}, {}'.format(self.timestamp, str(self.person1.user.username), str(self.person2.user.username))
-        else:
-            return '{}, {}, {}'.format(self.timestamp, str(self.person1.user.username), None)
+        return 'DateTime: {},Creator: {},Participants: {}'.format(self.datetime_created, str(self.creator.user.username), [str(p.user.username) for p in self.participants.all()])
