@@ -44,7 +44,7 @@ def profile(request, username):
 @login_required
 def profile_edit(request):
     path = '/profile_edit/'  # to point the path in the base html template
-    person_form = ProfileEditForm(request.user.person, request.POST or None, request.FILES or None)
+    person_form = ProfileEditForm(request.POST or None, request.FILES or None, instance=request.user.person)
     user_form = UserForm(request.POST or None, instance=request.user)
     if request.method == 'POST':
         if person_form.is_valid() and user_form.is_valid():
