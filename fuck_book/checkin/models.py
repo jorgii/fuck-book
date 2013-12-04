@@ -39,10 +39,18 @@ class CheckinDetails(models.Model):
             raise ValidationError("Always thought that 'all night long' was just an expression. Try a smaller number next time. :)")
 
     @staticmethod
+    def get_checkins_for_exact_people(*people):
+        gathered_checkins = CheckinDetails.get_checkins_for_people(*people)
+        for checkin in gathered_checkins:
+            if checkin.participants.count() != len(people):
+                gathered_checkins = gathered_checkins.exclude(id=checkin.id)
+        return gathered_checkins
+
+    @staticmethod
     def get_checkins_for_people(*people):
         for person in people:
             if person == people[0]:
-                gathered_checkins = CheckinDetails.objects.filter(participants__id__contains=person.id)
+                gathered_checkins = CheckinDetails.objects.filter(participants__id=person.id)
             else:
-                gathered_checkins=gathered_checkins.filter(participants__id__contains=person.id)
+                gathered_checkins=gathered_checkins.filter(participants__id=person.id)
         return gathered_checkins
