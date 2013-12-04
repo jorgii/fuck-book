@@ -18,6 +18,17 @@ class Diary(models.Model):
         return
 
     @staticmethod
+    def create(creator, participants, checkins):
+        diary = Diary.objects.create(creator=creator)
+        diary.participants.add(*participants)
+        if type(checkins) == list:
+            diary.checkins.add(*checkins)
+        else:
+            diary.checkins.add(checkins)
+        diary.save()
+        return
+
+    @staticmethod
     def get_diary_for_exact_people(*people): 
         for diary in Diary.get_diaries_for_people(*people):
             if diary.participants.count() == len(people):
