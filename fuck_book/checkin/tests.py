@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -11,16 +11,16 @@ from notifications.models import PeriodicalNotification
 
 
 class CheckinTest(TestCase):
-    fixtures = ['users_data.json', 'persons_data.json', 'checkin_data.json']
+    fixtures = ['users_data.json', 'persons_data.json']
 
     def setUp(self):
         self.client = Client()
         self.person1 = User.objects.get(username='user1').person
-        self.checkin = CheckinDetails.objects.get(id=1)
+        self.checkin = CheckinDetails.objects.create(creator=self.person1, datetime_created=datetime.now(), address='Sofia', rating=1)
 
     def test_create_checkin(self):
         self.assertTrue(isinstance(self.checkin, CheckinDetails))
-        self.assertEqual(str(self.checkin), str(self.checkin.date_checked) + ', ' + str(self.checkin.person.user))
+        self.assertEqual(str(self.checkin), str(self.checkin.datetime_created) + ', ' + str(self.checkin.creator.user))
 
     def test_checkin_with_self(self):
         self.checkin.person = self.checkin.with_who
