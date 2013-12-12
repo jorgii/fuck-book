@@ -1,128 +1,128 @@
 [
-{
+  {
+    "pk": 1,
+    "model": "auth.user",
     "fields": {
-        "user_permissions": [], 
-        "password": "md5$CLlZ0XsKdJNK$1de24754b8a875aa346a0bbbdf9bc1cd", 
-        "username": "user1", 
-        "is_superuser": false, 
-        "date_joined": "2013-07-02T15:16:51.710", 
-        "last_login": "2013-07-02T18:08:29.033", 
-        "first_name": "User1Name1", 
-        "email": "", 
-        "is_active": true, 
-        "is_staff": false, 
-        "last_name": "User1Name2", 
-        "groups": []
-    }, 
-    "model": "auth.user", 
-    "pk": 2
-},
-{
+      "username": "user1",
+      "first_name": "User1Name1",
+      "last_name": "User1Name2",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-12T11:09:30.953",
+      "groups": [],
+      "user_permissions": [],
+      "password": "md5$YGKbVEyfWvc2$6a1bdb809dbfe5c87b1bb4c03165f627",
+      "email": "",
+      "date_joined": "2013-12-12T11:09:30.953"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
     "fields": {
-        "user_permissions": [], 
-        "password": "md5$8GvAsZWFhkOc$6939953c62e32c61828a2d4043d9f399", 
-        "username": "user2", 
-        "is_superuser": false, 
-        "date_joined": "2013-07-02T15:16:51.908", 
-        "last_login": "2013-07-02T15:58:28.562", 
-        "first_name": "User2Name1", 
-        "email": "", 
-        "is_active": true, 
-        "is_staff": false, 
-        "last_name": "User2Name2", 
-        "groups": []
-    }, 
-    "model": "auth.user", 
-    "pk": 3
-},
-{
+      "username": "user2",
+      "first_name": "User2Name1",
+      "last_name": "User2Name2",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-12T11:09:31.109",
+      "groups": [],
+      "user_permissions": [],
+      "password": "md5$rB3jgdwoZbZf$381c7f968e31adf9ea205ddcb0e4e56f",
+      "email": "",
+      "date_joined": "2013-12-12T11:09:31.109"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.user",
     "fields": {
-        "user_permissions": [], 
-        "password": "md5$yFVAmAflK0mc$f3f53218b0e1aa36c56cb8bbfb919dcf", 
-        "username": "user3", 
-        "is_superuser": false, 
-        "date_joined": "2013-07-02T15:16:52.076", 
-        "last_login": "2013-07-02T15:16:52.076", 
-        "first_name": "User3Name1", 
-        "email": "", 
-        "is_active": true, 
-        "is_staff": false, 
-        "last_name": "User3Name2", 
-        "groups": []
-    }, 
-    "model": "auth.user", 
-    "pk": 4
-},
-{
+      "username": "user3",
+      "first_name": "User3Name1",
+      "last_name": "User3Name2",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-12T11:09:31.267",
+      "groups": [],
+      "user_permissions": [],
+      "password": "md5$cbeHJxXnopSg$e46c90385a71a29e97382ec4340f0333",
+      "email": "",
+      "date_joined": "2013-12-12T11:09:31.267"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.user",
     "fields": {
-        "user_permissions": [], 
-        "password": "md5$oYOqpXhHf23j$8af2935bce4b17a3449193c1e1fb68d6", 
-        "username": "user4", 
-        "is_superuser": false, 
-        "date_joined": "2013-07-02T15:16:52.245", 
-        "last_login": "2013-07-02T15:16:52.245", 
-        "first_name": "User4Name1", 
-        "email": "", 
-        "is_active": true, 
-        "is_staff": false, 
-        "last_name": "User4Name2", 
-        "groups": []
-    }, 
-    "model": "auth.user", 
-    "pk": 5
-},
-{
+      "username": "user4",
+      "first_name": "User4Name1",
+      "last_name": "User4Name2",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-12T11:09:31.417",
+      "groups": [],
+      "user_permissions": [],
+      "password": "md5$6jglrqkq2qGG$ecd93ab0ba19e2a3f05dc73ac3c40e9e",
+      "email": "",
+      "date_joined": "2013-12-12T11:09:31.417"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.user",
     "fields": {
-        "user_permissions": [], 
-        "password": "md5$Lyf7ipV1EFQW$d04d96fee53ab5392c96af968a2bd3f0", 
-        "username": "user5", 
-        "is_superuser": false, 
-        "date_joined": "2013-07-02T15:16:52.424", 
-        "last_login": "2013-07-02T15:16:52.424", 
-        "first_name": "User5Name1", 
-        "email": "", 
-        "is_active": true, 
-        "is_staff": false, 
-        "last_name": "User5Name2", 
-        "groups": []
-    }, 
-    "model": "auth.user", 
-    "pk": 6
-},
-{
+      "username": "user5",
+      "first_name": "User5Name1",
+      "last_name": "User5Name2",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-12T11:09:31.575",
+      "groups": [],
+      "user_permissions": [],
+      "password": "md5$tmBPPk4EzzRQ$827f866d8e29f39d1be446192d0641d7",
+      "email": "",
+      "date_joined": "2013-12-12T11:09:31.575"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "auth.user",
     "fields": {
-        "user_permissions": [], 
-        "password": "md5$AQB4Ip1VjgYZ$0a907c6f963b177437106f286e4e65c3", 
-        "username": "user6", 
-        "is_superuser": false, 
-        "date_joined": "2013-07-02T15:16:52.593", 
-        "last_login": "2013-07-02T15:16:52.593", 
-        "first_name": "User6Name1", 
-        "email": "", 
-        "is_active": true, 
-        "is_staff": false, 
-        "last_name": "User6Name2", 
-        "groups": []
-    }, 
-    "model": "auth.user", 
-    "pk": 7
-},
-{
+      "username": "user6",
+      "first_name": "User6Name1",
+      "last_name": "User6Name2",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-12T11:09:31.775",
+      "groups": [],
+      "user_permissions": [],
+      "password": "md5$CtUSzcqkNrty$8ad0474a925bca2d5d672812f3055374",
+      "email": "",
+      "date_joined": "2013-12-12T11:09:31.775"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "auth.user",
     "fields": {
-        "user_permissions": [], 
-        "password": "md5$WxeCoh2z6PD5$efa2f57a7e84df717e830d14a28717f7", 
-        "username": "user7", 
-        "is_superuser": false, 
-        "date_joined": "2013-07-02T15:16:52.866", 
-        "last_login": "2013-07-03T10:53:00.744", 
-        "first_name": "User7Name1", 
-        "email": "", 
-        "is_active": true, 
-        "is_staff": false, 
-        "last_name": "User7Name2", 
-        "groups": []
-    }, 
-    "model": "auth.user", 
-    "pk": 8
-}
+      "username": "user7",
+      "first_name": "User7Name1",
+      "last_name": "User7Name2",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-12T11:09:31.934",
+      "groups": [],
+      "user_permissions": [],
+      "password": "md5$pAQH5Auzm8tD$26f6603c57614b1c0622238b1abdc8c5",
+      "email": "",
+      "date_joined": "2013-12-12T11:09:31.934"
+    }
+  }
 ]

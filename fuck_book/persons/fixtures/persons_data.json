@@ -4,27 +4,29 @@
     "model": "persons.person",
     "fields": {
       "city": "Sofia1",
+      "display_difference_notification": true,
+      "orientation": null,
+      "display_periodical_notification": true,
+      "gender": "M",
       "preferred_places": [
         1,
         3,
-        4
+        5
       ],
-      "display_periodical_notification": true,
-      "gender": "M",
       "display_tip_notification": true,
       "preferred_poses": [
-        1,
         2,
-        6
+        5,
+        6,
+        7
       ],
       "tip_notification_period": 7,
-      "relation": null,
-      "user": 8,
+      "periodical_notification_period": 14,
+      "user": 1,
       "photo": "",
       "birth_date": "1990-01-25",
-      "periodical_notification_period": 14,
-      "display_difference_notification": true,
-      "difference_notification_period": 30
+      "difference_notification_period": 30,
+      "nickname": null
     }
   },
   {
@@ -32,27 +34,28 @@
     "model": "persons.person",
     "fields": {
       "city": "Sofia2",
-      "preferred_places": [
-        1,
-        2,
-        3
-      ],
+      "display_difference_notification": true,
+      "orientation": null,
       "display_periodical_notification": true,
       "gender": "F",
+      "preferred_places": [
+        1,
+        5
+      ],
       "display_tip_notification": true,
       "preferred_poses": [
         2,
-        4,
-        6
+        5,
+        6,
+        7
       ],
       "tip_notification_period": 7,
-      "relation": null,
+      "periodical_notification_period": 14,
       "user": 2,
       "photo": "",
       "birth_date": "1991-02-25",
-      "periodical_notification_period": 14,
-      "display_difference_notification": true,
-      "difference_notification_period": 30
+      "difference_notification_period": 30,
+      "nickname": null
     }
   },
   {
@@ -60,27 +63,28 @@
     "model": "persons.person",
     "fields": {
       "city": "Sofia3",
-      "preferred_places": [
-        1,
-        3,
-        5
-      ],
+      "display_difference_notification": true,
+      "orientation": null,
       "display_periodical_notification": true,
       "gender": "F",
+      "preferred_places": [
+        1,
+        4
+      ],
       "display_tip_notification": true,
       "preferred_poses": [
-        2,
+        3,
         4,
+        5,
         6
       ],
       "tip_notification_period": 7,
-      "relation": null,
+      "periodical_notification_period": 14,
       "user": 3,
       "photo": "",
       "birth_date": "1992-03-25",
-      "periodical_notification_period": 14,
-      "display_difference_notification": true,
-      "difference_notification_period": 30
+      "difference_notification_period": 30,
+      "nickname": null
     }
   },
   {
@@ -88,27 +92,28 @@
     "model": "persons.person",
     "fields": {
       "city": "Sofia4",
-      "preferred_places": [
-        3,
-        4,
-        5
-      ],
+      "display_difference_notification": true,
+      "orientation": null,
       "display_periodical_notification": true,
       "gender": "M",
+      "preferred_places": [
+        2,
+        3,
+        4
+      ],
       "display_tip_notification": true,
       "preferred_poses": [
-        1,
-        3,
-        6
+        2,
+        6,
+        7
       ],
       "tip_notification_period": 7,
-      "relation": null,
+      "periodical_notification_period": 14,
       "user": 4,
       "photo": "",
       "birth_date": "1993-04-25",
-      "periodical_notification_period": 14,
-      "display_difference_notification": true,
-      "difference_notification_period": 30
+      "difference_notification_period": 30,
+      "nickname": null
     }
   },
   {
@@ -116,27 +121,28 @@
     "model": "persons.person",
     "fields": {
       "city": "Sofia5",
+      "display_difference_notification": true,
+      "orientation": null,
+      "display_periodical_notification": true,
+      "gender": "F",
       "preferred_places": [
-        1,
+        2,
         4,
         5
       ],
-      "display_periodical_notification": true,
-      "gender": "F",
       "display_tip_notification": true,
       "preferred_poses": [
         1,
-        2,
-        6
+        5,
+        7
       ],
       "tip_notification_period": 7,
-      "relation": null,
+      "periodical_notification_period": 14,
       "user": 5,
       "photo": "",
       "birth_date": "1994-05-25",
-      "periodical_notification_period": 14,
-      "display_difference_notification": true,
-      "difference_notification_period": 30
+      "difference_notification_period": 30,
+      "nickname": null
     }
   },
   {
@@ -144,27 +150,26 @@
     "model": "persons.person",
     "fields": {
       "city": "Sofia6",
-      "preferred_places": [
-        1,
-        2,
-        5
-      ],
+      "display_difference_notification": true,
+      "orientation": null,
       "display_periodical_notification": true,
       "gender": "M",
-      "display_tip_notification": true,
-      "preferred_poses": [
-        1,
-        4,
+      "preferred_places": [
         5
       ],
+      "display_tip_notification": true,
+      "preferred_poses": [
+        3,
+        5,
+        6
+      ],
       "tip_notification_period": 7,
-      "relation": null,
+      "periodical_notification_period": 14,
       "user": 6,
       "photo": "",
       "birth_date": "1995-06-25",
-      "periodical_notification_period": 14,
-      "display_difference_notification": true,
-      "difference_notification_period": 30
+      "difference_notification_period": 30,
+      "nickname": null
     }
   },
   {
@@ -172,26 +177,28 @@
     "model": "persons.person",
     "fields": {
       "city": "Sofia7",
-      "preferred_places": [
-        3,
-        5
-      ],
+      "display_difference_notification": true,
+      "orientation": null,
       "display_periodical_notification": true,
       "gender": "F",
+      "preferred_places": [
+        3,
+        4
+      ],
       "display_tip_notification": true,
       "preferred_poses": [
-        2,
+        3,
+        4,
         5,
-        6
+        7
       ],
       "tip_notification_period": 7,
-      "relation": null,
+      "periodical_notification_period": 14,
       "user": 7,
       "photo": "",
       "birth_date": "1996-07-25",
-      "periodical_notification_period": 14,
-      "display_difference_notification": true,
-      "difference_notification_period": 30
+      "difference_notification_period": 30,
+      "nickname": null
     }
   }
 ]
