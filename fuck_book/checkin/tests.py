@@ -22,11 +22,6 @@ class CheckinTest(TestCase):
         self.assertTrue(isinstance(self.checkin, CheckinDetails))
         self.assertEqual(str(self.checkin), str(self.checkin.datetime_created) + ', ' + str(self.checkin.creator.user))
 
-    def test_checkin_with_self(self):
-        self.checkin.person = self.checkin.with_who
-        self.checkin.save()
-        self.assertRaises(ValidationError, self.checkin.clean)
-
     def test_checkin_with_negative_duration(self):
         self.checkin.duration = -1
         self.checkin.save()
