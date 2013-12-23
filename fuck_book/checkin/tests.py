@@ -83,7 +83,7 @@ class CheckinFormTest(TestCase):
         if self.checkin_form.is_valid():
             self.instance = self.checkin_form.save()
             self.assertEqual(self.instance.creator, self.person1)
-            self.assertContains(self.instance.participants, self.person1)
+            self.assertIn(self.person1, self.instance.participants.all())
         else:
             raise ValidationError(self.checkin_form.errors)
 
