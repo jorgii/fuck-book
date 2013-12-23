@@ -94,3 +94,11 @@ class CheckinFormTest(TestCase):
             self.assertItemsEqual(self.instance.participants.all(), [self.person1, self.person2, self.person3])
         else:
             raise ValidationError(self.checkin_form.errors)
+
+    def test_add_self_to_participants(self):
+        self.checkin_form.data['participants'] = ['1', '2', '3']
+        if self.checkin_form.is_valid():
+            self.instance = self.checkin_form.save()
+            self.assertItemsEqual(self.instance.participants.all(), [self.person1, self.person2, self.person3])
+        else:
+            raise ValidationError(self.checkin_form.errors)
