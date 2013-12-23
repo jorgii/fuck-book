@@ -63,6 +63,28 @@ class CheckinTest(TestCase):
         expected_url = reverse('diary')
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
 
+    def test_get_checkins_for_people(self):
+        checkin1 = CheckinDetails.objects.create(creator=self.person1, rating=3, duration=30)
+        checkin1.participants.add(self.person1, self.person2, self.person3)
+        checkin2 = CheckinDetails.objects.create(creator=self.person2, rating=3, duration=30)
+        checkin2.participants.add(self.person1, self.person2, self.person3)
+        checkin3 = CheckinDetails.objects.create(creator=self.person3, rating=3, duration=30)
+        checkin3.participants.add(self.person1, self.person2, self.person3)
+        checkin4 = CheckinDetails.objects.create(creator=self.person4, rating=3, duration=30)
+        checkin4.participants.add(self.person1, self.person2, self.person4)
+        checkin5 = CheckinDetails.objects.create(creator=self.person1, rating=3, duration=30)
+        checkin5.participants.add(self.person1, self.person2, self.person4)
+
+        self.assertItemsEqual(CheckinDetails.get_checkins_for_people(self.person1, self.person4), [checkin4, checkin5])
+        self.assertItemsEqual(CheckinDetails.get_checkins_for_people(self.person2, self.person3), [checkin1, checkin2, checkin3])
+        self.assertItemsEqual(CheckinDetails.get_checkins_for_people(self.person1, self.person2), [checkin1, checkin2, checkin3, checkin4, checkin5])
+
+        self.assertItemsEqual(CheckinDetails.get_checkins_for_exact_people(self.person1, self.person4), [])
+        self.assertItemsEqual(CheckinDetails.get_checkins_for_exact_people(self.person1, self.person2, self.person3), [checkin1, checkin2, checkin3])
+        self.assertItemsEqual(CheckinDetails.get_checkins_for_exact_people(self.person1, self.person2, self.person4), [checkin4, checkin5])
+
+
+
 class CheckinFormTest(TestCase):
     fixtures = ['users_data.json', 'persons_data.json']
 
