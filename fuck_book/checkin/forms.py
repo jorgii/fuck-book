@@ -18,5 +18,6 @@ class CheckinForm(ModelForm):
 
     def save(self):
         instance = super(CheckinForm, self).save()
-        instance.participants.add(instance.creator)
+        if instance.creator not in instance.participants.all():
+            instance.participants.add(instance.creator)
         return instance
