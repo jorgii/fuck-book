@@ -86,3 +86,11 @@ class CheckinFormTest(TestCase):
             self.assertContains(self.instance.participants, self.person1)
         else:
             raise ValidationError(self.checkin_form.errors)
+
+    def test_multiple_checkin(self):
+        self.checkin_form.data['participants'] = ['2', '3']
+        if self.checkin_form.is_valid():
+            self.instance = self.checkin_form.save()
+            self.assertEqual(self.instance.participants, [self.person1, self.person2, self.person3])
+        else:
+            raise ValidationError(self.checkin_form.errors)
