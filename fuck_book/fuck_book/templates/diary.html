@@ -12,14 +12,7 @@
         <a class="accordion-toggle" data-toggle="collapse" data-parent-toggle="#accordion1" href="#collapsediary{{ diary.id }}">
         <div class="span4">
             <h4>
-                Diary with:
-                  {% if request.user.person == diary.person1 and diary.person2 %}
-                    {{ diary.person2 }}
-                  {% elif request.user.person == diary.person2 and diary.person1 %}
-                    {{ diary.person1 }}
-                  {% else %}
-                     Anonymous
-                  {% endif %}
+                Diary including: {{ diary.participants.all }}
             </h4>
         </div>
         <div class="span4">

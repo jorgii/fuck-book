@@ -47,8 +47,8 @@ class CheckinTest(TestCase):
                                               date_saved=date(year=2013, month=6, day=30),
                                               message="default message",
                                               unread=False)
-        data = dict(person=self.person1,
-                    date_checked=date.today(),
+        data = dict(creator=self.person1,
+                    datetime_created=date.today(),
                     address='Sofia, Bulgaria',
                     rating=3,
                     duration=30,)

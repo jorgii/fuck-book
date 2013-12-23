@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-
+from django import forms
 
 from checkin.models import CheckinDetails
 
@@ -16,3 +16,8 @@ class CheckinForm(ModelForm):
             'duration',
             'contraception',
             'participants']
+
+    def save(self):
+        instance = super(CheckinForm, self).save()
+        instance.participants.add(instance.creator)
+        return instance
