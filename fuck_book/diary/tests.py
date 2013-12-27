@@ -9,7 +9,7 @@ from checkin.models import CheckinDetails
 
 
 class DiaryTest(TestCase):
-    fixtures = ['users_data.json', 'persons_data.json', 'diary_data.json', 'checkin_data.json', 'hardcoded_data.json']
+    fixtures = ['users_data.json', 'persons_data.json']
 
     def setUp(self):
         self.client = Client()
