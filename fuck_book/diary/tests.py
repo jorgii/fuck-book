@@ -56,3 +56,7 @@ class DiaryTest(TestCase):
         expected_diary_list = [self.diary1, self.diary2, self.empty_diary]
         received_diary_list = Diary.get_diaries_for_people(self.person1)
         self.assertItemsEqual(expected_diary_list, received_diary_list)
+
+        expected_diary_list = [self.diary1, self.diary2]
+        received_diary_list = Diary.get_diaries_for_people(self.person1, self.person2)
+        self.assertItemsEqual(expected_diary_list, received_diary_list)
