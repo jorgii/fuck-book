@@ -41,14 +41,6 @@ class DiaryTest(TestCase):
         diary = Diary.objects.get(creator=self.person1, participants=[self.person1, self.person2, self.person3])
         self.assertEqual(str(diary), 'DateTime: {},Creator: {},Participants: {}'.format(diary.datetime_created, str(diary.creator.user.username), [str(p.user.username) for p in diary.participants.all()]))
 
-    def test_diary_list_view(self):
-        self.client.login(username='user1', password='pass1')
-        expected_diary_list = list(Diary.objects.filter(person1=self.person1))
-        expected_diary_list.extend(list(Diary.objects.filter(person2=self.person1)))
-        expected_diary_list = sorted(expected_diary_list, key=lambda x: x.timestamp, reverse=True)
-        response = self.client.get('/diary/')
-        received_diary_list = response.context['diary_list']
-        self.assertEqual(expected_diary_list, received_diary_list)
 
     def test_diary_get(self):
         self.client.login(username='user1', password='pass1')
