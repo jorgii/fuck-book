@@ -82,3 +82,14 @@ class DiaryTest(TestCase):
         self.assertEqual(created_diary.creator, self.person4)
         self.assertItemsEqual(created_diary.participants.all(), [self.person1, self.person2, self.person4])
         self.assertItemsEqual(created_diary.checkins.all(), [checkin])
+
+    def test_add_checkins_to_diary(self):
+        checkin1 = CheckinDetails.objects.create(creator=self.person4, rating=3, duration=30)
+        checkin1.participants.add(self.person1, self.person2, self.person4)
+        checkin2 = CheckinDetails.objects.create(creator=self.person4, rating=3, duration=30)
+        checkin2.participants.add(self.person1, self.person2, self.person4)
+        checkin3 = CheckinDetails.objects.create(creator=self.person4, rating=3, duration=30)
+        checkin3.participants.add(self.person1, self.person2, self.person4)
+
+        self.diary2.add_checkins_to_diary(checkin1, checkin2, checkin3)
+        self.assertItemsEqual(self.diary2.checkins.all(), [self.checkin4, self.checkin5, checkin1, checkin2, checkin3])
