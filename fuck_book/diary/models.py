@@ -11,20 +11,15 @@ class Diary(models.Model):
         return 'DateTime: {},Creator: {},Participants: {}'.format(self.datetime_created, str(self.creator.user.username), [str(p.user.username) for p in self.participants.all()])
 
     def add_checkins_to_diary(self, *checkins):
-        diary_to_edit = Diary.objects.get(id=self.id)
-        for checkin in checkins:
-            diary_to_edit.checkins.add(checkin)
-        diary_to_edit.save()
+        self.checkins.add(*checkins)
+        self.save()
         return
 
     @staticmethod
     def create(creator, participants, checkins):
         diary = Diary.objects.create(creator=creator)
         diary.participants.add(*participants)
-        if type(checkins) == list:
-            diary.checkins.add(*checkins)
-        else:
-            diary.checkins.add(checkins)
+        diary.add_checkins_to_diary(checkins)
         diary.save()
         return
 
