@@ -27,7 +27,7 @@ class DiaryTest(TestCase):
         self.checkin5.participants.add(self.person1, self.person2, self.person4)
         self.empty_checkin = CheckinDetails.objects.create(creator=self.person1, rating=3, duration=30)
         self.empty_checkin.participants.add(self.person1)
-        self.diary = Diary.objects.create(creator=self.person1)
+        self.diary1 = Diary.objects.create(creator=self.person1)
         self.diary1.checkins.add(self.checkin1, self.checkin2, self.checkin3)
         self.diary1.participants.add(self.person1, self.person2, self.person3)
         self.diary2 = Diary.objects.create(creator=self.person4)
@@ -38,8 +38,7 @@ class DiaryTest(TestCase):
 
 
     def test_diary_str(self):
-        diary = Diary.objects.get(creator=self.person1, participants=[self.person1, self.person2, self.person3])
-        self.assertEqual(str(diary), 'DateTime: {},Creator: {},Participants: {}'.format(diary.datetime_created, str(diary.creator.user.username), [str(p.user.username) for p in diary.participants.all()]))
+        self.assertEqual(str(self.diary1), 'DateTime: {},Creator: {},Participants: {}'.format(self.diary1.datetime_created, str(self.diary1.creator.user.username), [str(p.user.username) for p in self.diary1.participants.all()]))
 
 
     def test_diary_get(self):
@@ -52,3 +51,8 @@ class DiaryTest(TestCase):
         response = self.client.get('/diary/')
         received_diary_list = response.context['diary_list']
         self.assertEqual(list(), received_diary_list)
+
+    def test_get_diaries_for_people(self):
+        expected_diary_list = [self.diary1, self.diary2, self.empty_diary]
+        received_diary_list = Diary.get_diaries_for_people(self.person1)
+        self.assertItemsEqual(expected_diary_list, received_diary_list)
