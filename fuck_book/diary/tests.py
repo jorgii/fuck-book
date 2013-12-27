@@ -16,15 +16,6 @@ class DiaryTest(TestCase):
         self.person1 = User.objects.get(username='user1').person
         self.person2 = User.objects.get(username='user2').person
 
-    def test_get_checkins_for_diary(self):
-        intended_diary = Diary.objects.get(person1=self.person1, person2=self.person2)
-        expected_checkins = list(CheckinDetails.objects.filter(person=self.person1,
-                                                               with_who=self.person2))
-        expected_checkins.extend(CheckinDetails.objects.filter(person=self.person2,
-                                                               with_who=self.person1))
-        expected_checkins = sorted(expected_checkins, key=lambda x: x.date_checked, reverse=True)
-        self.assertEqual(expected_checkins, get_checkins_for_diary(intended_diary))
-
     def test_diary_str(self):
         diary = Diary.objects.get(person1=self.person1, person2=self.person2)
         self.assertEqual(str(diary), '{}, {}, {}'.format(diary.timestamp, str(self.person1.user.username), str(self.person2.user.username)))
