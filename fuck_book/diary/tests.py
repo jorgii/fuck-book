@@ -4,8 +4,6 @@ from django.test.client import Client
 
 
 from diary.models import Diary
-from diary.views import get_checkins_for_diary
-from checkin.models import CheckinDetails
 
 
 class DiaryTest(TestCase):
@@ -19,10 +17,6 @@ class DiaryTest(TestCase):
     def test_diary_str(self):
         diary = Diary.objects.get(person1=self.person1, person2=self.person2)
         self.assertEqual(str(diary), 'DateTime: {},Creator: {},Participants: {}'.format(diary.datetime_created, str(diary.creator.user.username), [str(p.user.username) for p in diary.participants.all()]))
-
-    def test_diary_str_no_person2(self):
-        diary = Diary.objects.get(person1=self.person1, person2=None)
-        self.assertEqual(str(diary), '{}, {}, {}'.format(diary.timestamp, str(self.person1.user.username), None))
 
     def test_diary_list_view(self):
         self.client.login(username='user1', password='pass1')
