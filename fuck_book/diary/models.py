@@ -21,7 +21,7 @@ class Diary(models.Model):
         diary.participants.add(*participants)
         diary.add_checkins_to_diary(checkins)
         diary.save()
-        return
+        return diary
 
     @staticmethod
     def get_diary_for_exact_people(*people): 
