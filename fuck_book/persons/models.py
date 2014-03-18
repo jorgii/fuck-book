@@ -1,6 +1,10 @@
 from django.db import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
+from json_field import JSONField
+
+
+from notifications.models import NotificationTypes
 
 
 def get_upload_file_name(instance, filename):
@@ -34,13 +38,16 @@ class Person(models.Model):
                                        null=True)
     preferred_poses = models.ManyToManyField('hardcoded_models.PosesList', blank=True, null=True)
     preferred_places = models.ManyToManyField('hardcoded_models.PlacesList', blank=True, null=True)
-    display_periodical_notification = models.BooleanField(default=True)
-    display_tip_notification = models.BooleanField(default=True)
-    display_difference_notification = models.BooleanField(default=True)
 
-    periodical_notification_period = models.IntegerField(default=14)
-    tip_notification_period = models.IntegerField(default=7)
-    difference_notification_period = models.IntegerField(default=30)
+    notification_settings = JSONField()
+
 
     def __str__(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)
+
+
+    def populate_notification_settings(self):
+        self.notification_settings = dict()
+        for notification_type in NotificationTypes.objects.all():
+            self.notification_settings[notification_type.name] = {'period':'0', 'active':False,}
+        self.save()
