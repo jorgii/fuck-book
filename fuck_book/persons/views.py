@@ -12,7 +12,7 @@ from django.contrib.auth import login
 
 from persons.models import Person
 from persons.forms import PersonRegisterForm, UserForm, ProfileEditForm
-from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
+from notifications.models import NotificationTypes, NotificationInstance
 
 
 @login_required
@@ -37,7 +37,8 @@ def profile(request, username):
         profile_photo = user_to_display.person.photo.url
     except ValueError:
         profile_photo = '/media/profile_photos/noPhoto.jpg'
-    number_of_unread_notifications = get_number_of_unread_notifications(request.user.person)
+    number_of_unread_notifications = NotificationInstance.objects.filter(person=request.user.person).filter(is_read=False).all().count()
+    print number_of_unread_notifications
     return render(request, 'profile.html', locals())
 
 
@@ -74,6 +75,7 @@ def register(request):
             user = form.instance
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             created_person = Person(user=user)
+            created_person.populate_notification_settings()
             created_person.save()
             login(request, user)
             return redirect('/register_success/')
@@ -89,15 +91,14 @@ def register_success(request):
         if person_form.is_valid() and user_form.is_valid():
             person_form.save()
             user_form.save()
-            PeriodicalNotification.objects.create(
+            NotificationInstance.objects.create(
                 person=request.user.person,
+                notification_type=NotificationTypes.get(name='periodical'),
                 message="Wellcome! Don't hesitate to make your first check in.")
-            TipNotification.objects.create(
+            NotificationInstance.objects.create(
                 person=request.user.person,
+                notification_type=NotificationTypes.get(name='tip'),
                 message="Wellcome! Go to your profile settings if you don't want to get useful tips.")
-            DifferenceNotification.objects.create(
-                person=request.user.person,
-                message="Wellcome! Once you're in a relation you'll start getting difference notifications.")
             return redirect('/profile/'+request.user.username+'/')
     csrf(request)
     return render(request, 'register_success.html', locals())
@@ -105,12 +106,4 @@ def register_success(request):
 
 @login_required
 def home(request):
-
     return redirect('profile', username=request.user.username)
-
-
-def get_number_of_unread_notifications(this_person):
-    unread_notifications_count = PeriodicalNotification.objects.filter(person=this_person, unread=True).count()
-    unread_notifications_count += TipNotification.objects.filter(person=this_person, unread=True).count()
-    unread_notifications_count += DifferenceNotification.objects.filter(person=this_person, unread=True).count()
-    return unread_notifications_count
