@@ -31,9 +31,4 @@ class ProfileEditForm(ModelForm):
                   'photo',
                   'preferred_poses',
                   'preferred_places',
-                  'display_periodical_notification',
-                  'display_tip_notification',
-                  'display_difference_notification',
-                  'periodical_notification_period',
-                  'tip_notification_period',
-                  'difference_notification_period']
+                  'notification_settings']
