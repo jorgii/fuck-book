@@ -24,7 +24,7 @@ class NotificationInstance(models.Model):
 
 
     def __str__(self):
-        return '{} for {}'.format(self.notification_type.name, self.person)
+        return '{}, {}, {}'.format(str(self.person), str(self.notification_type), self.datetime_created)
 
 
 @staticmethod
