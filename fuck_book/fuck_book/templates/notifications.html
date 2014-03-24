@@ -6,90 +6,33 @@
     <div class="row-fluid">
         <div class="span12">
             <div class="row-fluid">
+                {% for notif_type, settings in current_person.notification_settings.items %}
                 <div class="span4">
+                    {{ notif_type|title }} Notifications
                     <table class="table table-striped">
-                        {% if current_person.display_periodical_notification %}
-                        {% if periodical_notifications.count == 0 %}
-                        <tr><td>You have no notifications to display.</td></tr>
+                        {% if settings.active %}
+                            {% for notification in notifications_by_type %}
+                                <tr>
+                                    <td>{{ notification.datetime_created }}: </td>
+                                    <td>{{ notification.message }}</td>
+                                    {% if not notification.is_read %}
+                                        <td>
+                                            <form class="form" method="post" action="{% url 'notifications' %}">
+                                                {% csrf_token %}
+                                                <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
+                                                <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
+                                                <input type="hidden" name="notification_class" value="PeriodicalNotification"/>
+                                            </form>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
                         {% else %}
-                        {% for notification in periodical_notifications %}
-                        <tr>
-                            <td>{{ notification.date_saved }}: </td>
-                            <td>{{ notification.message }}</td>
-                            {% if notification.unread %}
-                            <td>
-                                <form class="form" method="post" action="{% url 'notifications' %}">
-                                    {% csrf_token %}
-                                    <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
-                                    <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
-                                    <input type="hidden" name="notification_class" value="PeriodicalNotification"/>
-                                </form>
-                            </td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                        {% endif %}
-                        {% else %}
-                        <tr><td>There are no notifications to display.</td></tr>
+                            <tr><td>There are no notifications to display.</td></tr>
                         {% endif %}
                     </table>
                 </div>
-                <div class="span4">
-                    <table class="table table-striped">
-                        {% if current_person.display_tip_notification %}
-                        {% if tip_notifications.count == 0 %}
-                        <tr><td>You have no notifications to display.</td></tr>
-                        {% else %}
-                        {% for notification in tip_notifications %}
-                        <tr>
-                            <td>{{ notification.date_saved }}: </td>
-                            <td>{{ notification.message }}</td>
-                            {% if notification.unread %}
-                            <td>
-                                <form class="form" method="post" action="{% url 'notifications' %}">
-                                    {% csrf_token %}
-                                    <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
-                                    <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
-                                    <input type="hidden" name="notification_class" value="TipNotification"/>
-                                </form>
-                            </td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                        {% endif %}
-                        {% else %}
-                        <tr><td>There are no notifications to display.</td></tr>
-                        {% endif %}
-                    </table>
-                </div>
-                <div class="span4">
-                    <table class="table table-striped">
-                        {% if current_person.display_difference_notification %}
-                        {% if difference_notifications.count == 0 %}
-                        <tr><td>You have no notifications to display.</td></tr>
-                        {% else %}
-                        {% for notification in difference_notifications %}
-                        <tr>
-                            <td>{{ notification.date_saved }}: </td>
-                            <td>{{ notification.message }}</td>
-                            {% if notification.unread %}
-                            <td>
-                                <form class="form" method="post" action="{% url 'notifications' %}">
-                                    {% csrf_token %}
-                                    <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
-                                    <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
-                                    <input type="hidden" name="notification_class" value="DifferenceNotification"/>
-                                </form>
-                            </td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                        {% endif %}
-                        {% else %}
-                        <tr><td>There are no notifications to display.</td></tr>
-                        {% endif %}
-                    </table>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

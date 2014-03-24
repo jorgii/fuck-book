@@ -2,16 +2,17 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
-from notifications.models import PeriodicalNotification, TipNotification, DifferenceNotification
+
+from notifications.models import NotificationTypes, NotificationInstance
 
 
 @login_required
 def notifications(request):
     current_person = request.user.person
 
-    periodical_notifications = PeriodicalNotification.objects.filter(person=current_person).order_by('-date_saved')
-    tip_notifications = TipNotification.objects.filter(person=current_person).order_by('-date_saved')
-    difference_notifications = DifferenceNotification.objects.filter(person=current_person).order_by('-date_saved')
+    notifications_by_type = dict()
+    for notification_type in NotificationTypes.objects.all():
+            notifications_by_type[notification_type.name]= NotificationInstance.objects.filter(person=current_person).filter(notification_type=notification_type).all()
 
     if request.method == 'POST':
         notification_key = int(request.POST.get('notification_id'))
@@ -28,11 +29,11 @@ def mark_notification_as_read(key, cls):
     Updates the notification's unread field from True to False so
     it won't be displayd as new any more.
     '''
-    if cls == "PeriodicalNotification":
-        notification = PeriodicalNotification.objects.get(id=key)
-    elif cls == "TipNotification":
-        notification = TipNotification.objects.get(id=key)
-    else:
-        notification = DifferenceNotification.objects.get(id=key)
-    notification.unread = False
-    notification.save(update_fields=['unread'])
+#    if cls == "PeriodicalNotification":
+#        notification = PeriodicalNotification.objects.get(id=key)
+#    elif cls == "TipNotification":
+#        notification = TipNotification.objects.get(id=key)
+#    else:
+#        notification = DifferenceNotification.objects.get(id=key)
+#    notification.unread = False
+#    notification.save(update_fields=['unread'])
