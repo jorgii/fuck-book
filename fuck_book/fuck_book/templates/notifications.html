@@ -6,12 +6,12 @@
     <div class="row-fluid">
         <div class="span12">
             <div class="row-fluid">
-                {% for notif_type, settings in current_person.notification_settings.items %}
-                <div class="span4">
+                {% for notif_type, notif_list in notifications_by_type.items %}
+                <div class="span3">
                     {{ notif_type|title }} Notifications
                     <table class="table table-striped">
-                        {% if settings.active %}
-                            {% for notification in notifications_by_type %}
+                        {% if notif_list %}
+                            {% for notification in notif_list %}
                                 <tr>
                                     <td>{{ notification.datetime_created }}: </td>
                                     <td>{{ notification.message }}</td>
@@ -21,7 +21,6 @@
                                                 {% csrf_token %}
                                                 <input class="btn btn-primary btn-mini" type="submit" value="Mark as read"/>
                                                 <input type="hidden" name="notification_id" value="{{ notification.id }}"/>
-                                                <input type="hidden" name="notification_class" value="PeriodicalNotification"/>
                                             </form>
                                         </td>
                                     {% endif %}
